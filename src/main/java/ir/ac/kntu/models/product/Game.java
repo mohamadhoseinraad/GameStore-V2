@@ -1,6 +1,7 @@
 package ir.ac.kntu.models.product;
 
-import ir.ac.kntu.HelperClasses.GameHelper;
+
+import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.models.User;
 
 import java.util.HashMap;
@@ -83,7 +84,7 @@ public class Game extends Product {
 
     @Override
     public void showProduct() {
-        GameHelper.printGame(this);
+        ProductHelper.printGame(this);
     }
 
     @Override

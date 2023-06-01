@@ -1,6 +1,6 @@
 package ir.ac.kntu.menu.Admin.Game;
 
-import ir.ac.kntu.HelperClasses.GameHelper;
+import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
@@ -91,7 +91,7 @@ public class AdminGameEdit extends Menu {
     }
 
     private void editGenre() {
-        Genre genre = GameHelper.getInputEnumData(Genre.class);
+        Genre genre = ProductHelper.getInputEnumData(Genre.class);
         currentGame.setGenre(genre);
     }
 

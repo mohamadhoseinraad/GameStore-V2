@@ -4,7 +4,7 @@ import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.product.Genre;
 import ir.ac.kntu.models.product.Level;
 
-public class GameHelper {
+public class ProductHelper {
     public static Game makeGame() {
         System.out.println("Pleas enter game name :");
         String name = Scan.getLine();
@@ -41,11 +41,11 @@ public class GameHelper {
         String input;
         do {
             input = Scan.getLine();
-        } while (checkInputGenre(input , inputenum));
+        } while (checkInputEnum(input , inputenum));
         return options[Integer.parseInt(input)];
     }
 
-    private static <T extends Enum> boolean checkInputGenre(String input , Class<T> inputEnum ) {
+    private static <T extends Enum> boolean checkInputEnum(String input , Class<T> inputEnum ) {
         if (!input.matches("[0-9]+")) {
             System.out.println("Invalid input try again");
             return true;
