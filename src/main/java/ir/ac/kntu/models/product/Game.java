@@ -1,12 +1,10 @@
-package ir.ac.kntu.models;
+package ir.ac.kntu.models.product;
 
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.HelperClasses.GameHelper;
+import ir.ac.kntu.models.User;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Game extends Product {
     public static int gamesNumber = 0;
@@ -85,6 +83,18 @@ public class Game extends Product {
 
     @Override
     public void showProduct() {
+        GameHelper.printGame(this);
+    }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", name=" + getName() +
+                ", genre=" + genre +
+                ", price=" + getPrice() +
+                ", score=" + score +
+                ", level=" + level +
+                '}';
     }
 }

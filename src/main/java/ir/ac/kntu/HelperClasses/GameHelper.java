@@ -1,8 +1,8 @@
 package ir.ac.kntu.HelperClasses;
 
-import ir.ac.kntu.models.Game;
-import ir.ac.kntu.models.Genre;
-import ir.ac.kntu.models.Level;
+import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.Genre;
+import ir.ac.kntu.models.product.Level;
 
 public class GameHelper {
     public static Game makeGame() {
@@ -93,6 +93,7 @@ public class GameHelper {
         TerminalColor.cyan();
         System.out.println(" (" + game.getRates().size() + ")");
         System.out.println(game.getDetails());
+        System.out.println("Level : " + game.getLevel());
         TerminalColor.blue();
         System.out.println("|----------------------------");
         TerminalColor.reset();

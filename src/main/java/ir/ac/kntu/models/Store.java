@@ -1,8 +1,6 @@
 package ir.ac.kntu.models;
 
-import ir.ac.kntu.models.Game;
-import ir.ac.kntu.models.User;
-import ir.ac.kntu.models.UserType;
+import ir.ac.kntu.models.product.Game;
 
 import java.util.*;
 

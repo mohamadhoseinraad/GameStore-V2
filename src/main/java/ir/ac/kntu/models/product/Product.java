@@ -1,7 +1,8 @@
-package ir.ac.kntu.models;
+package ir.ac.kntu.models.product;
+
+import ir.ac.kntu.models.Community;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public abstract class Product {
 

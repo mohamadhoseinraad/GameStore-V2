@@ -2,6 +2,7 @@ package ir.ac.kntu.models;
 
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.models.product.Game;
 
 import java.util.*;
 

@@ -1,6 +1,9 @@
 package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.*;
+import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.Genre;
+import ir.ac.kntu.models.product.Level;
 
 public class DefaultData {
     public static Store addDefaultData() {

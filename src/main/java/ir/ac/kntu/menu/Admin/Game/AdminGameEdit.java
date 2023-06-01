@@ -4,8 +4,8 @@ import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.Game;
-import ir.ac.kntu.models.Genre;
+import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.Genre;
 
 public class AdminGameEdit extends Menu {
 
