@@ -1,9 +1,11 @@
 package ir.ac.kntu.menu.Admin.Game;
 
+import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.Game;
+import ir.ac.kntu.models.Genre;
 
 public class AdminGameEdit extends Menu {
 
@@ -89,15 +91,8 @@ public class AdminGameEdit extends Menu {
     }
 
     private void editGenre() {
-        System.out.println("Enter new genre : ");
-        String input = Scan.getLine().trim().toUpperCase();
-        if (input.length() > 2) {
-            currentGame.setGenre(input);
-            return;
-        }
-        TerminalColor.red();
-        System.out.println("Minimum Length 3 character!");
-        TerminalColor.reset();
+        Genre genre = GameHelper.getInputgenre();
+        currentGame.setGenre(genre);
     }
 
 }
