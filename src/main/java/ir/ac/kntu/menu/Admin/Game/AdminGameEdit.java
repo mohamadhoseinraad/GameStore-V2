@@ -49,7 +49,7 @@ public class AdminGameEdit extends Menu {
     }
 
     private boolean showGame() {
-        currentGame.showGame();
+        currentGame.showProduct();
         return true;
     }
 
