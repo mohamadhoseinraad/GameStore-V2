@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.Admin.Game;
 
+import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
@@ -58,7 +59,7 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void addGame() {
-        Game newGame = ProductHelper.makeGame();
+        Game newGame = GameHelper.makeGame();
         if (newGame != null) {
             if (storeDB.addGame(newGame)) {
                 TerminalColor.green();

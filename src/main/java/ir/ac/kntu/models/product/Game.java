@@ -1,11 +1,13 @@
 package ir.ac.kntu.models.product;
 
 
+import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.models.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Game extends Product {
     public static int gamesNumber = 0;
@@ -84,7 +86,7 @@ public class Game extends Product {
 
     @Override
     public void showProduct() {
-        ProductHelper.printGame(this);
+        GameHelper.printGame(this);
     }
 
     @Override
@@ -97,5 +99,22 @@ public class Game extends Product {
                 ", score=" + score +
                 ", level=" + level +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Game game = (Game) o;
+        return id == game.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
