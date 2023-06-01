@@ -13,19 +13,20 @@ public class Game extends Product {
 
     private final int id;
 
-
     private Genre genre;
-
 
     private double score;
 
+    private Level level;
+
     private Map<String, Double> rates;
 
-    public Game(String name, String details, double price, ProductType productType, Genre genre) {
-        super(name, details, price, productType);
+    public Game(String name, String details, double price, Genre genre , Level level) {
+        super(name, details, price, ProductType.GAME);
         this.genre = genre;
         score = 0;
         id = gamesNumber++;
+        this.level = level;
         rates = new HashMap<>();
     }
 
@@ -44,6 +45,14 @@ public class Game extends Product {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public int getId() {

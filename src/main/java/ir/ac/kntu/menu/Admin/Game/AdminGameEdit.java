@@ -91,7 +91,7 @@ public class AdminGameEdit extends Menu {
     }
 
     private void editGenre() {
-        Genre genre = GameHelper.getInputgenre();
+        Genre genre = GameHelper.getInputEnumData(Genre.class);
         currentGame.setGenre(genre);
     }
 

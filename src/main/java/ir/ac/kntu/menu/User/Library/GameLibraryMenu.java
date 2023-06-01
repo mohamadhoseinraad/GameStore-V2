@@ -50,7 +50,7 @@ public class GameLibraryMenu extends Menu {
     }
 
     private boolean printGame() {
-        currentGame.showGame();
+        currentGame.showProduct();
         return true;
     }
 

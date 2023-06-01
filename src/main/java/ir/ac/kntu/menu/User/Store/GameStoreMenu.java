@@ -46,7 +46,7 @@ public class GameStoreMenu extends Menu {
     }
 
     public boolean printGame() {
-        currentGame.showGame();
+        currentGame.showProduct();
         return true;
     }
 
