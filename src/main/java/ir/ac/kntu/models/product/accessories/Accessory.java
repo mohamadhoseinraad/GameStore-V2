@@ -1,4 +1,7 @@
-package ir.ac.kntu.models.product;
+package ir.ac.kntu.models.product.accessories;
+
+import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.ProductType;
 
 public class Accessory extends Product {
 
