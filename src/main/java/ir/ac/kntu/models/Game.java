@@ -8,67 +8,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Game implements Cloneable {
+public class Game extends Product {
     public static int gamesNumber = 0;
 
     private final int id;
 
-    private String name;
-
-    private String details;
 
     private String genre;
 
-    private double price;
 
     private double score;
 
     private Map<String, Double> rates;
 
-    private ArrayList<Community> communities;
-
-    public Game(String name, String details, String genre, double price) {
-        this.name = name.toUpperCase();
-        this.details = details;
+    public Game(String name, String details, double price, ProductType productType, String genre) {
+        super(name, details, price, productType);
         this.genre = genre;
-        this.price = price;
         score = 0;
         id = gamesNumber++;
-        communities = new ArrayList<>();
         rates = new HashMap<>();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name.toUpperCase();
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public double getScore() {
         return score;
@@ -78,23 +38,6 @@ public class Game implements Cloneable {
         this.score = score;
     }
 
-    public ArrayList<Community> getCommunities() {
-        return communities;
-    }
-
-    public void setCommunities(ArrayList<Community> communities) {
-        this.communities = communities;
-    }
-
-    public void addCommunity(Community community){
-        communities.add(community);
-    }
-
-    public void showAllComment(){
-        for (Community community : communities){
-            community.showComment();
-        }
-    }
 
     public int getId() {
         return id;
@@ -124,45 +67,6 @@ public class Game implements Cloneable {
         score = sumRate / numberOfVoter;
     }
 
-    @Override
-    public String toString() {
-        return
-                "ID-" + id +
-                        " name : " + name +
-                        " ,genre :" + genre +
-                        " ,price :" + price +
-                        " ,score :" + score +
-                        " ,details:" +
-                        details + "\n";
-    }
-
-    public void showGame() {
-        TerminalColor.blue();
-        System.out.println("|----------------------------");
-        TerminalColor.cyan();
-        System.out.print("| Name     : " + name);
-        TerminalColor.reset();
-        System.out.print("  -----  ");
-        if (price == 0) {
-            TerminalColor.green();
-            System.out.println("Free");
-        } else {
-            TerminalColor.cyan();
-            System.out.println(price + "$ coast");
-        }
-        TerminalColor.yellow();
-        System.out.print("| Genre : " + genre);
-        System.out.print(" | Score : ");
-        scoreColor();
-        System.out.print(score);
-        TerminalColor.cyan();
-        System.out.println(" (" + rates.size() + ")");
-        System.out.println(details);
-        TerminalColor.blue();
-        System.out.println("|----------------------------");
-        TerminalColor.reset();
-    }
-
     private void scoreColor() {
         if (score < 3) {
             TerminalColor.red();
@@ -173,22 +77,6 @@ public class Game implements Cloneable {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Game game = (Game) o;
-        return id == game.getId() && name.equals(game.getName()) && genre.equals(game.getGenre());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, genre);
-    }
 
     public static Game makeGame() {
         System.out.println("Pleas enter game name :");
@@ -212,6 +100,34 @@ public class Game implements Cloneable {
         }
         TerminalColor.reset();
         double price = Double.parseDouble(priceSrt);
-        return new Game(name, detail, genre, price);
+        return new Game(name, detail, price, ProductType.GAME, genre);
+    }
+
+    @Override
+    public void showProduct() {
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.cyan();
+        System.out.print("| Name     : " + getName());
+        TerminalColor.reset();
+        System.out.print("  -----  ");
+        if (getPrice() == 0) {
+            TerminalColor.green();
+            System.out.println("Free");
+        } else {
+            TerminalColor.cyan();
+            System.out.println(getPrice() + "$ coast");
+        }
+        TerminalColor.yellow();
+        System.out.print("| Genre : " + genre);
+        System.out.print(" | Score : ");
+        scoreColor();
+        System.out.print(score);
+        TerminalColor.cyan();
+        System.out.println(" (" + rates.size() + ")");
+        System.out.println(getDetails());
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.reset();
     }
 }

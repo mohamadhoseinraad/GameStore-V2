@@ -72,4 +72,6 @@ public abstract class Product {
     public void setProductType(ProductType productType) {
         this.productType = productType;
     }
+
+    public abstract void showProduct();
 }
