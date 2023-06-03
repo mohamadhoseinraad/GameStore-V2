@@ -1,6 +1,12 @@
 package ir.ac.kntu.models.product.accessories;
 
+import java.util.Objects;
+
 public class GamePad extends Accessory {
+
+    private static int countGamePad = 0;
+
+    private final String id;
 
     private Device device;
 
@@ -10,6 +16,7 @@ public class GamePad extends Accessory {
         super(name, details, price, amount, AccessoryType.GAME_PAD);
         this.device = device;
         this.connection = connection;
+        id = "ACC_GP" + countGamePad++;
     }
 
     public Device getDevice() {
@@ -26,5 +33,23 @@ public class GamePad extends Accessory {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GamePad gamePad = (GamePad) o;
+        return Objects.equals(id, gamePad.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

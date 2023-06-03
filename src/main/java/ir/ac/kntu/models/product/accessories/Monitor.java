@@ -1,6 +1,12 @@
 package ir.ac.kntu.models.product.accessories;
 
+import java.util.Objects;
+
 public class Monitor extends Accessory {
+
+    private static int countMonitor = 0;
+
+    private final String id;
 
     private int size;
 
@@ -13,6 +19,7 @@ public class Monitor extends Accessory {
         this.refreshRate = refreshRate;
         this.responseTime = responseTime;
         this.size = size;
+        id = "ACC_MO" + countMonitor++;
     }
 
     public int getSize() {
@@ -37,5 +44,23 @@ public class Monitor extends Accessory {
 
     public void setResponseTime(int responseTime) {
         this.responseTime = responseTime;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Monitor monitor = (Monitor) o;
+        return Objects.equals(id, monitor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

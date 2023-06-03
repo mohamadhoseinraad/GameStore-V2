@@ -43,4 +43,9 @@ public class Accessory extends Product {
     public void showProduct() {
 
     }
+
+    @Override
+    public String getId() {
+        return null;
+    }
 }

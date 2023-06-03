@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Game extends Product {
     public static int gamesNumber = 0;
 
-    private final int id;
+    private final String id;
 
     private Genre genre;
 
@@ -26,7 +26,7 @@ public class Game extends Product {
         super(name, details, price, ProductType.GAME);
         this.genre = genre;
         score = 0;
-        id = gamesNumber++;
+        id = "GAME"+ gamesNumber++;
         this.level = level;
         rates = new HashMap<>();
     }
@@ -56,9 +56,6 @@ public class Game extends Product {
         this.level = level;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public Map<String, Double> getRates() {
         return rates;
@@ -90,6 +87,11 @@ public class Game extends Product {
     }
 
     @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
@@ -103,14 +105,10 @@ public class Game extends Product {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
-        return id == game.id;
+        return id.equals(game.id);
     }
 
     @Override

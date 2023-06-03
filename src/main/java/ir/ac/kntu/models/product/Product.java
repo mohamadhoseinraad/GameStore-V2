@@ -75,4 +75,6 @@ public abstract class Product {
     }
 
     public abstract void showProduct();
+
+    public abstract String getId();
 }

@@ -19,7 +19,7 @@ public class User {
 
     public final UserType userType;
 
-    private Map<Integer, String> library;
+    private Map<String, String> library;
 
     private ArrayList<String> friends;
 
@@ -97,7 +97,7 @@ public class User {
         return true;
     }
 
-    public Map<Integer, String> getLibrary() {
+    public Map<String, String> getLibrary() {
         return library;
     }
 
