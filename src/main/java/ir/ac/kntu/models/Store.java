@@ -8,9 +8,9 @@ import ir.ac.kntu.models.product.accessories.Accessory;
 import java.util.*;
 
 public class Store {
-    private ArrayList<User> users;
+    private ArrayList<User> users = new ArrayList<>();
 
-    //private ArrayList<Game> games;
+    private ArrayList<Admin> admins = new ArrayList<>();
 
     private HashMap<ProductType, ArrayList<Product>> products = new HashMap<>();
 
@@ -20,7 +20,8 @@ public class Store {
     }
 
     public Store() {
-        users = new ArrayList<>();
+        Admin admin = new Admin("admin", "", "", "admin", true);
+        admins.add(admin);
         products.put(ProductType.GAME, new ArrayList<>());
         products.put(ProductType.ACCESSORIES, new ArrayList<>());
     }
@@ -71,6 +72,11 @@ public class Store {
         }
         username = username.toUpperCase();
         for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        for (User user : admins) {
             if (user.getUsername().equals(username)) {
                 return user;
             }
@@ -174,7 +180,12 @@ public class Store {
         if (newUser == null) {
             return false;
         }
-        return users.add(newUser);
+        if (newUser.getClass() != Admin.class) {
+            return users.add(newUser);
+        } else {
+            return admins.add((Admin) newUser);
+        }
+
     }
 
     public boolean removeUser(User user) {
@@ -190,6 +201,11 @@ public class Store {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 return user.isLogin(password);
+            }
+        }
+        for (Admin admin : admins) {
+            if (admin.getUsername().equals(username)) {
+                return admin.isLogin(password);
             }
         }
         return false;

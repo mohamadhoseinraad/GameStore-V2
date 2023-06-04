@@ -13,7 +13,7 @@ public class DefaultData {
         Store store = new Store();
         User user1 = new User("1", "09934140117", "mh.shbanirad@icloud.com", "1", UserType.USER);
         User user2 = new User("mo.gamer", "09934140117", "mogamer@gmail.com", "12341234", UserType.USER);
-        User amin = new User("admin", "", "", "admin", UserType.ADMIN);
+        Admin amin = new Admin("admin", "", "", "admin", true);
         Game game1 = new Game("Fortnite", "Battle royall action game", 0, Genre.SHOOTING, Level.LEVEL_1);
         Game g2 = new Game("Rainbow six", "Action shooter game", 20, Genre.SHOOTING, Level.LEVEL_1);
         Game g3 = new Game("GTA V", "Story mode game form al life of a person", 35, Genre.SHOOTING, Level.LEVEL_1);

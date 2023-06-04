@@ -61,6 +61,7 @@ public class FriendProfileMenu extends Menu {
             System.out.print(" | ");
             TerminalColor.reset();
             System.out.println(product);
+            i++;
         }
     }
 

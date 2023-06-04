@@ -1,5 +1,5 @@
 package ir.ac.kntu.menu.Admin;
 
 public enum AdminMenuOption {
-    USERS, GAMES, LOGOUT, EXIT
+    PROFILE, EDIT_ADMINS, USERS, GAMES, ACCESSORY, LOGOUT, EXIT
 }

@@ -48,6 +48,12 @@ public class AuthMenu extends Menu {
         String password = Scan.getLine().trim();
         if (storeDB.loginUser(username, password)) {
             User user = storeDB.findUserByUsername(username);
+            if (user == null){
+                TerminalColor.red();
+                System.out.println("Username or password incorrect!");
+                TerminalColor.reset();
+                return;
+            }
             if (user.userType == UserType.USER) {
                 UserMenu userMenu = new UserMenu(storeDB, user);
                 userMenu.showMenu();
