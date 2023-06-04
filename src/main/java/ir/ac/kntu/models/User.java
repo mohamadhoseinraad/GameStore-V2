@@ -268,7 +268,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "Username :" + username + " | Phone number : " + phoneNumber + " | Email : " + email + lastGameName();
+        return "Username :" + username + " | Phone number : " + phoneNumber + " | Email : " + email + " | Score : " + score + lastGameName();
     }
 
     public void showProfile() {
@@ -276,6 +276,8 @@ public class User {
         System.out.println("|----------------------------");
         TerminalColor.cyan();
         System.out.print("| Username     : " + username);
+        TerminalColor.yellow();
+        System.out.print(" (" + score + ") ");
         TerminalColor.reset();
         System.out.print("  -----  ");
         TerminalColor.cyan();
