@@ -1,6 +1,6 @@
 package ir.ac.kntu.menu.User.Profile;
 
-import ir.ac.kntu.HelperClasses.Scan;
+import ir.ac.kntu.HelperClasses.GetInputHelper;
 import ir.ac.kntu.HelperClasses.UserHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
@@ -8,9 +8,9 @@ import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.User;
 
 public class ProfileMenu extends Menu {
-    private Store storeDB;
+    private final Store storeDB;
 
-    private User user;
+    private final User user;
 
     public ProfileMenu(Store storeDB, User user) {
         this.storeDB = storeDB;
@@ -59,21 +59,12 @@ public class ProfileMenu extends Menu {
     }
 
     private void changeUsername() {
-        System.out.println("Enter your new username:");
-        String newUsername = Scan.getLine().toUpperCase().trim();
-        TerminalColor.red();
-        if (newUsername.length() < 3) {
-            System.out.println("Username must be 3  or more character!");
-            TerminalColor.reset();
-            return;
-        }
-        if (newUsername.equals(user.getUsername())) {
-            System.out.println("this username is same!");
-            TerminalColor.reset();
+        String newUsername = GetInputHelper.inputUserName();
+        if (newUsername == null) {
             return;
         }
         User temp = storeDB.findUserByUsername(newUsername);
-        if (temp != null && !temp.equals(user)) {
+        if (temp != null) {
             System.out.println("this username is already taken!");
             TerminalColor.reset();
             return;
@@ -85,76 +76,44 @@ public class ProfileMenu extends Menu {
     }
 
     private void changeEmail() {
-        System.out.println("Enter your new email:");
-        String newEmail = Scan.getLine().toLowerCase().trim();
-        TerminalColor.red();
-        if (!newEmail.matches(".*@.*")) {
-            System.out.println("New email is not valid!");
+        String newEmail = GetInputHelper.inputEmail();
+        if (newEmail != null) {
+            user.setEmail(newEmail);
+            TerminalColor.green();
+            System.out.println("email changed :D");
             TerminalColor.reset();
-            return;
         }
-        if (newEmail.equals(user.getEmail())) {
-            System.out.println("New email is same as previous email !");
-            TerminalColor.reset();
-            return;
-        }
-        user.setEmail(newEmail);
-        TerminalColor.green();
-        System.out.println("email changed :D");
-        TerminalColor.reset();
     }
 
     private void changePhoneNumber() {
-        System.out.println("Enter your new phone number:");
-        String newPhoneNumber = Scan.getLine().toUpperCase().trim();
-        TerminalColor.red();
-        if (!newPhoneNumber.matches("[0-9+]+")) {
-            System.out.println("New phone number is not valid!");
-            return;
+        String newPhoneNumber = GetInputHelper.inputPhoneNumber();
+        if (newPhoneNumber != null) {
+            user.setPhoneNumber(newPhoneNumber);
+            TerminalColor.green();
+            System.out.println("phone number changed :D");
+            TerminalColor.reset();
         }
-        if (newPhoneNumber.equals(user.getEmail())) {
-            System.out.println("New phone number is same as previous email !");
-            return;
-        }
-        user.setPhoneNumber(newPhoneNumber);
-        TerminalColor.green();
-        System.out.println("phone number changed :D");
-        TerminalColor.reset();
     }
 
     private void chargeWallet() {
-        System.out.println("how much you want amount ? (1+ $)");
-        String amount = Scan.getLine();
-        TerminalColor.red();
-        int errorCount = 0;
-        while (!amount.matches("[1-9][0-9.]+") || Double.parseDouble(amount) < 1) {
-            errorCount++;
-            if (errorCount > 2) {
-                System.out.println("Charge wallet fail !");
-                return;
-            }
-            System.out.println("Invalid amount ! Try again :");
-            amount = Scan.getLine();
-
+        double amount = GetInputHelper.inputChargeWallet();
+        if (amount != 0) {
+            user.chargeWallet(amount);
+            TerminalColor.green();
+            System.out.println("Your wallet charged inventory : " + user.getWallet());
+            TerminalColor.reset();
         }
-        user.chargeWallet(Double.parseDouble(amount));
-        TerminalColor.green();
-        System.out.println("Your wallet charged inventory : " + user.getWallet());
-        TerminalColor.reset();
     }
 
     private void changePassword() {
         int error = 0;
         while (error < 3) {
-            System.out.println("Enter old password:");
-            String oldPassword = Scan.getLine().trim();
-            System.out.println("Enter new password:");
-            String newPassword = Scan.getLine().trim();
-            if (newPassword.length() < 8) {
+            String[] inputs = GetInputHelper.inputPassword();
+            if (inputs[0].length() < 8) {
                 TerminalColor.red();
                 System.out.println("New password must be 8 or more character");
                 TerminalColor.reset();
-            } else if (user.setNewPassword(newPassword, oldPassword)) {
+            } else if (user.setNewPassword(inputs[0], inputs[1])) {
                 TerminalColor.green();
                 System.out.println("Password successfully !");
                 TerminalColor.reset();

@@ -12,11 +12,11 @@ import ir.ac.kntu.models.product.accessories.Accessory;
 
 public class ProductStoreMenu extends Menu {
 
-    private User currentUser;
+    private final User currentUser;
 
-    private Product currentProduct;
+    private final Product currentProduct;
 
-    private Store storeDB;
+    private final Store storeDB;
 
     public ProductStoreMenu(User currentUser, Product currentProduct, Store storeDB) {
         this.currentUser = currentUser;
@@ -27,7 +27,8 @@ public class ProductStoreMenu extends Menu {
     @Override
     public void showMenu() {
         ProductStoreMenuOptions option;
-        while (printGame() && (option = printMenuOptions(currentProduct.getName(), ProductStoreMenuOptions.class)) != ProductStoreMenuOptions.EXIT) {
+        while (printProduct() && (option = printMenuOptions(currentProduct.getName(),
+                ProductStoreMenuOptions.class)) != ProductStoreMenuOptions.EXIT) {
             if (option != null) {
                 switch (option) {
                     case BUY: {
@@ -50,7 +51,7 @@ public class ProductStoreMenu extends Menu {
         System.exit(0);
     }
 
-    public boolean printGame() {
+    public boolean printProduct() {
         currentProduct.showProduct(currentUser);
         return true;
     }
@@ -61,7 +62,6 @@ public class ProductStoreMenu extends Menu {
         } else {
             buyAccessory((Accessory) currentProduct);
         }
-
     }
 
     private void buyAccessory(Accessory currentProduct) {
@@ -80,7 +80,6 @@ public class ProductStoreMenu extends Menu {
         TerminalColor.red();
         System.out.println("We don't have this Product already ! :(");
         TerminalColor.reset();
-        return;
     }
 
     private void buyGame(Game currentProduct) {
@@ -153,25 +152,23 @@ public class ProductStoreMenu extends Menu {
         }
     }
 
-    public boolean giftGame(User friend, Game currentProduct) {
+    public void giftGame(User friend, Game currentProduct) {
         if (friend.doHaveGame(currentProduct)) {
             TerminalColor.red();
             System.out.println("Your friend already has this game!");
             TerminalColor.reset();
-            return true;
+            return;
         }
         if (!GameHelper.checkUserLevel(currentProduct, currentUser)) {
             TerminalColor.red();
             System.out.println("Your level is not match!");
             TerminalColor.reset();
-            return true;
+            return;
         }
         if (currentUser.giftGame(currentProduct, friend)) {
             TerminalColor.green();
             System.out.println("Gift Successfully :) ");
             TerminalColor.reset();
-            return true;
         }
-        return false;
     }
 }

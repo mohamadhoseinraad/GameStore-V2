@@ -1,19 +1,25 @@
 package ir.ac.kntu.menu.User.Friend;
 
-import ir.ac.kntu.HelperClasses.Scan;
+import ir.ac.kntu.HelperClasses.GetInputHelper;
+import ir.ac.kntu.HelperClasses.StoreHelperClass;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
+import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.Product;
 
 public class FriendProfileMenu extends Menu {
 
-    private User friend;
+    private final User friend;
 
-    private User currentUser;
+    private final User currentUser;
 
-    public FriendProfileMenu(User friend, User currentUser) {
+    private final Store storeDB;
+
+    public FriendProfileMenu(User friend, User currentUser, Store storeDB) {
         this.friend = friend;
         this.currentUser = currentUser;
+        this.storeDB = storeDB;
     }
 
     @Override
@@ -28,8 +34,8 @@ public class FriendProfileMenu extends Menu {
                         }
                         break;
                     }
-                    case SHOW_USER_GAMES: {
-                        showFriendGames();
+                    case SHOW_USER_PRODUCTS: {
+                        showFriendProducts();
                         break;
                     }
                     case BACK: {
@@ -43,31 +49,23 @@ public class FriendProfileMenu extends Menu {
         System.exit(0);
     }
 
-    private void showFriendGames() {
+    private void showFriendProducts() {
         if (friend.getLibrary().size() == 0) {
-            System.out.println("Your friend doesn't have any game!");
+            System.out.println("Your friend doesn't have any Product!");
             return;
         }
         int i = 1;
-        for (String gameName : friend.getLibrary().values()) {
+        for (Product product : StoreHelperClass.getAllLibrary(storeDB, friend)) {
             System.out.print(i);
             TerminalColor.yellow();
             System.out.print(" | ");
             TerminalColor.reset();
-            System.out.println(gameName);
+            System.out.println(product);
         }
     }
 
     private boolean removeFriend() {
-        System.out.println("Are you  sure ? (Y/N)");
-        String input;
-        while (!(input = Scan.getLine().trim()).matches("Y|N")) {
-            TerminalColor.red();
-            System.out.println("Wrong chios!");
-            TerminalColor.reset();
-            System.out.println("Are you  sure ? (Y/N)");
-        }
-        if (input.equals("Y")) {
+        if (GetInputHelper.inputConform().equals("Y")) {
             currentUser.removeFriend(friend);
             friend.removeFriend(currentUser);
             return true;

@@ -1,9 +1,9 @@
 package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
+import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
-import ir.ac.kntu.menu.ProductSearch;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.User;
@@ -70,8 +70,7 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void editGame() {
-        ProductSearch productSearch = new ProductSearch(storeDB);
-        Game game = (Game) productSearch.searchMenu();
+        Game game = (Game) SelectItemHelper.searchStoreProtectByName(storeDB);
         if (game == null) {
             return;
         }
@@ -80,8 +79,7 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void removeGame() {
-        ProductSearch productSearch = new ProductSearch(storeDB);
-        Game game = (Game) productSearch.searchMenu();
+        Game game = (Game) SelectItemHelper.searchStoreProtectByName(storeDB);
         if (storeDB.removeGame(game) && !(game == null)) {
             TerminalColor.green();
             System.out.println(game.getName() + " with " + game.getId() + " id successfully deleted !");

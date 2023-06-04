@@ -66,6 +66,9 @@ public class Store {
     }
 
     public User findUserByUsername(String username) {
+        if (username == null) {
+            return null;
+        }
         username = username.toUpperCase();
         for (User user : users) {
             if (user.getUsername().equals(username)) {

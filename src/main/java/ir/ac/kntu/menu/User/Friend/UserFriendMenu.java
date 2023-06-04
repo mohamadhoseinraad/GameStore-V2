@@ -1,20 +1,21 @@
 package ir.ac.kntu.menu.User.Friend;
 
 import ir.ac.kntu.HelperClasses.Scan;
+import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.models.User;
 
 import java.util.ArrayList;
 
-public class UserFriendMenu {
-    private Store storeDB;
+public class UserFriendMenu extends Menu {
+    private final Store storeDB;
 
     private ArrayList<User> notFriend;
 
     private ArrayList<User> friends;
 
-    private User currentUser;
+    private final User currentUser;
 
     public UserFriendMenu(Store storeDB, User currentUser) {
         this.storeDB = storeDB;
@@ -26,17 +27,6 @@ public class UserFriendMenu {
         notFriend = currentUser.getUserNotFriend(storeDB);
         friends = currentUser.getFriendsList(storeDB);
     }
-
-    private User searchMenu(String name) {
-        name = name.trim().toUpperCase();
-        ArrayList<User> result = storeDB.findUserByUsernames(name);
-        printUserSearchResult(result);
-        if (result.size() != 0) {
-            return handleSelect(result);
-        }
-        return null;
-    }
-
 
     private ArrayList<User> usernameSearch(ArrayList<User> notFriend) {
         System.out.println("Search User by username : ");
@@ -65,33 +55,31 @@ public class UserFriendMenu {
                 System.out.println("Chose valid number!");
                 TerminalColor.reset();
             } else {
-                User user = searchResult.get(choose);
-                return user;
+                return searchResult.get(choose);
             }
         }
         return null;
 
     }
 
-    private User allFriends() {
+    private void allFriends() {
         ArrayList<User> result = friends;
         printUserSearchResult(result);
         if (result.size() != 0) {
             User selectedUser = handleSelect(result);
             if (selectedUser == null) {
-                return null;
+                return;
             }
-            FriendProfileMenu friendProfileMenu = new FriendProfileMenu(selectedUser, currentUser);
+            FriendProfileMenu friendProfileMenu = new FriendProfileMenu(selectedUser, currentUser, storeDB);
             friendProfileMenu.showMenu();
         }
-        return null;
     }
 
     private void sendRequest(User user) {
         TerminalColor.yellow();
         System.out.println("Send request to " + user.getUsername() + " ? (Y/N)");
         String input;
-        while (!(input = Scan.getLine().toUpperCase()).matches("Y|N")) {
+        while (!(input = Scan.getLine().toUpperCase()).matches("[Y N]")) {
             System.out.println("Send request to " + user.getUsername() + " ? (Y/N)");
         }
         TerminalColor.reset();
@@ -113,17 +101,16 @@ public class UserFriendMenu {
         TerminalColor.reset();
     }
 
-    private User addFriend() {
+    private void addFriend() {
         ArrayList<User> result = usernameSearch(notFriend);
         printUserSearchResult(result);
         if (result.size() != 0) {
             User selectedUser = handleSelect(result);
             if (selectedUser == null) {
-                return null;
+                return;
             }
             sendRequest(selectedUser);
         }
-        return null;
     }
 
     private void printUserSearchResult(ArrayList<User> result) {
@@ -185,7 +172,6 @@ public class UserFriendMenu {
             }
             handleFriendRequest(selectedUser);
         }
-        return;
     }
 
     private void handleFriendRequest(User user) {
@@ -194,7 +180,7 @@ public class UserFriendMenu {
         System.out.println("1- Accept");
         System.out.println("2- Delete");
         String input;
-        while (!(input = Scan.getLine().toUpperCase().trim()).matches("1|2")) {
+        while (!(input = Scan.getLine().toUpperCase().trim()).matches("[1 2]")) {
             TerminalColor.red();
             System.out.println("Wrong choose!");
             TerminalColor.yellow();
@@ -228,33 +214,5 @@ public class UserFriendMenu {
         return result;
     }
 
-    private  <T extends Enum<T>> T getOption(Class<T> menuEnum) {
-        T[] options = menuEnum.getEnumConstants();
-        String choiceStr = Scan.getLine().trim();
-        int choice = -1;
-        if (choiceStr.matches("[0-9]+")) {
-            choice = Integer.parseInt(choiceStr) - 1;
-        }
-
-        if (choice >= 0 && choice < options.length) {
-            return options[choice];
-        }
-        TerminalColor.red();
-        System.out.println("Wrong choice !");
-        TerminalColor.reset();
-        return null;
-    }
-
-    private  <T extends Enum<T>> T printMenuOptions(String title, Class<T> menuEnum) {
-        TerminalColor.cyan();
-        System.out.println("----------" + title + "----------");
-        TerminalColor.reset();
-        T[] options = menuEnum.getEnumConstants();
-        for (int i = 0; i < options.length; i++) {
-            System.out.println((i + 1) + " - " + options[i]);
-        }
-        System.out.print("Enter your choice : ");
-        return getOption(menuEnum);
-    }
 }
 

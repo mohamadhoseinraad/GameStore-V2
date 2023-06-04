@@ -11,20 +11,20 @@ import ir.ac.kntu.models.User;
 
 public class UserMenu extends Menu {
 
-    private Store storeDB;
+    private final Store storeDB;
 
-    private User user;
+    private final User currentUser;
 
-    public UserMenu(Store store, User user) {
+    public UserMenu(Store store, User currentUser) {
         this.storeDB = store;
-        this.user = user;
+        this.currentUser = currentUser;
     }
 
     @Override
     public void showMenu() {
         UserMenuOption option;
         TerminalColor.purple();
-        System.out.println("Welcome " + user.getUsername());
+        System.out.println("Welcome " + currentUser.getUsername());
         TerminalColor.reset();
         while ((option = printMenuOptions("User Menu", UserMenuOption.class)) != UserMenuOption.EXIT) {
             if (option != null) {
@@ -46,7 +46,7 @@ public class UserMenu extends Menu {
                         break;
                     }
                     case LOGOUT:
-                        user.isLogout();
+                        currentUser.isLogout();
                         System.out.println("Back soon :)");
                         return;
                     default:
@@ -58,22 +58,22 @@ public class UserMenu extends Menu {
     }
 
     public void profile() {
-        ProfileMenu profileMenu = new ProfileMenu(storeDB, user);
+        ProfileMenu profileMenu = new ProfileMenu(storeDB, currentUser);
         profileMenu.showMenu();
     }
 
     public void store() {
-        UserStore userStore = new UserStore(storeDB, user);
+        UserStore userStore = new UserStore(storeDB, currentUser);
         userStore.showMenu();
     }
 
     public void library() {
-        UserLibrary userLibrary = new UserLibrary(storeDB, user);
+        UserLibrary userLibrary = new UserLibrary(storeDB, currentUser);
         userLibrary.showMenu();
     }
 
     public void friends() {
-        UserFriendMenu userFriendMenu = new UserFriendMenu(storeDB, user);
+        UserFriendMenu userFriendMenu = new UserFriendMenu(storeDB, currentUser);
         userFriendMenu.showMenu();
     }
 }
