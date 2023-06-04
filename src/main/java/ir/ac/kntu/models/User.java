@@ -214,20 +214,8 @@ public class User {
         requests.remove(user.getId());
     }
 
-    public Date getTimeEntered() {
-        return timeEntered;
-    }
-
-    public void setTimeEntered(Date timeEntered) {
-        this.timeEntered = timeEntered;
-    }
-
-    public Date getTimeExit() {
-        return timeExit;
-    }
-
-    public void setTimeExit(Date timeExit) {
-        this.timeExit = timeExit;
+    public int getScore() {
+        return score;
     }
 
     public boolean isLogin(String password) {
@@ -269,25 +257,6 @@ public class User {
     @Override
     public String toString() {
         return "Username :" + username + " | Phone number : " + phoneNumber + " | Email : " + email + " | Score : " + score + lastGameName();
-    }
-
-    public void showProfile() {
-        TerminalColor.blue();
-        System.out.println("|----------------------------");
-        TerminalColor.cyan();
-        System.out.print("| Username     : " + username);
-        TerminalColor.yellow();
-        System.out.print(" (" + score + ") ");
-        TerminalColor.reset();
-        System.out.print("  -----  ");
-        TerminalColor.cyan();
-        System.out.println(wallet + "$");
-        TerminalColor.yellow();
-        System.out.println("| Phone number : " + phoneNumber);
-        System.out.println("| Email        : " + email);
-        TerminalColor.blue();
-        System.out.println("|----------------------------");
-        TerminalColor.reset();
     }
 
     private String lastGameName() {

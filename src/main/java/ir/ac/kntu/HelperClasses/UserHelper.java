@@ -40,4 +40,23 @@ public class UserHelper {
         storeDB.addUser(newUser);
         return newUser;
     }
+
+    public static void showProfile(User user) {
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.cyan();
+        System.out.print("| Username     : " + user.getUsername());
+        TerminalColor.yellow();
+        System.out.print(" (" + user.getScore() + ") ");
+        TerminalColor.reset();
+        System.out.print("  -----  ");
+        TerminalColor.cyan();
+        System.out.println(user.getWallet() + "$");
+        TerminalColor.yellow();
+        System.out.println("| Phone number : " + user.getPhoneNumber());
+        System.out.println("| Email        : " + user.getEmail());
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.reset();
+    }
 }

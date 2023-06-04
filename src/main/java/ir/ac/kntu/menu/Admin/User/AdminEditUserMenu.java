@@ -1,6 +1,7 @@
 package ir.ac.kntu.menu.Admin.User;
 
 import ir.ac.kntu.HelperClasses.Scan;
+import ir.ac.kntu.HelperClasses.UserHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
@@ -76,7 +77,7 @@ public class AdminEditUserMenu extends Menu {
     }
 
     private boolean userProfile() {
-        user.showProfile();
+        UserHelper.showProfile(user);
         return true;
     }
 
