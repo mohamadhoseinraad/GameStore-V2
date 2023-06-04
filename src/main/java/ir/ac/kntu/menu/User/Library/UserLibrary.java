@@ -2,9 +2,11 @@ package ir.ac.kntu.menu.User.Library;
 
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.HelperClasses.StoreHelperClass;
-import ir.ac.kntu.menu.User.Store.SearchProduct;
+import ir.ac.kntu.menu.User.SearchProduct;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
+import ir.ac.kntu.models.product.accessories.GamePad;
+import ir.ac.kntu.models.product.accessories.Monitor;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
@@ -36,12 +38,20 @@ public class UserLibrary extends Menu {
                         allLibrary();
                         break;
                     }
-                    case BY_NAME: {
-                        searchByName();
+                    case GAMES: {
+                        games();
                         break;
                     }
                     case EXPORT_LIBRARY_TO_HTML: {
                         exportHtml();
+                        break;
+                    }
+                    case GAME_PAD: {
+                        gamePad();
+                        break;
+                    }
+                    case MONITOR: {
+                        monitor();
                         break;
                     }
                     case BACK: {
@@ -55,13 +65,24 @@ public class UserLibrary extends Menu {
         System.exit(0);
     }
 
-    private void allLibrary() {
-        Product selectedProduct = SelectItemHelper.handleSelect(userLibrary);
-        if (selectedProduct == null) {
-            return;
-        }
-        startProductMenu(selectedProduct);
+    private void monitor() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, true, Monitor.class);
+        searchProduct.showMenu();
+    }
 
+    private void gamePad() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, true, GamePad.class);
+        searchProduct.showMenu();
+    }
+
+    private void games() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, true, Game.class);
+        searchProduct.showMenu();
+    }
+
+    private void allLibrary() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, true, Product.class);
+        searchProduct.showMenu();
     }
 
     private void exportHtml() {
@@ -69,29 +90,4 @@ public class UserLibrary extends Menu {
         exportUserGames.showMenu();
     }
 
-    private void searchByName() {
-        startProductMenu(SelectItemHelper.searchInCostumeProtectByName(userLibrary));
-    }
-
-    private void startProductMenu(Product selectedProduct) {
-        if (selectedProduct == null) {
-            return;
-        }
-        switch (selectedProduct.getProductType()) {
-            case GAME: {
-                GameLibraryMenu gameLibraryMenu = new GameLibraryMenu(currentUser, (Game) selectedProduct, storeDB);
-                gameLibraryMenu.showMenu();
-                break;
-            }
-            case ACCESSORIES: {
-                AccessoryLibraryMenu accessoryLibraryMenu = new AccessoryLibraryMenu(currentUser,
-                        (Accessory) selectedProduct, storeDB);
-                accessoryLibraryMenu.showMenu();
-                break;
-            }
-            default: {
-
-            }
-        }
-    }
 }

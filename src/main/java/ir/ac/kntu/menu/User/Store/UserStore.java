@@ -1,6 +1,6 @@
 package ir.ac.kntu.menu.User.Store;
 
-import ir.ac.kntu.HelperClasses.SelectItemHelper;
+import ir.ac.kntu.menu.User.SearchProduct;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.User;
@@ -8,8 +8,6 @@ import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.accessories.GamePad;
 import ir.ac.kntu.models.product.accessories.Monitor;
 import ir.ac.kntu.models.product.games.Game;
-
-import java.util.ArrayList;
 
 public class UserStore extends Menu {
 

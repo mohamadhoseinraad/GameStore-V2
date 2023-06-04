@@ -1,10 +1,11 @@
-package ir.ac.kntu.menu.User.Store;
+package ir.ac.kntu.menu.User;
 
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.HelperClasses.StoreHelperClass;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.menu.User.Library.AccessoryLibraryMenu;
 import ir.ac.kntu.menu.User.Library.GameLibraryMenu;
+import ir.ac.kntu.menu.User.Store.ProductStoreMenu;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
@@ -118,10 +119,16 @@ public class SearchProduct extends Menu {
 
     private ArrayList<Product> createList() {
         ArrayList<Product> result = new ArrayList<>();
-        if (accessoryType == null && productType == null) {
+        if (accessoryType == null && productType == null && !isLibrary) {
             result = SelectItemHelper.getAllProducts(storeDB.getProducts());
         } else {
-            for (Product product : SelectItemHelper.getAllProducts(storeDB.getProducts())) {
+            ArrayList<Product> main = new ArrayList<>();
+            if (isLibrary) {
+                main = StoreHelperClass.getAllLibrary(storeDB, currentUser);
+            } else {
+                main = SelectItemHelper.getAllProducts(storeDB.getProducts());
+            }
+            for (Product product : main) {
                 if (accessoryType == null) {
                     if (product.getClass() == Game.class) {
                         result.add(product);
@@ -139,14 +146,7 @@ public class SearchProduct extends Menu {
                 }
             }
         }
-        if (isLibrary) {
-            ArrayList<Product> userLib = StoreHelperClass.getAllLibrary(storeDB, currentUser);
-            for (Product product : result) {
-                if (!userLib.contains(product)) {
-                    result.remove(product);
-                }
-            }
-        }
+
         return result;
     }
 
