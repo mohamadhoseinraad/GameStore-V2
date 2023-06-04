@@ -4,6 +4,8 @@ import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Product {
 
@@ -12,6 +14,10 @@ public abstract class Product {
     private String details;
 
     private double price;
+
+    private double score = 0;
+
+    private Map<String, Double> rates = new HashMap<>();
 
     private ProductType productType;
 
@@ -23,6 +29,38 @@ public abstract class Product {
         this.price = price;
         this.productType = productType;
         communities = new ArrayList<>();
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public Map<String, Double> getRates() {
+        return rates;
+    }
+
+    public void setRates(Map<String, Double> rates) {
+        this.rates = rates;
+    }
+
+    public void rating(User user, Double rate) {
+        if (rate >= 0 && rate <= 10) {
+            rates.put(user.getId(), rate);
+            updateScore();
+        }
+    }
+
+    private void updateScore() {
+        double sumRate = 0;
+        int numberOfVoter = rates.size();
+        for (Map.Entry<String, Double> userRateMap : rates.entrySet()) {
+            sumRate += userRateMap.getValue();
+        }
+        score = sumRate / numberOfVoter;
     }
 
     public String getName() {

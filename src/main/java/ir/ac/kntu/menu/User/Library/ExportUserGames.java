@@ -30,7 +30,7 @@ public class ExportUserGames extends Menu {
     private ArrayList<Game> getAllGames() {
         ArrayList<Game> result = new ArrayList<>();
         for (Map.Entry<String, String> gameName : currentUser.getLibrary().entrySet()) {
-            Game game = storeDB.findGame(gameName.getKey(), gameName.getValue());
+            Game game = (Game) storeDB.findProduct(gameName.getKey());
             result.add(game);
         }
         return result;

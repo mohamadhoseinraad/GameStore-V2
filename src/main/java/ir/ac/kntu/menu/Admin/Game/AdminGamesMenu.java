@@ -1,10 +1,9 @@
 package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
-import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
-import ir.ac.kntu.menu.GameSearch;
+import ir.ac.kntu.menu.ProductSearch;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.User;
@@ -54,14 +53,14 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void exportHtml() {
-        ExportGames exportGames = new ExportGames(storeDB);
-        exportGames.showMenu();
+        ExportProducts exportProducts = new ExportProducts(storeDB);
+        exportProducts.showMenu();
     }
 
     private void addGame() {
         Game newGame = GameHelper.makeGame();
         if (newGame != null) {
-            if (storeDB.addGame(newGame)) {
+            if (storeDB.addProduct(newGame)) {
                 TerminalColor.green();
                 System.out.println(newGame.getName() + " added to DB");
                 TerminalColor.reset();
@@ -71,8 +70,8 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void editGame() {
-        GameSearch gameSearch = new GameSearch(storeDB);
-        Game game = gameSearch.searchMenu();
+        ProductSearch productSearch = new ProductSearch(storeDB);
+        Game game = (Game) productSearch.searchMenu();
         if (game == null) {
             return;
         }
@@ -81,10 +80,8 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void removeGame() {
-        GameSearch gameSearch = new GameSearch(storeDB);
-        Game game = gameSearch.searchMenu();
-        System.out.println();
-        System.out.println(storeDB.getGames().contains(game));
+        ProductSearch productSearch = new ProductSearch(storeDB);
+        Game game = (Game) productSearch.searchMenu();
         if (storeDB.removeGame(game) && !(game == null)) {
             TerminalColor.green();
             System.out.println(game.getName() + " with " + game.getId() + " id successfully deleted !");

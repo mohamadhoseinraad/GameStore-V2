@@ -4,20 +4,21 @@ import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.Product;
 
 import java.util.ArrayList;
 
-public class GameSearch {
+public class ProductSearch {
     private Store storeDB;
 
-    public GameSearch(Store storeDB) {
+    public ProductSearch(Store storeDB) {
         this.storeDB = storeDB;
     }
 
-    public Game searchMenu(String name){
+    public Product searchMenu(String name){
         name = name.trim().toUpperCase();
-        ArrayList<Game> result = storeDB.findGameByName(name);
-        printGameSearchResult(result);
+        ArrayList<Product> result = storeDB.findProductByName(name);
+        printSearchResult(result);
         if (result.size() != 0){
             return handleSelect(result);
         }
@@ -25,18 +26,18 @@ public class GameSearch {
     }
 
 
-    public Game searchMenu() {
+    public Product searchMenu() {
         System.out.println("Search Name of game : ");
         String name = Scan.getLine().trim().toUpperCase();
-        ArrayList<Game> result = storeDB.findGameByName(name);
-        printGameSearchResult(result);
+        ArrayList<Product> result = storeDB.findProductByName(name);
+        printSearchResult(result);
         if (result.size() != 0){
             return handleSelect(result);
         }
         return null;
     }
 
-    private Game handleSelect(ArrayList<Game> searchResult) {
+    private Product handleSelect(ArrayList<Product> searchResult) {
         System.out.println("---- chose number : ");
         String input = Scan.getLine();
         if (!input.matches("[0-9]+")) {
@@ -50,26 +51,26 @@ public class GameSearch {
                 System.out.println("Chose valid number!");
                 TerminalColor.reset();
             } else {
-                Game game = searchResult.get(choose);
-                return game;
+                Product product = searchResult.get(choose);
+                return product;
             }
         }
         return null;
 
     }
 
-    private void printGameSearchResult(ArrayList<Game> result) {
+    private void printSearchResult(ArrayList<Product> result) {
         if (result.size() == 0) {
             System.out.println("Not found ! :(");
         } else {
             int i = 1;
-            for (Game game : result) {
+            for (Product product : result) {
                 TerminalColor.blue();
                 System.out.print(i);
                 TerminalColor.yellow();
                 System.out.print(" | ");
                 TerminalColor.blue();
-                System.out.println(game);
+                System.out.println(product);
                 TerminalColor.reset();
                 i++;
             }

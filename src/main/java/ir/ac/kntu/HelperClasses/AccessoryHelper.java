@@ -1,5 +1,7 @@
 package ir.ac.kntu.HelperClasses;
 
+import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.product.Genre;
 import ir.ac.kntu.models.product.Level;
 import ir.ac.kntu.models.product.accessories.*;
@@ -73,5 +75,49 @@ public class AccessoryHelper {
         String name = accessory.getName();
         String detail = accessory.getDetails();
         return new Monitor(name, detail, accessory.getPrice(), accessory.getAmount(), size, resTime, resTime);
+    }
+
+    public static void printAccessory(Accessory accessory, User user) {
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.cyan();
+        System.out.println("Accessory type : " + accessory.getAccessoryType());
+        System.out.print("| Name     : " + accessory.getName());
+        TerminalColor.reset();
+        System.out.print("  -----  ");
+        if (accessory.getPrice() == 0) {
+            TerminalColor.green();
+            System.out.println("Free");
+        } else {
+            TerminalColor.cyan();
+            System.out.print(accessory.getPrice() + "$ coast  ");
+        }
+        TerminalColor.yellow();
+        System.out.print(" | Score : ");
+        ProductHelper.scoreColor(accessory);
+        System.out.print(accessory.getScore());
+        TerminalColor.cyan();
+        System.out.println(" (" + accessory.getRates().size() + ")");
+        System.out.println("Amount in Store : " + accessory.getAmount());
+        System.out.println(accessory.getDetails());
+        TerminalColor.purple();
+        if (accessory.getClass() == Monitor.class){
+            printMonitorData((Monitor) accessory);
+        } else {
+            printGamePadData((GamePad) accessory);
+        }
+        System.out.println();
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.reset();
+    }
+    private static void printMonitorData(Monitor monitor){
+        System.out.println("Size : "+ monitor.getSize() + " inch");
+        System.out.println("RefreshRate : " + monitor.getRefreshRate() + "Hz");
+        System.out.println("ResponseTime" + monitor.getResponseTime() + "mls");
+    }
+    private static void printGamePadData(GamePad gamePad){
+        System.out.println("Connection : "+ gamePad.getConnection());
+        System.out.println("Device : "+ gamePad.getDevice());
     }
 }

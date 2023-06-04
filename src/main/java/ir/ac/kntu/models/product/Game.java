@@ -17,32 +17,23 @@ public class Game extends Product {
 
     private Genre genre;
 
-    private double score;
 
     private Level level;
 
     private boolean isBetaVersion;
 
-    private Map<String, Double> rates;
+
 
     public Game(String name, String details, double price, Genre genre, Level level) {
         super(name, details, price, ProductType.GAME);
         this.genre = genre;
-        score = 0;
         id = "G" + gamesNumber++;
         this.level = level;
-        rates = new HashMap<>();
         isBetaVersion = false;
     }
 
 
-    public double getScore() {
-        return score;
-    }
 
-    public void setScore(double score) {
-        this.score = score;
-    }
 
     public Genre getGenre() {
         return genre;
@@ -68,29 +59,6 @@ public class Game extends Product {
         isBetaVersion = betaVersion;
     }
 
-    public Map<String, Double> getRates() {
-        return rates;
-    }
-
-    public void setRates(Map<String, Double> rates) {
-        this.rates = rates;
-    }
-
-    public void rating(User user, Double rate) {
-        if (rate >= 0 && rate <= 10) {
-            rates.put(user.getId(), rate);
-            updateScore();
-        }
-    }
-
-    private void updateScore() {
-        double sumRate = 0;
-        int numberOfVoter = rates.size();
-        for (Map.Entry<String, Double> userRateMap : rates.entrySet()) {
-            sumRate += userRateMap.getValue();
-        }
-        score = sumRate / numberOfVoter;
-    }
 
     @Override
     public void showProduct(User currentUser) {
@@ -109,7 +77,7 @@ public class Game extends Product {
                 ", name=" + getName() +
                 ", genre=" + genre +
                 ", price=" + getPrice() +
-                ", score=" + score +
+                ", score=" + getScore() +
                 ", level=" + level +
                 '}';
     }

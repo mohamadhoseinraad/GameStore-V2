@@ -1,5 +1,8 @@
 package ir.ac.kntu.models.product.accessories;
 
+import ir.ac.kntu.HelperClasses.AccessoryHelper;
+import ir.ac.kntu.models.User;
+
 import java.util.Objects;
 
 public class GamePad extends Accessory {
@@ -55,5 +58,22 @@ public class GamePad extends Accessory {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "GamePad{" +
+                "id='" + id + '\'' +
+                "name='" + getName() + '\'' +
+                ", device=" + device + '\'' +
+                ", connection=" + connection + '\'' +
+                "amount=" + getAmount() + '\'' +
+                ", price=" + getPrice() +
+                '}';
+    }
+
+    @Override
+    public void showProduct(User currentUser) {
+        AccessoryHelper.printAccessory(this , currentUser);
     }
 }

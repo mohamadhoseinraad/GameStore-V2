@@ -1,22 +1,28 @@
 package ir.ac.kntu.models;
 
 import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.ProductType;
+import ir.ac.kntu.models.product.accessories.Accessory;
 
 import java.util.*;
 
 public class Store {
     private ArrayList<User> users;
 
-    private ArrayList<Game> games;
+    //private ArrayList<Game> games;
 
-    public Store(Set<User> users, Set<Game> games) {
+    private HashMap<ProductType, ArrayList<Product>> products = new HashMap<>();
+
+    public Store(Set<User> users, HashMap<ProductType, ArrayList<Product>> data) {
         this.users = new ArrayList<>(users);
-        this.games = new ArrayList<>(games);
+        this.products = new HashMap<>(data);
     }
 
     public Store() {
         users = new ArrayList<>();
-        games = new ArrayList<>();
+        products.put(ProductType.GAME, new ArrayList<>());
+        products.put(ProductType.ACCESSORIES, new ArrayList<>());
     }
 
     public ArrayList<User> getUsers() {
@@ -28,11 +34,35 @@ public class Store {
     }
 
     public ArrayList<Game> getGames() {
+        ArrayList<Game> games = new ArrayList<>();
+        for (Product p : products.get(ProductType.GAME)) {
+            games.add((Game) p);
+        }
         return games;
     }
 
+    public ArrayList<Accessory> getAccessories() {
+        ArrayList<Accessory> accessories = new ArrayList<>();
+        for (Product p : products.get(ProductType.ACCESSORIES)) {
+            accessories.add((Accessory) p);
+        }
+        return accessories;
+    }
+
+    public ArrayList<Product> getProducts() {
+        ArrayList<Product> productsList = new ArrayList<>();
+        for (Product p : products.get(ProductType.GAME)) {
+            productsList.add(p);
+        }
+        for (Product p : products.get(ProductType.ACCESSORIES)) {
+            productsList.add(p);
+        }
+        return productsList;
+    }
+
+
     public void setGames(ArrayList<Game> games) {
-        this.games = new ArrayList<>(games);
+        products.put(ProductType.GAME, new ArrayList<>(games));
     }
 
     public User findUserByUsername(String username) {
@@ -65,30 +95,30 @@ public class Store {
         return result;
     }
 
-    public Game findGame(String id, String name) {
-        for (Game game : games) {
-            if (game.getId().equals(id)) {
-                return game;
+    public Product findProduct(String id) {
+        for (Product product : getProducts()) {
+            if (product.getId().equals(id)) {
+                return product;
             }
         }
         return null;
     }
 
-    public ArrayList<Game> findGameByName(String name) {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Game game : games) {
-            if (game.getName().startsWith(name)) {
-                result.add(game);
+    public ArrayList<Product> findProductByName(String name) {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product product : getProducts()) {
+            if (product.getName().startsWith(name)) {
+                result.add(product);
             }
         }
         return result;
     }
 
-    public ArrayList<Game> findGameByPrice(double basePrice, double maxPrice) {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Game game : games) {
-            if (game.getPrice() >= basePrice && game.getPrice() <= maxPrice) {
-                result.add(game);
+    public ArrayList<Product> findProductByPrice(double basePrice, double maxPrice) {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product product : getProducts()) {
+            if (product.getPrice() >= basePrice && product.getPrice() <= maxPrice) {
+                result.add(product);
             }
         }
         return result;
@@ -114,20 +144,24 @@ public class Store {
         return result;
     }
 
-    public boolean addGame(Game newGame) {
-        if (newGame == null) {
+    public boolean addProduct(Product newProduct) {
+        if (newProduct == null) {
             return false;
         }
-        if (findGame(newGame.getId(), newGame.getName()) == null) {
-            games.add(newGame);
+        if (findProduct(newProduct.getId()) == null) {
+            if (newProduct.getClass() == Game.class) {
+                products.get(ProductType.GAME).add(newProduct);
+            } else {
+                products.get(ProductType.ACCESSORIES).add(newProduct);
+            }
             return true;
         }
         return false;
     }
 
     public boolean removeGame(Game game) {
-        if (games.contains(game)) {
-            games.remove(game);
+        if (products.get(ProductType.GAME).contains(game)) {
+            products.get(ProductType.GAME).remove(game);
             return true;
         }
         return false;

@@ -4,8 +4,8 @@ import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.Product;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class UserStore extends Menu {
             if (option != null) {
                 switch (option) {
                     case ALL: {
-                        allGame();
+                        allProducts();
                         break;
                     }
                     case BY_NAME: {
@@ -49,36 +49,36 @@ public class UserStore extends Menu {
         System.exit(0);
     }
 
-    public void allGame() {
-        ArrayList<Game> result = getAllGames();
+    public void allProducts() {
+        ArrayList<Product> result = getAllProducts();
         if (result.size() != 0) {
-            Game selectedGame = handleSelect(result);
-            if (selectedGame == null) {
+            Product selectedProduct = handleSelect(result);
+            if (selectedProduct == null) {
                 return;
             }
-            GameStoreMenu gameStoreMenu = new GameStoreMenu(currentUser, selectedGame, storeDB);
-            gameStoreMenu.showMenu();
+            ProductStoreMenu productStoreMenu = new ProductStoreMenu(currentUser, selectedProduct, storeDB);
+            productStoreMenu.showMenu();
         }
     }
 
-    private ArrayList<Game> getAllGames() {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Game game : storeDB.getGames()) {
-            result.add(game);
+    private ArrayList<Product> getAllProducts() {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product product : storeDB.getProducts()) {
+            result.add(product);
         }
         return result;
     }
 
     public void searchByName() {
-        System.out.println("Search Name of game : ");
+        System.out.println("Search Name of products : ");
         String name = Scan.getLine().trim().toUpperCase();
-        ArrayList<Game> result = storeDB.findGameByName(name);
-        Game selectedGame = handleSelect(result);
-        if (selectedGame == null) {
+        ArrayList<Product> result = storeDB.findProductByName(name);
+        Product selectedProduct =  handleSelect(result);
+        if (selectedProduct == null) {
             return;
         }
-        GameStoreMenu gameStoreMenu = new GameStoreMenu(currentUser, selectedGame, storeDB);
-        gameStoreMenu.showMenu();
+        ProductStoreMenu productStoreMenu = new ProductStoreMenu(currentUser, selectedProduct, storeDB);
+        productStoreMenu.showMenu();
 
     }
 
@@ -95,16 +95,16 @@ public class UserStore extends Menu {
         }
         double basePrice = Double.parseDouble(basePriceStr);
         double maxPrice = Double.parseDouble(maxPriceStr);
-        ArrayList<Game> result = storeDB.findGameByPrice(basePrice, maxPrice);
-        Game selectedGame = handleSelect(result);
-        if (selectedGame == null) {
+        ArrayList<Product> result = storeDB.findProductByPrice(basePrice, maxPrice);
+        Product selectedProduct = handleSelect(result);
+        if (selectedProduct == null) {
             return;
         }
-        GameStoreMenu gameStoreMenu = new GameStoreMenu(currentUser, selectedGame, storeDB);
-        gameStoreMenu.showMenu();
+        ProductStoreMenu productStoreMenu = new ProductStoreMenu(currentUser, selectedProduct, storeDB);
+        productStoreMenu.showMenu();
     }
 
-    public Game handleSelect(ArrayList<Game> searchResult) {
+    public Product handleSelect(ArrayList<Product> searchResult) {
         while (true) {
             printGameSearchResult(searchResult);
             if (searchResult.size() == 0){
@@ -126,25 +126,25 @@ public class UserStore extends Menu {
                     System.out.println("Chose valid number!");
                     TerminalColor.reset();
                 } else {
-                    Game game = searchResult.get(choose);
-                    return game;
+                    Product product = searchResult.get(choose);
+                    return product;
                 }
             }
         }
     }
 
-    private void printGameSearchResult(ArrayList<Game> result) {
+    private void printGameSearchResult(ArrayList<Product> result) {
         if (result.size() == 0) {
             System.out.println("Not found ! :(");
         } else {
             int i = 1;
-            for (Game game : result) {
+            for (Product product : result) {
                 TerminalColor.blue();
                 System.out.print(i);
                 TerminalColor.yellow();
                 System.out.print(" | ");
                 TerminalColor.blue();
-                System.out.println(game);
+                System.out.println(product);
                 TerminalColor.reset();
                 i++;
             }

@@ -5,6 +5,7 @@ import ir.ac.kntu.models.UserType;
 import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.product.Genre;
 import ir.ac.kntu.models.product.Level;
+import ir.ac.kntu.models.product.Product;
 
 public class GameHelper {
     public static Game makeGame() {
@@ -34,15 +35,7 @@ public class GameHelper {
         return new Game(name, detail, price, genre, level);
     }
 
-    private static void scoreColor(Game game) {
-        if (game.getScore() < 3) {
-            TerminalColor.red();
-        } else if (game.getScore() < 6) {
-            TerminalColor.yellow();
-        } else {
-            TerminalColor.green();
-        }
-    }
+
 
     public static void printGame(Game game, User user) {
         TerminalColor.blue();
@@ -62,7 +55,7 @@ public class GameHelper {
         TerminalColor.yellow();
         System.out.print("| Genre : " + game.getGenre());
         System.out.print(" | Score : ");
-        scoreColor(game);
+        ProductHelper.scoreColor(game);
         System.out.print(game.getScore());
         TerminalColor.cyan();
         System.out.println(" (" + game.getRates().size() + ")");

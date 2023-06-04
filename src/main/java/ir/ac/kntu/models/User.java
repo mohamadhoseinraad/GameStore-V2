@@ -147,9 +147,8 @@ public class User {
         double price = accessory.getPrice();
         if ((accessory.getAmount() > 0) && wallet >= price) {
             library.put(accessory.getId(), accessory.getName());
-            System.out.println(accessory.getId());
             wallet -= price;
-            accessory.setAmount(accessory.getAmount() -1);
+            accessory.setAmount(accessory.getAmount() - 1);
             return true;
         }
         return false;
@@ -159,11 +158,26 @@ public class User {
         library.put(game.getId(), game.getName());
     }
 
+    public void addCostumeProduct(Accessory accessory) {
+        library.put(accessory.getId(), accessory.getName());
+    }
+
     public boolean giftGame(Game game, User friend) {
         double price = GameHelper.applyOffer(game.getPrice(), score);
         if (!friend.getLibrary().containsKey(game.getId()) && wallet >= price) {
             friend.addCostumeGame(game);
             wallet -= price;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean giftAccessory(Accessory accessory, User friend) {
+        double price = accessory.getPrice();
+        if ((accessory.getAmount() > 0) && wallet >= price) {
+            friend.addCostumeProduct(accessory);
+            wallet -= price;
+            accessory.setAmount(accessory.getAmount() -1);
             return true;
         }
         return false;

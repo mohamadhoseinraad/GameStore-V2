@@ -1,5 +1,8 @@
 package ir.ac.kntu.models.product.accessories;
 
+import ir.ac.kntu.HelperClasses.AccessoryHelper;
+import ir.ac.kntu.models.User;
+
 import java.util.Objects;
 
 public class Monitor extends Accessory {
@@ -66,5 +69,10 @@ public class Monitor extends Accessory {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public void showProduct(User currentUser) {
+        AccessoryHelper.printAccessory(this, currentUser);
     }
 }
