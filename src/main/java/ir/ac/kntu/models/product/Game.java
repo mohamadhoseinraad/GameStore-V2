@@ -23,7 +23,6 @@ public class Game extends Product {
     private boolean isBetaVersion;
 
 
-
     public Game(String name, String details, double price, Genre genre, Level level) {
         super(name, details, price, ProductType.GAME);
         this.genre = genre;
@@ -31,8 +30,6 @@ public class Game extends Product {
         this.level = level;
         isBetaVersion = false;
     }
-
-
 
 
     public Genre getGenre() {
@@ -62,7 +59,7 @@ public class Game extends Product {
 
     @Override
     public void showProduct(User currentUser) {
-        GameHelper.printGame(this , currentUser);
+        GameHelper.printGame(this, currentUser);
     }
 
     @Override

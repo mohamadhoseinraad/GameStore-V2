@@ -74,6 +74,6 @@ public class GamePad extends Accessory {
 
     @Override
     public void showProduct(User currentUser) {
-        AccessoryHelper.printAccessory(this , currentUser);
+        AccessoryHelper.printAccessory(this, currentUser);
     }
 }

@@ -36,7 +36,6 @@ public class GameHelper {
     }
 
 
-
     public static void printGame(Game game, User user) {
         TerminalColor.blue();
         System.out.println("|----------------------------");
@@ -95,8 +94,10 @@ public class GameHelper {
             case LEVEL_4: {
                 return (user.getScore() >= 100);
             }
+            default: {
+                return false;
+            }
         }
-        return false;
     }
 
     public static double applyOffer(double price, int score) {

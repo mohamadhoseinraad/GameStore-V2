@@ -111,11 +111,13 @@ public class AccessoryHelper {
         System.out.println("|----------------------------");
         TerminalColor.reset();
     }
+
     private static void printMonitorData(Monitor monitor){
         System.out.println("Size : "+ monitor.getSize() + " inch");
         System.out.println("RefreshRate : " + monitor.getRefreshRate() + "Hz");
         System.out.println("ResponseTime" + monitor.getResponseTime() + "mls");
     }
+
     private static void printGamePadData(GamePad gamePad){
         System.out.println("Connection : "+ gamePad.getConnection());
         System.out.println("Device : "+ gamePad.getDevice());
