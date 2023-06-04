@@ -1,6 +1,7 @@
 package ir.ac.kntu.menu.Admin.User;
 
 import ir.ac.kntu.HelperClasses.Scan;
+import ir.ac.kntu.HelperClasses.UserHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.models.User;
@@ -157,7 +158,7 @@ public class AdminUserSearch {
                         return phoneSearch();
                     }
                     case ADD_USER:{
-                        User.makeUser(storeDB);
+                        UserHelper.makeUser(storeDB);
                         break;
                     }
                     case BACK: {
