@@ -99,7 +99,7 @@ public class UserFriendMenu {
             if (user.addRequest(currentUser)) {
                 TerminalColor.green();
                 System.out.println("Requested !");
-            } else if (currentUser.isFriend(user.getUsername())) {
+            } else if (currentUser.isFriend(user.getId())) {
                 TerminalColor.red();
                 System.out.println("this username is your friend already!");
             } else {
@@ -222,8 +222,8 @@ public class UserFriendMenu {
 
     private ArrayList<User> getUserRequested() {
         ArrayList<User> result = new ArrayList<>();
-        for (String username : currentUser.getRequests()) {
-            result.add(storeDB.findUserByUsername(username));
+        for (String userId : currentUser.getRequests()) {
+            result.add(storeDB.findUserById(userId));
         }
         return result;
     }

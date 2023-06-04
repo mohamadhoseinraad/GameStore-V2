@@ -15,11 +15,11 @@ public class ProductHelper {
         String input;
         do {
             input = Scan.getLine();
-        } while (checkInputEnum(input , inputenum));
+        } while (checkInputEnum(input, inputenum));
         return options[Integer.parseInt(input)];
     }
 
-    private static <T extends Enum> boolean checkInputEnum(String input , Class<T> inputEnum ) {
+    private static <T extends Enum> boolean checkInputEnum(String input, Class<T> inputEnum) {
         if (!input.matches("[0-9]+")) {
             System.out.println("Invalid input try again");
             return true;

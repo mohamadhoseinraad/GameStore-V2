@@ -45,6 +45,16 @@ public class Store {
         return null;
     }
 
+    public User findUserById(String userId) {
+        userId = userId.toUpperCase();
+        for (User user : users) {
+            if (user.getId().equals(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<User> findUserByPhoneNumber(String phoneNumber) {
         ArrayList<User> result = new ArrayList<>();
         for (User u : users) {
@@ -152,4 +162,6 @@ public class Store {
         User admin = new User(username, "", "", password, UserType.ADMIN);
         return users.add(admin);
     }
+
+
 }

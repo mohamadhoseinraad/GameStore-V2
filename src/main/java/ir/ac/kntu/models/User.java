@@ -7,6 +7,11 @@ import ir.ac.kntu.models.product.Game;
 import java.util.*;
 
 public class User {
+
+    private static int countUser;
+
+    private final String id;
+
     private String username;
 
     private String phoneNumber;
@@ -35,6 +40,15 @@ public class User {
         friends = new ArrayList<>();
         requests = new ArrayList<>();
         userType = type;
+        if (userType == UserType.USER) {
+            id = "USR" + countUser++;
+        } else {
+            id = "ADM" + countUser++;
+        }
+    }
+
+    public String getId() {
+        return id;
     }
 
     public UserType getUserType() {
@@ -130,8 +144,8 @@ public class User {
         return library.containsKey(game.getId());
     }
 
-    public boolean isFriend(String username) {
-        return friends.contains(username);
+    public boolean isFriend(String userId) {
+        return friends.contains(userId);
     }
 
     public ArrayList<String> getFriends() {
@@ -141,8 +155,8 @@ public class User {
     public ArrayList<User> getFriendsList(Store storeDB) {
         ArrayList<User> friendsList = new ArrayList<>();
         ArrayList<User> allUsers = storeDB.getUsers();
-        for (User user : allUsers){
-            if (friends.contains(user.getUsername())){
+        for (User user : allUsers) {
+            if (friends.contains(user.getId())) {
                 friendsList.add(user);
             }
         }
@@ -153,8 +167,8 @@ public class User {
     public ArrayList<User> getUserNotFriend(Store storeDB) {
         ArrayList<User> friendsList = new ArrayList<>();
         ArrayList<User> allUsers = storeDB.getUsers();
-        for (User user : allUsers){
-            if (!friends.contains(user.getUsername()) && user.getUserType() != UserType.ADMIN){
+        for (User user : allUsers) {
+            if (!friends.contains(user.getId()) && user.getUserType() == UserType.USER) {
                 friendsList.add(user);
             }
         }
@@ -164,17 +178,17 @@ public class User {
 
 
     public boolean addFriend(User user) {
-        if (friends.contains(user.getUsername())) {
+        if (friends.contains(user.getId())) {
             return false;
         }
-        friends.add(user.getUsername());
-        requests.remove(user.getUsername());
+        friends.add(user.getId());
+        requests.remove(user.getId());
         return true;
     }
 
     public boolean removeFriend(User user) {
-        if (friends.contains(user.getUsername())) {
-            friends.remove(user.getUsername());
+        if (friends.contains(user.getId())) {
+            friends.remove(user.getId());
             return true;
         }
         return false;
@@ -185,17 +199,17 @@ public class User {
     }
 
     public boolean addRequest(User someUser) {
-        if (friends.contains(someUser.getUsername())) {
+        if (friends.contains(someUser.getId())) {
             return false;
         }
-        if (requests.contains(someUser.getUsername())) {
+        if (requests.contains(someUser.getId())) {
             return false;
         }
-        return requests.add(someUser.getUsername());
+        return requests.add(someUser.getId());
     }
 
-    public void removeRequest(User user){
-        requests.remove(user.getUsername());
+    public void removeRequest(User user) {
+        requests.remove(user.getId());
     }
 
     @Override

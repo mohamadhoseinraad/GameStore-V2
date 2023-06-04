@@ -42,8 +42,12 @@ public class GamePad extends Accessory {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         GamePad gamePad = (GamePad) o;
         return Objects.equals(id, gamePad.id);
     }

@@ -75,12 +75,6 @@ public class GameStoreMenu extends Menu {
     public void gift() {
         System.out.println("Enter username you want to gift game : ");
         String friendUsername = Scan.getLine().trim().toUpperCase();
-        if (!currentUser.isFriend(friendUsername)) {
-            TerminalColor.red();
-            System.out.println("This account is not your friend!");
-            TerminalColor.reset();
-            return;
-        }
         User friend = storeDB.findUserByUsername(friendUsername);
         if (friend == null) {
             TerminalColor.red();
@@ -88,6 +82,13 @@ public class GameStoreMenu extends Menu {
             TerminalColor.reset();
             return;
         }
+        if (!currentUser.isFriend(friend.getId())) {
+            TerminalColor.red();
+            System.out.println("This account is not your friend!");
+            TerminalColor.reset();
+            return;
+        }
+
 
         if (friend.doHaveGame(currentGame)) {
             TerminalColor.red();

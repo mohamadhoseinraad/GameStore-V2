@@ -3,14 +3,16 @@ package ir.ac.kntu.models.product;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.ProductHelper;
+import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Game extends Product {
-    public static int gamesNumber = 0;
+    private static int gamesNumber = 0;
 
     private final String id;
 
@@ -20,15 +22,18 @@ public class Game extends Product {
 
     private Level level;
 
+    private boolean isBetaVersion;
+
     private Map<String, Double> rates;
 
-    public Game(String name, String details, double price, Genre genre , Level level) {
+    public Game(String name, String details, double price, Genre genre, Level level) {
         super(name, details, price, ProductType.GAME);
         this.genre = genre;
         score = 0;
-        id = "GAME"+ gamesNumber++;
+        id = "G" + gamesNumber++;
         this.level = level;
         rates = new HashMap<>();
+        isBetaVersion = false;
     }
 
 
@@ -56,6 +61,13 @@ public class Game extends Product {
         this.level = level;
     }
 
+    public boolean isBetaVersion() {
+        return isBetaVersion;
+    }
+
+    public void setBetaVersion(boolean betaVersion) {
+        isBetaVersion = betaVersion;
+    }
 
     public Map<String, Double> getRates() {
         return rates;
@@ -67,7 +79,7 @@ public class Game extends Product {
 
     public void rating(User user, Double rate) {
         if (rate >= 0 && rate <= 10) {
-            rates.put(user.getUsername(), rate);
+            rates.put(user.getId(), rate);
             updateScore();
         }
     }
@@ -105,8 +117,12 @@ public class Game extends Product {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Game game = (Game) o;
         return id.equals(game.id);
     }
@@ -114,5 +130,34 @@ public class Game extends Product {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public ArrayList<Community> getCommunities() {
+        if (!isBetaVersion) {
+            return super.getCommunities();
+        }
+        return null;
+    }
+
+    @Override
+    public void setCommunities(ArrayList<Community> communities) {
+        if (!isBetaVersion) {
+            super.setCommunities(communities);
+        }
+    }
+
+    @Override
+    public void showAllComment() {
+        if (!isBetaVersion) {
+            super.showAllComment();
+        }
+    }
+
+    @Override
+    public void addCommunity(Community community) {
+        if (!isBetaVersion) {
+            super.addCommunity(community);
+        }
     }
 }
