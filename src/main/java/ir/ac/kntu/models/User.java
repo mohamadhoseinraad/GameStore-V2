@@ -1,9 +1,11 @@
 package ir.ac.kntu.models;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.accessories.Accessory;
+import ir.ac.kntu.models.product.accessories.GamePad;
+import ir.ac.kntu.models.product.accessories.Monitor;
 
 import java.util.*;
 
@@ -118,14 +120,36 @@ public class User {
         return library;
     }
 
-    public boolean addGame(Game game) {
-        if (game == null) {
+    public boolean addProduct(Product product) {
+        if (product == null) {
             return false;
         }
+        if (product.getClass() == Game.class) {
+            return addGame((Game) product);
+        }
+        if (product.getClass() == GamePad.class || product.getClass() == Monitor.class) {
+            return addAccessory((Accessory) product);
+        }
+        return false;
+    }
+
+    private boolean addGame(Game game) {
         double price = GameHelper.applyOffer(game.getPrice(), score);
         if (!library.containsKey(game.getId()) && wallet >= price) {
             library.put(game.getId(), game.getName());
             wallet -= price;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean addAccessory(Accessory accessory) {
+        double price = accessory.getPrice();
+        if ((accessory.getAmount() > 0) && wallet >= price) {
+            library.put(accessory.getId(), accessory.getName());
+            System.out.println(accessory.getId());
+            wallet -= price;
+            accessory.setAmount(accessory.getAmount() -1);
             return true;
         }
         return false;

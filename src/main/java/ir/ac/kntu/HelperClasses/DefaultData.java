@@ -24,7 +24,7 @@ public class DefaultData {
         user1.chargeWallet(100);
         Community community = new Community(user1.getUsername(), "Awlliii");
         game1.addCommunity(community);
-        user1.addGame(game1);
+        user1.addProduct(game1);
         user1.addFriend(user2);
         user2.addFriend(user1);
         user1.setScore(30);

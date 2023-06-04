@@ -64,7 +64,7 @@ public class GameStoreMenu extends Menu {
             TerminalColor.reset();
             return;
         }
-        if (currentUser.addGame(currentGame)) {
+        if (currentUser.addProduct(currentGame)) {
             TerminalColor.green();
             System.out.println("Buy Successfully :) ");
             TerminalColor.reset();
