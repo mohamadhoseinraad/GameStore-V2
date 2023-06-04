@@ -1,4 +1,4 @@
-package ir.ac.kntu.menu.Admin;
+package ir.ac.kntu.menu.Admin.Profile;
 
 import ir.ac.kntu.HelperClasses.GetInputHelper;
 import ir.ac.kntu.HelperClasses.UserHelper;

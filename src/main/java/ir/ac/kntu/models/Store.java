@@ -30,6 +30,10 @@ public class Store {
         return new ArrayList<>(users);
     }
 
+    public ArrayList<Admin> getAdmins() {
+        return new ArrayList<>(admins);
+    }
+
     public void setUsers(ArrayList<User> users) {
         this.users = new ArrayList<>(users);
     }
@@ -104,6 +108,16 @@ public class Store {
         return result;
     }
 
+    public ArrayList<Admin> findAdminByPhoneNumber(String phoneNumber) {
+        ArrayList<Admin> result = new ArrayList<>();
+        for (Admin u : admins) {
+            if (u.getPhoneNumber().compareTo(phoneNumber) >= 0) {
+                result.add(u);
+            }
+        }
+        return result;
+    }
+
     public Product findProduct(String id) {
         for (Product product : getProducts()) {
             if (product.getId().equals(id)) {
@@ -143,6 +157,16 @@ public class Store {
         return result;
     }
 
+    public ArrayList<Admin> findAdminByEmail(String email) {
+        ArrayList<Admin> result = new ArrayList<>();
+        for (Admin u : admins) {
+            if (u.getEmail().startsWith(email)) {
+                result.add(u);
+            }
+        }
+        return result;
+    }
+
     public ArrayList<User> findUserByUsernames(String username) {
         ArrayList<User> result = new ArrayList<>();
         for (User u : users) {
@@ -152,6 +176,17 @@ public class Store {
         }
         return result;
     }
+
+    public ArrayList<Admin> findAdminByUsernames(String username) {
+        ArrayList<Admin> result = new ArrayList<>();
+        for (Admin u : admins) {
+            if (u.getUsername().startsWith(username)) {
+                result.add(u);
+            }
+        }
+        return result;
+    }
+
 
     public boolean addProduct(Product newProduct) {
         if (newProduct == null) {
@@ -211,9 +246,10 @@ public class Store {
         return false;
     }
 
-    public boolean addAdmin(String username, String password) {
-        User admin = new User(username, "", "", password, UserType.ADMIN);
-        return users.add(admin);
+    public void addAdmin(Admin admin) {
+        if (findUserByUsername(admin.getUsername()) == null) {
+            admins.add(admin);
+        }
     }
 
 

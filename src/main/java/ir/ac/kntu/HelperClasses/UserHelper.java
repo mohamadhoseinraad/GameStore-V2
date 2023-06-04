@@ -44,6 +44,65 @@ public class UserHelper {
         return newUser;
     }
 
+    public static Admin makeAdmin(Store storeDB) {
+        System.out.println("Pleas enter Username :");
+        String username = Scan.getLine();
+        System.out.println("Pleas enter password :");
+        String password = Scan.getLine().trim();
+        System.out.println("Pleas enter phone number :");
+        String phoneNumber = Scan.getLine().trim();
+        System.out.println("Pleas enter email :");
+        String email = Scan.getLine().trim();
+        TerminalColor.red();
+        if (!phoneNumber.matches("[0-9+]+")) {
+            System.out.println("phone number is not Valid!");
+            TerminalColor.reset();
+            return null;
+        }
+        if (!email.matches(".*@.*")) {
+            System.out.println("email is not Valid!");
+            TerminalColor.reset();
+            return null;
+        }
+        if (storeDB.findUserByUsername(username) != null) {
+            System.out.println("this username already take !");
+            TerminalColor.reset();
+            return null;
+        }
+        if (password.length() < 8) {
+            System.out.println("Password length must 8 or more !");
+            TerminalColor.reset();
+            return null;
+        }
+        TerminalColor.reset();
+        Admin admin = new Admin(username, phoneNumber, email, password, false);
+        storeDB.addAdmin(admin);
+        checkPermission(admin);
+        return admin;
+    }
+
+    public static void checkPermission(Admin admin) {
+        System.out.println("is Seller ? (Y/N)");
+        if (GetInputHelper.inputConform().equals("Y")) {
+            admin.setSeller(true);
+        } else {
+            admin.setSeller(false);
+        }
+        System.out.println("is Developer ? (Y/N)");
+        if (GetInputHelper.inputConform().equals("Y")) {
+            admin.setDeveloper(true);
+        } else {
+            admin.setDeveloper(false);
+        }
+        System.out.println("is Manager ? (Y/N)");
+        if (GetInputHelper.inputConform().equals("Y")) {
+            admin.setUserManager(true);
+        } else {
+            admin.setUserManager(false);
+        }
+    }
+
+
     public static void showProfile(User user) {
         TerminalColor.blue();
         System.out.println("|----------------------------");

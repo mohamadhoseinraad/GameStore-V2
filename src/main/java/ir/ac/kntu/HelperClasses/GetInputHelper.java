@@ -67,8 +67,8 @@ public class GetInputHelper {
         return inputs;
     }
 
-    public static String inputConform(){
-        System.out.println("Are you  sure ? (Y/N)");
+    public static String inputConform() {
+        System.out.println("Are you  sure(Yes or No) ? (Y/N)");
         String input;
         while (!(input = Scan.getLine().trim()).matches("Y|N")) {
             TerminalColor.red();

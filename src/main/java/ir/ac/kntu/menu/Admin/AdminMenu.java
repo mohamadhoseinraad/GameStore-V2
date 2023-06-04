@@ -1,11 +1,13 @@
 package ir.ac.kntu.menu.Admin;
 
+import ir.ac.kntu.menu.Admin.Admins.AdminAdminsSearch;
+import ir.ac.kntu.menu.Admin.Profile.AdminProfile;
 import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Admin.Game.AdminGamesMenu;
 import ir.ac.kntu.menu.Admin.User.AdminUserSearch;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.User;
+import ir.ac.kntu.utils.TerminalColor;
 
 public class AdminMenu extends Menu {
 
@@ -35,6 +37,13 @@ public class AdminMenu extends Menu {
                     case GAMES: {
                         games();
                         break;
+                    } case EDIT_ADMINS:{
+                        editAdmins();
+                        break;
+
+                    } case ACCESSORY:{
+                        accessory();
+                        break;
                     }
                     case LOGOUT: {
                         return;
@@ -47,6 +56,28 @@ public class AdminMenu extends Menu {
         System.exit(0);
     }
 
+    private void accessory() {
+        if (admin.isSeller() || admin.isMastetAdmin()) {
+            AdminUserSearch adminUserSearch = new AdminUserSearch(storeDB);
+            adminUserSearch.showMenu();
+        } else {
+            TerminalColor.red();
+            System.out.println("You don't have permission!");
+            TerminalColor.reset();
+        }
+    }
+
+    private void editAdmins() {
+        if (admin.isMastetAdmin()) {
+            AdminAdminsSearch adminAdminsSearch = new AdminAdminsSearch(storeDB);
+            adminAdminsSearch.showMenu();
+        } else {
+            TerminalColor.red();
+            System.out.println("You don't have permission!");
+            TerminalColor.reset();
+        }
+    }
+
     private void profile() {
         AdminProfile adminProfile = new AdminProfile(storeDB, admin);
         adminProfile.showMenu();
@@ -54,13 +85,25 @@ public class AdminMenu extends Menu {
     }
 
     private void users() {
-        AdminUserSearch adminUserSearch = new AdminUserSearch(storeDB);
-        adminUserSearch.showMenu();
+        if (admin.isUserManager() || admin.isMastetAdmin()) {
+            AdminUserSearch adminUserSearch = new AdminUserSearch(storeDB);
+            adminUserSearch.showMenu();
+        } else {
+            TerminalColor.red();
+            System.out.println("You don't have permission!");
+            TerminalColor.reset();
+        }
 
     }
 
     private void games() {
-        AdminGamesMenu adminGamesMenu = new AdminGamesMenu(storeDB, admin);
-        adminGamesMenu.showMenu();
+        if (admin.isUserManager() || admin.isDeveloper()) {
+            AdminGamesMenu adminGamesMenu = new AdminGamesMenu(storeDB, admin);
+            adminGamesMenu.showMenu();
+        } else {
+            TerminalColor.red();
+            System.out.println("You don't have permission!");
+            TerminalColor.reset();
+        }
     }
 }
