@@ -1,5 +1,8 @@
 package ir.ac.kntu.HelperClasses;
 
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
+
 public class GetInputHelper {
 
     public static double inputChargeWallet() {

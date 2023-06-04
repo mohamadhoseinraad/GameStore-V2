@@ -1,4 +1,4 @@
-package ir.ac.kntu.HelperClasses;
+package ir.ac.kntu.utils;
 
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors

@@ -3,6 +3,8 @@ package ir.ac.kntu.HelperClasses;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.UserType;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 
 public class UserHelper {
     public static User makeUser(Store storeDB) {

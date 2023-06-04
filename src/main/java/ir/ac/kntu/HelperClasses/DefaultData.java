@@ -1,9 +1,9 @@
 package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.*;
-import ir.ac.kntu.models.product.Game;
-import ir.ac.kntu.models.product.Genre;
-import ir.ac.kntu.models.product.Level;
+import ir.ac.kntu.models.product.games.Game;
+import ir.ac.kntu.models.product.games.Genre;
+import ir.ac.kntu.models.product.games.Level;
 import ir.ac.kntu.models.product.accessories.Connection;
 import ir.ac.kntu.models.product.accessories.Device;
 import ir.ac.kntu.models.product.accessories.GamePad;
@@ -20,6 +20,7 @@ public class DefaultData {
         Game g4 = new Game("Bomb", "Strategy game ", 0, Genre.STRATEGY, Level.LEVEL_4);
         GamePad gp1 = new GamePad("Ps4GP", "For PS4 , PS5", 100, 3, Connection.WIRELESS, Device.PLAY_STATION);
         store.addUser(user1);
+        g2.setBetaVersion(true);
         store.addUser(user2);
         store.addUser(amin);
         store.addProduct(game1);

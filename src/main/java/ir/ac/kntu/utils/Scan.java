@@ -1,4 +1,4 @@
-package ir.ac.kntu.HelperClasses;
+package ir.ac.kntu.utils;
 
 import java.util.Scanner;
 

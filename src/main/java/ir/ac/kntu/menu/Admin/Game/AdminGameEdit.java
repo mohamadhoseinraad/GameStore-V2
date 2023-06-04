@@ -1,12 +1,12 @@
 package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.ProductHelper;
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.User;
-import ir.ac.kntu.models.product.Game;
-import ir.ac.kntu.models.product.Genre;
+import ir.ac.kntu.models.product.games.Game;
+import ir.ac.kntu.models.product.games.Genre;
 
 public class AdminGameEdit extends Menu {
 

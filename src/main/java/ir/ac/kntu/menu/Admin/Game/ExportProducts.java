@@ -1,8 +1,8 @@
 package ir.ac.kntu.menu.Admin.Game;
 
-import ir.ac.kntu.HelperClasses.GenerateHTML;
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.GenerateHTML;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.Product;

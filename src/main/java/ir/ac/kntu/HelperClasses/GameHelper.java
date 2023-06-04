@@ -2,10 +2,11 @@ package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.UserType;
-import ir.ac.kntu.models.product.Game;
-import ir.ac.kntu.models.product.Genre;
-import ir.ac.kntu.models.product.Level;
-import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.games.Game;
+import ir.ac.kntu.models.product.games.Genre;
+import ir.ac.kntu.models.product.games.Level;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 
 public class GameHelper {
     public static Game makeGame() {
@@ -39,6 +40,10 @@ public class GameHelper {
     public static void printGame(Game game, User user) {
         TerminalColor.blue();
         System.out.println("|----------------------------");
+        if (game.isBetaVersion()){
+            TerminalColor.yellow();
+            System.out.println("|---- this is beta version of this game ----");
+        }
         TerminalColor.cyan();
         System.out.print("| Name     : " + game.getName());
         TerminalColor.reset();

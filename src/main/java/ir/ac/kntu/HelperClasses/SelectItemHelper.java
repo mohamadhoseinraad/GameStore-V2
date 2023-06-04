@@ -2,8 +2,9 @@ package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 

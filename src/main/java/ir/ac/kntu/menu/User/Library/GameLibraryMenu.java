@@ -1,20 +1,20 @@
 package ir.ac.kntu.menu.User.Library;
 
 import ir.ac.kntu.models.Community;
-import ir.ac.kntu.HelperClasses.Scan;
+import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.models.Store;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 
 public class GameLibraryMenu extends Menu {
 
-    private User currentUser;
+    private final User currentUser;
 
-    private Game currentGame;
+    private final Game currentGame;
 
-    private Store storeDB;
+    private final Store storeDB;
 
     public GameLibraryMenu(User currentUser, Game currentGame, Store storeDB) {
         this.currentUser = currentUser;
@@ -37,9 +37,14 @@ public class GameLibraryMenu extends Menu {
                 }
                 case SHOW_COMMENTS: {
                     showComments();
+                    break;
                 }
                 case BACK: {
                     return;
+                }
+                case FEEDBACK: {
+                    feedback();
+                    break;
                 }
                 default: {
                     break;
@@ -47,6 +52,10 @@ public class GameLibraryMenu extends Menu {
             }
         }
         System.exit(0);
+    }
+
+    private void feedback() {
+        System.out.println("In Update will come!");
     }
 
     private boolean printGame() {
@@ -68,22 +77,34 @@ public class GameLibraryMenu extends Menu {
     }
 
     private void comment() {
-        System.out.println("Enter your comment");
-        String userComment;
-        while ((userComment = Scan.getLine().trim()).length() < 3) {
+        if (currentGame.isBetaVersion()) {
             TerminalColor.red();
-            System.out.println("Your comment must 3 or more character ! enter your comment again :");
+            System.out.println("this is beta version of game. you can't comment for this!");
+            TerminalColor.reset();
+        } else {
+            System.out.println("Enter your comment");
+            String userComment;
+            while ((userComment = Scan.getLine().trim()).length() < 3) {
+                TerminalColor.red();
+                System.out.println("Your comment must 3 or more character ! enter your comment again :");
+                TerminalColor.reset();
+            }
+            Community community = new Community(currentUser.getUsername(), userComment);
+            currentGame.addCommunity(community);
+            TerminalColor.green();
+            System.out.println("Successfully submit !");
             TerminalColor.reset();
         }
-        Community community = new Community(currentUser.getUsername(), userComment);
-        currentGame.addCommunity(community);
-        TerminalColor.green();
-        System.out.println("Successfully submit !");
-        TerminalColor.reset();
     }
 
     private void showComments() {
-        currentGame.showAllComment();
+        if (currentGame.isBetaVersion()) {
+            TerminalColor.red();
+            System.out.println("this is beta version of game. you can't comment for this!");
+            TerminalColor.reset();
+        } else {
+            currentGame.showAllComment();
+        }
     }
 
 }

@@ -1,24 +1,24 @@
 package ir.ac.kntu.menu.User.Library;
 
-import ir.ac.kntu.HelperClasses.GenerateHTML;
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.GenerateHTML;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class ExportUserGames extends Menu {
 
-    private Store storeDB;
+    private final Store storeDB;
 
-    private User currentUser;
+    private final User currentUser;
 
-    private ArrayList<Game> library;
-
+    private final ArrayList<Game> library;
 
 
     public ExportUserGames(Store store, User user) {
@@ -76,34 +76,32 @@ public class ExportUserGames extends Menu {
         System.out.println("Search Name of game : ");
         String name = Scan.getLine().trim().toUpperCase();
         ArrayList<Game> result = nameFilter(name);
-        GenerateHTML.generateHTML(currentUser.getUsername()+" Games with "+name+"in their name", convertArray(result));
+        GenerateHTML.generateHTML(currentUser.getUsername() + " Games with " + name + "in their name", convertArray(result));
 
     }
 
-    private ArrayList<Game> nameFilter(String name){
+    private ArrayList<Game> nameFilter(String name) {
         ArrayList<Game> result = new ArrayList<>();
-        for (Game game : library){
-            if (game.getName().startsWith(name)){
+        for (Game game : library) {
+            if (game.getName().startsWith(name)) {
                 result.add(game);
             }
         }
         return result;
     }
 
-    private ArrayList<Object> convertArray(ArrayList<Game> input){
+    private ArrayList<Object> convertArray(ArrayList<Game> input) {
         ArrayList<Object> result = new ArrayList<>();
-        for (Game game : input){
-            result.add(game);
-        }
+        Collections.addAll(result, input);
         return result;
     }
 
-    private void searchBPrice(){
+    private void searchBPrice() {
         System.out.println("from : ");
         String basePriceStr = Scan.getLine().trim();
         System.out.println("to : ");
         String maxPriceStr = Scan.getLine().trim();
-        if (!maxPriceStr.matches("[0-9][0-9.]*") || !basePriceStr.matches("[0-9][0-9.]*")){
+        if (!maxPriceStr.matches("[0-9][0-9.]*") || !basePriceStr.matches("[0-9][0-9.]*")) {
             TerminalColor.red();
             System.out.println("Enter valid amount!");
             TerminalColor.reset();
@@ -112,14 +110,14 @@ public class ExportUserGames extends Menu {
         double basePrice = Double.parseDouble(basePriceStr);
         double maxPrice = Double.parseDouble(maxPriceStr);
         ArrayList<Game> result = priceFilter(basePrice, maxPrice);
-        String title = currentUser.getUsername()+" Games filter by price from " + basePrice + "to" +maxPrice;
+        String title = currentUser.getUsername() + " Games filter by price from " + basePrice + "to" + maxPrice;
         GenerateHTML.generateHTML(title, convertArray(result));
     }
 
-    private ArrayList<Game> priceFilter(double min, double max){
+    private ArrayList<Game> priceFilter(double min, double max) {
         ArrayList<Game> result = new ArrayList<>();
-        for (Game game : library){
-            if (game.getPrice() >= min && game.getPrice() <= max){
+        for (Game game : library) {
+            if (game.getPrice() >= min && game.getPrice() <= max) {
                 result.add(game);
             }
         }

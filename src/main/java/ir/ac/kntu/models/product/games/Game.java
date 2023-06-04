@@ -1,13 +1,13 @@
-package ir.ac.kntu.models.product;
+package ir.ac.kntu.models.product.games;
 
 
 import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.ProductType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Game extends Product {
@@ -21,6 +21,8 @@ public class Game extends Product {
     private Level level;
 
     private boolean isBetaVersion;
+
+
 
 
     public Game(String name, String details, double price, Genre genre, Level level) {

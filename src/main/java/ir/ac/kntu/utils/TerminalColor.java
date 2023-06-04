@@ -1,4 +1,4 @@
-package ir.ac.kntu.HelperClasses;
+package ir.ac.kntu.utils;
 
 public class TerminalColor {
     public static void cyan() {

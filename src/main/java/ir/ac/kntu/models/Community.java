@@ -1,6 +1,6 @@
 package ir.ac.kntu.models;
 
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.TerminalColor;
 
 public class Community {
     private String username;

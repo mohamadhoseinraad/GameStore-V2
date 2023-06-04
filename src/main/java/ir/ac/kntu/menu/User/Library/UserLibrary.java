@@ -4,7 +4,7 @@ import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.HelperClasses.StoreHelperClass;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.accessories.Accessory;

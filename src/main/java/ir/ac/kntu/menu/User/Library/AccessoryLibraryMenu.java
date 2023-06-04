@@ -1,7 +1,7 @@
 package ir.ac.kntu.menu.User.Library;
 
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.Store;
@@ -10,11 +10,11 @@ import ir.ac.kntu.models.product.accessories.Accessory;
 
 public class AccessoryLibraryMenu extends Menu {
 
-    private User currentUser;
+    private final User currentUser;
 
-    private Accessory currentAccessory;
+    private final Accessory currentAccessory;
 
-    private Store storeDB;
+    private final Store storeDB;
 
     public AccessoryLibraryMenu(User currentUser, Accessory currentAccessory, Store storeDB) {
         this.currentUser = currentUser;
@@ -37,9 +37,14 @@ public class AccessoryLibraryMenu extends Menu {
                 }
                 case SHOW_COMMENTS: {
                     showComments();
+                    break;
                 }
                 case BACK: {
                     return;
+                }
+                case FEEDBACK: {
+                    feedback();
+                    break;
                 }
                 default: {
                     break;
@@ -47,6 +52,10 @@ public class AccessoryLibraryMenu extends Menu {
             }
         }
         System.exit(0);
+    }
+
+    private void feedback() {
+        System.out.println("In update wil come!");
     }
 
     private boolean printGame() {

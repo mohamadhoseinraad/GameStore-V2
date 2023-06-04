@@ -1,9 +1,8 @@
 package ir.ac.kntu.HelperClasses;
 
-import ir.ac.kntu.models.product.Game;
-import ir.ac.kntu.models.product.Genre;
-import ir.ac.kntu.models.product.Level;
 import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 
 public class ProductHelper {
 

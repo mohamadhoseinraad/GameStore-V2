@@ -1,6 +1,6 @@
 package ir.ac.kntu.models;
 
-import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
 import ir.ac.kntu.models.product.accessories.Accessory;

@@ -1,7 +1,7 @@
 package ir.ac.kntu.menu;
 
-import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.Scan;
+import ir.ac.kntu.utils.TerminalColor;
 
 public abstract class Menu {
 

@@ -3,7 +3,7 @@ package ir.ac.kntu.menu.User.Profile;
 import ir.ac.kntu.HelperClasses.GetInputHelper;
 import ir.ac.kntu.HelperClasses.UserHelper;
 import ir.ac.kntu.models.Store;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.User;
 

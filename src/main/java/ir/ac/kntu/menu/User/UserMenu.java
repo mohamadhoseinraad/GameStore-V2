@@ -1,7 +1,7 @@
 package ir.ac.kntu.menu.User;
 
 import ir.ac.kntu.models.Store;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.menu.User.Friend.UserFriendMenu;
 import ir.ac.kntu.menu.User.Library.UserLibrary;

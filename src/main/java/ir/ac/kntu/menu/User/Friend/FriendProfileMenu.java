@@ -2,7 +2,7 @@ package ir.ac.kntu.menu.User.Friend;
 
 import ir.ac.kntu.HelperClasses.GetInputHelper;
 import ir.ac.kntu.HelperClasses.StoreHelperClass;
-import ir.ac.kntu.HelperClasses.TerminalColor;
+import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.User;
