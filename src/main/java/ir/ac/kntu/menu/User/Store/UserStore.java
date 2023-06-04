@@ -5,6 +5,9 @@ import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.accessories.GamePad;
+import ir.ac.kntu.models.product.accessories.Monitor;
+import ir.ac.kntu.models.product.games.Game;
 
 import java.util.ArrayList;
 
@@ -29,12 +32,16 @@ public class UserStore extends Menu {
                         all();
                         break;
                     }
-                    case BY_NAME: {
-                        searchByName();
+                    case GAMES: {
+                        games();
                         break;
                     }
-                    case BY_PRICE: {
-                        searchBPrice();
+                    case GAME_PAD: {
+                        gamePad();
+                        break;
+                    }
+                    case MONITOR: {
+                        monitor();
                         break;
                     }
                     case BACK: {
@@ -49,32 +56,23 @@ public class UserStore extends Menu {
     }
 
     public void all() {
-        ArrayList<Product> result = SelectItemHelper.getAllProducts(storeDB.getProducts());
-        Product selectedProduct = SelectItemHelper.handleSelect(result);
-        if (selectedProduct == null) {
-            return;
-        }
-        ProductStoreMenu productStoreMenu = new ProductStoreMenu(currentUser, selectedProduct, storeDB);
-        productStoreMenu.showMenu();
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, false, Product.class);
+        searchProduct.showMenu();
     }
 
-    public void searchByName() {
-        Product selectedProduct = SelectItemHelper.searchStoreProtectByName(storeDB);
-        if (selectedProduct == null) {
-            return;
-        }
-        ProductStoreMenu productStoreMenu = new ProductStoreMenu(currentUser, selectedProduct, storeDB);
-        productStoreMenu.showMenu();
-
+    public void games() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, false, Game.class);
+        searchProduct.showMenu();
     }
 
-    public void searchBPrice() {
-        Product selectedProduct = SelectItemHelper.searchProtectByPrice(storeDB);
-        if (selectedProduct == null) {
-            return;
-        }
-        ProductStoreMenu productStoreMenu = new ProductStoreMenu(currentUser, selectedProduct, storeDB);
-        productStoreMenu.showMenu();
+    public void gamePad() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, false, GamePad.class);
+        searchProduct.showMenu();
+    }
+
+    public void monitor() {
+        SearchProduct searchProduct = new SearchProduct(currentUser, storeDB, false, Monitor.class);
+        searchProduct.showMenu();
     }
 
 }

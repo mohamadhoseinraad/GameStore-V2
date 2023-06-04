@@ -2,6 +2,7 @@ package ir.ac.kntu.menu.User.Library;
 
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.HelperClasses.StoreHelperClass;
+import ir.ac.kntu.menu.User.Store.SearchProduct;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.games.Game;
@@ -69,7 +70,7 @@ public class UserLibrary extends Menu {
     }
 
     private void searchByName() {
-        startProductMenu(SelectItemHelper.searchUserProtectByName(userLibrary));
+        startProductMenu(SelectItemHelper.searchInCostumeProtectByName(userLibrary));
     }
 
     private void startProductMenu(Product selectedProduct) {
