@@ -46,6 +46,7 @@ public class UserMenu extends Menu {
                         break;
                     }
                     case LOGOUT:
+                        user.isLogout();
                         System.out.println("Back soon :)");
                         return;
                     default:

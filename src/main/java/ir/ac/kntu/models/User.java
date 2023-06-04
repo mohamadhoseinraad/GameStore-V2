@@ -8,7 +8,7 @@ import java.util.*;
 
 public class User {
 
-    private static int countUser;
+    private static int countUser = 0;
 
     private final String id;
 
@@ -20,25 +20,27 @@ public class User {
 
     private int hashPassword;
 
-    private double wallet;
+    private double wallet = 0;
+
+    private int score = 0;
+
+    private Date timeEntered = new Date();
+
+    private Date timeExit = new Date();
 
     public final UserType userType;
 
-    private Map<String, String> library;
+    private Map<String, String> library = new HashMap<>();
 
-    private ArrayList<String> friends;
+    private ArrayList<String> friends = new ArrayList<>();
 
-    private ArrayList<String> requests;
+    private ArrayList<String> requests = new ArrayList<>();
 
     public User(String username, String phoneNumber, String email, String password, UserType type) {
         this.username = username.toUpperCase().trim();
         this.phoneNumber = phoneNumber.trim();
         this.email = email.toLowerCase().trim();
         hashPassword = password.hashCode();
-        wallet = 0;
-        library = new HashMap<>();
-        friends = new ArrayList<>();
-        requests = new ArrayList<>();
         userType = type;
         if (userType == UserType.USER) {
             id = "USR" + countUser++;
@@ -210,6 +212,40 @@ public class User {
 
     public void removeRequest(User user) {
         requests.remove(user.getId());
+    }
+
+    public Date getTimeEntered() {
+        return timeEntered;
+    }
+
+    public void setTimeEntered(Date timeEntered) {
+        this.timeEntered = timeEntered;
+    }
+
+    public Date getTimeExit() {
+        return timeExit;
+    }
+
+    public void setTimeExit(Date timeExit) {
+        this.timeExit = timeExit;
+    }
+
+    public boolean isLogin(String password) {
+        if (checkPassword(password)) {
+            timeEntered.setTime(System.currentTimeMillis());
+            timeExit.setTime(System.currentTimeMillis());
+            return true;
+        }
+        return false;
+    }
+
+    public void isLogout() {
+        if (timeEntered.equals(timeExit)) {
+            timeExit.setTime(System.currentTimeMillis());
+            long difference = timeExit.getTime() - timeEntered.getTime();
+            difference /= 60000;
+            score += difference;
+        }
     }
 
     @Override

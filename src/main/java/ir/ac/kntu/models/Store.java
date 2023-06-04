@@ -152,7 +152,7 @@ public class Store {
         username = username.toUpperCase().trim();
         for (User user : users) {
             if (user.getUsername().equals(username)) {
-                return user.checkPassword(password);
+                return user.isLogin(password);
             }
         }
         return false;
