@@ -1,5 +1,5 @@
 package ir.ac.kntu.menu.User.Library;
 
-public enum GameLibraryMenuOptions {
+public enum SelectedProductMenuOptions {
     RATE, COMMENT, SHOW_COMMENTS, BACK, EXIT
 }

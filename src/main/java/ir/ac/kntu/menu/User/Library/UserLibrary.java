@@ -6,6 +6,8 @@ import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.accessories.Accessory;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,12 +18,16 @@ public class UserLibrary extends Menu {
 
     private User currentUser;
 
-    private ArrayList<Game> userLibrary;
+    private ArrayList<Product> userLibrary;
+
+    private ArrayList<Game> userGames;
+
+    private ArrayList<Accessory> userAccessory;
 
     public UserLibrary(Store store, User user) {
         this.storeDB = store;
         this.currentUser = user;
-        userLibrary = getAllGames();
+        userLibrary = getAllLibrary();
     }
 
     @Override
@@ -31,7 +37,7 @@ public class UserLibrary extends Menu {
             if (option != null) {
                 switch (option) {
                     case ALL: {
-                        allGame();
+                        allLibrary();
                         break;
                     }
                     case BY_NAME: {
@@ -53,25 +59,25 @@ public class UserLibrary extends Menu {
         System.exit(0);
     }
 
-    private void allGame() {
-        Game selectedGame = handleSelect(userLibrary);
-        if (selectedGame == null) {
+    private void allLibrary() {
+        Product selectedProduct = handleSelect(userLibrary);
+        if (selectedProduct == null) {
             return;
         }
-        GameLibraryMenu gameLibraryMenu = new GameLibraryMenu(currentUser, selectedGame, storeDB);
-        gameLibraryMenu.showMenu();
+        startProductMenu(selectedProduct);
+
     }
 
     private void exportHtml() {
-        ExportUserGames exportUserGames = new ExportUserGames(storeDB,currentUser);
+        ExportUserGames exportUserGames = new ExportUserGames(storeDB, currentUser);
         exportUserGames.showMenu();
     }
 
-    private ArrayList<Game> getAllGames() {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Map.Entry<String, String> gameName : currentUser.getLibrary().entrySet()) {
-            Game game = (Game) storeDB.findProduct(gameName.getKey());
-            result.add(game);
+    private ArrayList<Product> getAllLibrary() {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Map.Entry<String, String> productName : currentUser.getLibrary().entrySet()) {
+            Product product = storeDB.findProduct(productName.getKey());
+            result.add(product);
         }
         return result;
     }
@@ -79,22 +85,20 @@ public class UserLibrary extends Menu {
     private void searchByName() {
         System.out.println("Search Name of game : ");
         String name = Scan.getLine().trim().toUpperCase();
-        ArrayList<Game> result = new ArrayList<>();
-        for (Game game : userLibrary) {
-            if (game.getName().startsWith(name)) {
-                result.add(game);
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product product : userLibrary) {
+            if (product.getName().startsWith(name)) {
+                result.add(product);
             }
         }
-        Game selectedGame = handleSelect(result);
-        if (selectedGame == null) {
+        Product selectedProduct = handleSelect(result);
+        if (selectedProduct == null) {
             return;
         }
-        GameLibraryMenu gameLibraryMenu = new GameLibraryMenu(currentUser, selectedGame, storeDB);
-        gameLibraryMenu.showMenu();
-
+        startProductMenu(selectedProduct);
     }
 
-    private Game handleSelect(ArrayList<Game> searchResult) {
+    private Product handleSelect(ArrayList<Product> searchResult) {
         while (true) {
             printGameSearchResult(searchResult);
             if (searchResult.size() == 0) {
@@ -116,27 +120,46 @@ public class UserLibrary extends Menu {
                     System.out.println("Chose valid number!");
                     TerminalColor.reset();
                 } else {
-                    Game game = searchResult.get(choose);
-                    return game;
+                    Product product = searchResult.get(choose);
+                    return product;
                 }
             }
         }
     }
 
-    private void printGameSearchResult(ArrayList<Game> result) {
+    private void printGameSearchResult(ArrayList<Product> result) {
         if (result.size() == 0) {
             System.out.println("Not found ! :(");
         } else {
             int i = 1;
-            for (Game game : result) {
+            for (Product product : result) {
                 TerminalColor.blue();
                 System.out.print(i);
                 TerminalColor.yellow();
                 System.out.print(" | ");
                 TerminalColor.blue();
-                System.out.println(game);
+                System.out.println(product);
                 TerminalColor.reset();
                 i++;
+            }
+        }
+    }
+
+    private void startProductMenu(Product selectedProduct) {
+        switch (selectedProduct.getProductType()) {
+
+            case GAME: {
+                GameLibraryMenu gameLibraryMenu = new GameLibraryMenu(currentUser, (Game) selectedProduct, storeDB);
+                gameLibraryMenu.showMenu();
+                break;
+            }
+            case ACCESSORIES: {
+                AccessoryLibraryMenu accessoryLibraryMenu = new AccessoryLibraryMenu(currentUser, (Accessory) selectedProduct, storeDB);
+                accessoryLibraryMenu.showMenu();
+                break;
+            }
+            default: {
+
             }
         }
     }

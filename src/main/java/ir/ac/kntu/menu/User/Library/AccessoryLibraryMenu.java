@@ -1,31 +1,31 @@
 package ir.ac.kntu.menu.User.Library;
 
-import ir.ac.kntu.models.Community;
 import ir.ac.kntu.HelperClasses.Scan;
-import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
-import ir.ac.kntu.models.product.Game;
+import ir.ac.kntu.models.Community;
+import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.accessories.Accessory;
 
-public class GameLibraryMenu extends Menu {
+public class AccessoryLibraryMenu extends Menu {
 
     private User currentUser;
 
-    private Game currentGame;
+    private Accessory currentAccessory;
 
     private Store storeDB;
 
-    public GameLibraryMenu(User currentUser, Game currentGame, Store storeDB) {
+    public AccessoryLibraryMenu(User currentUser, Accessory currentAccessory, Store storeDB) {
         this.currentUser = currentUser;
-        this.currentGame = currentGame;
+        this.currentAccessory = currentAccessory;
         this.storeDB = storeDB;
     }
 
     @Override
     public void showMenu() {
         SelectedProductMenuOptions option;
-        while (printGame() && (option = printMenuOptions(currentGame.getName(), SelectedProductMenuOptions.class)) != SelectedProductMenuOptions.EXIT) {
+        while (printGame() && (option = printMenuOptions(currentAccessory.getName(), SelectedProductMenuOptions.class)) != SelectedProductMenuOptions.EXIT) {
             switch (option) {
                 case RATE: {
                     rate();
@@ -50,7 +50,7 @@ public class GameLibraryMenu extends Menu {
     }
 
     private boolean printGame() {
-        currentGame.showProduct(currentUser);
+        currentAccessory.showProduct(currentUser);
         return true;
     }
 
@@ -63,7 +63,7 @@ public class GameLibraryMenu extends Menu {
             TerminalColor.reset();
         }
         double vote = Double.parseDouble(rateStr);
-        currentGame.rating(currentUser, vote);
+        currentAccessory.rating(currentUser, vote);
 
     }
 
@@ -76,14 +76,14 @@ public class GameLibraryMenu extends Menu {
             TerminalColor.reset();
         }
         Community community = new Community(currentUser.getUsername(), userComment);
-        currentGame.addCommunity(community);
+        currentAccessory.addCommunity(community);
         TerminalColor.green();
         System.out.println("Successfully submit !");
         TerminalColor.reset();
     }
 
     private void showComments() {
-        currentGame.showAllComment();
+        currentAccessory.showAllComment();
     }
 
 }
