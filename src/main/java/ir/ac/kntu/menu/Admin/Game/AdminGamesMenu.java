@@ -2,6 +2,7 @@ package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
@@ -12,9 +13,9 @@ public class AdminGamesMenu extends Menu {
 
     private Store storeDB;
 
-    private User admin;
+    private Admin admin;
 
-    public AdminGamesMenu(Store storeDB, User admin) {
+    public AdminGamesMenu(Store storeDB, Admin admin) {
         this.storeDB = storeDB;
         this.admin = admin;
     }

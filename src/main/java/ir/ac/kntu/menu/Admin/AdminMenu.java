@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.Admin;
 
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Admin.Game.AdminGamesMenu;
 import ir.ac.kntu.menu.Admin.User.AdminUserSearch;
@@ -10,9 +11,9 @@ public class AdminMenu extends Menu {
 
     private Store storeDB;
 
-    private User admin;
+    private Admin admin;
 
-    public AdminMenu(Store store, User admin) {
+    public AdminMenu(Store store, Admin admin) {
         this.storeDB = store;
         this.admin = admin;
     }
@@ -23,6 +24,10 @@ public class AdminMenu extends Menu {
         while ((option = printMenuOptions("Amin Menu", AdminMenuOption.class)) != AdminMenuOption.EXIT) {
             if (option != null) {
                 switch (option) {
+                    case PROFILE: {
+                        profile();
+                        break;
+                    }
                     case USERS: {
                         users();
                         break;
@@ -40,6 +45,12 @@ public class AdminMenu extends Menu {
             }
         }
         System.exit(0);
+    }
+
+    private void profile() {
+        AdminProfile adminProfile = new AdminProfile(storeDB, admin);
+        adminProfile.showMenu();
+
     }
 
     private void users() {

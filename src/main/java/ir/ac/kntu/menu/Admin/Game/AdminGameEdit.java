@@ -1,6 +1,7 @@
 package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.ProductHelper;
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
@@ -12,9 +13,9 @@ public class AdminGameEdit extends Menu {
 
     private Game currentGame;
 
-    private User admin;
+    private Admin admin;
 
-    public AdminGameEdit(Game currentGame, User admin) {
+    public AdminGameEdit(Game currentGame, Admin admin) {
         this.currentGame = currentGame;
         this.admin = admin;
     }

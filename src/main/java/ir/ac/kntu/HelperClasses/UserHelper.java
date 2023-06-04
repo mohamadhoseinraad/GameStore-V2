@@ -1,5 +1,6 @@
 package ir.ac.kntu.HelperClasses;
 
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.UserType;
@@ -58,6 +59,26 @@ public class UserHelper {
         System.out.println("| Phone number : " + user.getPhoneNumber());
         System.out.println("| Email        : " + user.getEmail());
         TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.reset();
+    }
+
+    public static void showAdminProfile(Admin admin) {
+        TerminalColor.blue();
+        System.out.println("|----------------------------");
+        TerminalColor.cyan();
+        System.out.print("| Username     : " + admin.getUsername());
+        TerminalColor.yellow();
+        System.out.println(" (" + admin.getId() + ") ");
+        TerminalColor.yellow();
+        System.out.println("| Phone number : " + admin.getPhoneNumber());
+        System.out.println("| Email        : " + admin.getEmail());
+        TerminalColor.cyan();
+        System.out.println("Permissions :");
+        System.out.println("Master      " + admin.isMastetAdmin());
+        System.out.println("Developer   " + admin.isDeveloper());
+        System.out.println("Seller      " + admin.isSeller());
+        System.out.println("Manager     " + admin.isUserManager());
         System.out.println("|----------------------------");
         TerminalColor.reset();
     }

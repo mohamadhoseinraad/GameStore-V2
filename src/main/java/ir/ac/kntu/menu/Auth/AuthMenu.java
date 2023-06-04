@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.Auth;
 
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.utils.TerminalColor;
@@ -58,7 +59,7 @@ public class AuthMenu extends Menu {
                 UserMenu userMenu = new UserMenu(storeDB, user);
                 userMenu.showMenu();
             } else {
-                AdminMenu adminMenu = new AdminMenu(storeDB, user);
+                AdminMenu adminMenu = new AdminMenu(storeDB, (Admin) user);
                 adminMenu.showMenu();
             }
         } else {
