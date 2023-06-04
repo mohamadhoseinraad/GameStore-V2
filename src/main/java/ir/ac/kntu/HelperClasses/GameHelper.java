@@ -87,4 +87,34 @@ public class GameHelper {
             }
         }
     }
+
+    public static boolean checkUserLevel(Game game, User user) {
+        switch (game.getLevel()) {
+            case LEVEL_1: {
+                return true;
+            }
+            case LEVEL_2: {
+                return (user.getScore() >= 20);
+            }
+            case LEVEL_3: {
+                return (user.getScore() >= 50);
+            }
+            case LEVEL_4: {
+                return (user.getScore() >= 100);
+            }
+        }
+        return false;
+    }
+
+    public static double applyOffer(double price, int score) {
+        if (score < 50) {
+            return price * 0.9;
+        } else if (score < 100) {
+            return price * 0.8;
+        } else if (score > 100) {
+            return price * 0.7;
+        } else {
+            return price;
+        }
+    }
 }

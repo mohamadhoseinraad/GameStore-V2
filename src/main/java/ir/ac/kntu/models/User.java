@@ -1,5 +1,6 @@
 package ir.ac.kntu.models;
 
+import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.models.product.Game;
@@ -121,9 +122,10 @@ public class User {
         if (game == null) {
             return false;
         }
-        if (!library.containsKey(game.getId()) && wallet >= game.getPrice()) {
+        double price = GameHelper.applyOffer(game.getPrice(), score);
+        if (!library.containsKey(game.getId()) && wallet >= price) {
             library.put(game.getId(), game.getName());
-            wallet -= game.getPrice();
+            wallet -= price;
             return true;
         }
         return false;
@@ -134,9 +136,10 @@ public class User {
     }
 
     public boolean giftGame(Game game, User friend) {
-        if (!friend.getLibrary().containsKey(game.getId()) && wallet >= game.getPrice()) {
+        double price = GameHelper.applyOffer(game.getPrice(), score);
+        if (!friend.getLibrary().containsKey(game.getId()) && wallet >= price) {
             friend.addCostumeGame(game);
-            wallet -= game.getPrice();
+            wallet -= price;
             return true;
         }
         return false;

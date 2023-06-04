@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.User.Store;
 
+import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.HelperClasses.TerminalColor;
@@ -57,6 +58,12 @@ public class GameStoreMenu extends Menu {
             TerminalColor.reset();
             return;
         }
+        if (!GameHelper.checkUserLevel(currentGame, currentUser)){
+            TerminalColor.red();
+            System.out.println("Your level is not match!");
+            TerminalColor.reset();
+            return;
+        }
         if (currentUser.addGame(currentGame)) {
             TerminalColor.green();
             System.out.println("Buy Successfully :) ");
@@ -88,11 +95,15 @@ public class GameStoreMenu extends Menu {
             TerminalColor.reset();
             return;
         }
-
-
         if (friend.doHaveGame(currentGame)) {
             TerminalColor.red();
             System.out.println("Your friend already has this game!");
+            TerminalColor.reset();
+            return;
+        }
+        if (!GameHelper.checkUserLevel(currentGame, currentUser)){
+            TerminalColor.red();
+            System.out.println("Your level is not match!");
             TerminalColor.reset();
             return;
         }
