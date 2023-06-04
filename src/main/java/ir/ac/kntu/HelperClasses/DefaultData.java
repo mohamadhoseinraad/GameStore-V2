@@ -27,6 +27,7 @@ public class DefaultData {
         user1.addGame(game1);
         user1.addFriend(user2);
         user2.addFriend(user1);
+        user1.setScore(30);
         return store;
     }
 }

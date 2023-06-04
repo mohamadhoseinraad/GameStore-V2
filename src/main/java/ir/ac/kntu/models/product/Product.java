@@ -1,6 +1,7 @@
 package ir.ac.kntu.models.product;
 
 import ir.ac.kntu.models.Community;
+import ir.ac.kntu.models.User;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,7 @@ public abstract class Product {
         this.productType = productType;
     }
 
-    public abstract void showProduct();
+    public abstract void showProduct(User currentUser);
 
     public abstract String getId();
 }

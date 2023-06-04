@@ -4,6 +4,7 @@ import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.HelperClasses.Scan;
 import ir.ac.kntu.HelperClasses.TerminalColor;
 import ir.ac.kntu.menu.Menu;
+import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.product.Genre;
 
@@ -11,8 +12,11 @@ public class AdminGameEdit extends Menu {
 
     private Game currentGame;
 
-    public AdminGameEdit(Game currentGame) {
+    private User admin;
+
+    public AdminGameEdit(Game currentGame, User admin) {
         this.currentGame = currentGame;
+        this.admin = admin;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class AdminGameEdit extends Menu {
     }
 
     private boolean showGame() {
-        currentGame.showProduct();
+        currentGame.showProduct(admin);
         return true;
     }
 

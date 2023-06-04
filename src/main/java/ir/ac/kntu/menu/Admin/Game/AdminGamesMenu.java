@@ -38,7 +38,7 @@ public class AdminGamesMenu extends Menu {
                         removeGame();
                         break;
                     }
-                    case EXPORT_TO_HTML:{
+                    case EXPORT_TO_HTML: {
                         exportHtml();
                         break;
                     }
@@ -73,10 +73,10 @@ public class AdminGamesMenu extends Menu {
     private void editGame() {
         GameSearch gameSearch = new GameSearch(storeDB);
         Game game = gameSearch.searchMenu();
-        if (game == null){
+        if (game == null) {
             return;
         }
-        AdminGameEdit adminGameEdit = new AdminGameEdit(game);
+        AdminGameEdit adminGameEdit = new AdminGameEdit(game, admin);
         adminGameEdit.showMenu();
     }
 
@@ -85,7 +85,7 @@ public class AdminGamesMenu extends Menu {
         Game game = gameSearch.searchMenu();
         System.out.println();
         System.out.println(storeDB.getGames().contains(game));
-        if (storeDB.removeGame(game) && !(game ==null)) {
+        if (storeDB.removeGame(game) && !(game == null)) {
             TerminalColor.green();
             System.out.println(game.getName() + " with " + game.getId() + " id successfully deleted !");
             TerminalColor.reset();

@@ -1,5 +1,6 @@
 package ir.ac.kntu.models.product.accessories;
 
+import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
 
@@ -40,7 +41,7 @@ public class Accessory extends Product {
     }
 
     @Override
-    public void showProduct() {
+    public void showProduct(User currentUser) {
 
     }
 

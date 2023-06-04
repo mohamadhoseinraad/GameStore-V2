@@ -218,6 +218,10 @@ public class User {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public boolean isLogin(String password) {
         if (checkPassword(password)) {
             timeEntered.setTime(System.currentTimeMillis());

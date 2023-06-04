@@ -1,5 +1,7 @@
 package ir.ac.kntu.HelperClasses;
 
+import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.UserType;
 import ir.ac.kntu.models.product.Game;
 import ir.ac.kntu.models.product.Genre;
 import ir.ac.kntu.models.product.Level;
@@ -42,7 +44,7 @@ public class GameHelper {
         }
     }
 
-    public static void printGame(Game game) {
+    public static void printGame(Game game, User user) {
         TerminalColor.blue();
         System.out.println("|----------------------------");
         TerminalColor.cyan();
@@ -54,7 +56,8 @@ public class GameHelper {
             System.out.println("Free");
         } else {
             TerminalColor.cyan();
-            System.out.println(game.getPrice() + "$ coast");
+            System.out.print(game.getPrice() + "$ coast  ");
+            handleOffPrice(game, user);
         }
         TerminalColor.yellow();
         System.out.print("| Genre : " + game.getGenre());
@@ -68,5 +71,20 @@ public class GameHelper {
         TerminalColor.blue();
         System.out.println("|----------------------------");
         TerminalColor.reset();
+    }
+
+    private static void handleOffPrice(Game game, User user) {
+        if (user.getUserType() == UserType.USER) {
+            TerminalColor.green();
+            if (user.getScore() < 20) {
+                System.out.println("OFF " + 0 + "%");
+            } else if (user.getScore() < 50) {
+                System.out.println("OFF " + 10 + "%");
+            } else if (user.getScore() < 100) {
+                System.out.println("OFF " + 20 + "%");
+            } else {
+                System.out.println("OFF " + 30 + "%");
+            }
+        }
     }
 }

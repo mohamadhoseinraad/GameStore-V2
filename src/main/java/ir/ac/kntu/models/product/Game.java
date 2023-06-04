@@ -2,7 +2,6 @@ package ir.ac.kntu.models.product;
 
 
 import ir.ac.kntu.HelperClasses.GameHelper;
-import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
 
@@ -94,8 +93,8 @@ public class Game extends Product {
     }
 
     @Override
-    public void showProduct() {
-        GameHelper.printGame(this);
+    public void showProduct(User currentUser) {
+        GameHelper.printGame(this , currentUser);
     }
 
     @Override
