@@ -16,7 +16,7 @@ public class Admin extends User {
 
     private boolean isUserManager;
 
-    private ArrayList<String> productAccess = new ArrayList<>();
+    private ArrayList<String> productAccessID = new ArrayList<>();
 
     private ArrayList<String> scheduledEvent = new ArrayList<>();
 
@@ -53,6 +53,22 @@ public class Admin extends User {
 
     public void setUserManager(boolean userManager) {
         isUserManager = userManager;
+    }
+
+    public void addAccessProduct(Product product) {
+        productAccessID.add(product.getId());
+    }
+
+    public void removeAccessProduct(Product product) {
+        productAccessID.remove(product.getId());
+    }
+
+    public boolean canAccessProduct(Product product) {
+        return productAccessID.contains(product.getId());
+    }
+
+    public ArrayList<String> getProductAccessID() {
+        return productAccessID;
     }
 
     @Override

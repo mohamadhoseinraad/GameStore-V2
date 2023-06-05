@@ -154,7 +154,7 @@ public class AdminAdminsSearch {
                         break;
                     }
                     case BACK: {
-                        break;
+                        return;
                     }
                     default:
                         System.out.println("Invalid choose");

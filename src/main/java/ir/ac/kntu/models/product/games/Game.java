@@ -2,6 +2,7 @@ package ir.ac.kntu.models.product.games;
 
 
 import ir.ac.kntu.HelperClasses.GameHelper;
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
@@ -15,6 +16,8 @@ public class Game extends Product {
 
     private final String id;
 
+    public final String creatorId;
+
     private Genre genre;
 
 
@@ -23,14 +26,18 @@ public class Game extends Product {
     private boolean isBetaVersion;
 
 
-
-
-    public Game(String name, String details, double price, Genre genre, Level level) {
+    public Game(String name, String details, double price, Genre genre, Level level, Admin admin) {
         super(name, details, price, ProductType.GAME);
         this.genre = genre;
         id = "G" + gamesNumber++;
         this.level = level;
         isBetaVersion = false;
+        if (admin == null) {
+            creatorId = "ADM0";
+        } else {
+            creatorId = admin.getId();
+            admin.addAccessProduct(this);
+        }
     }
 
 

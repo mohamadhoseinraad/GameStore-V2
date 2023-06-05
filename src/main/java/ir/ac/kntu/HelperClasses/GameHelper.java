@@ -1,5 +1,6 @@
 package ir.ac.kntu.HelperClasses;
 
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.UserType;
 import ir.ac.kntu.models.product.games.Game;
@@ -9,7 +10,7 @@ import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
 
 public class GameHelper {
-    public static Game makeGame() {
+    public static Game makeGame(Admin admin) {
         System.out.println("Pleas enter game name :");
         String name = Scan.getLine();
         System.out.println("Enter Genre : ");
@@ -33,7 +34,7 @@ public class GameHelper {
         }
         TerminalColor.reset();
         double price = Double.parseDouble(priceSrt);
-        return new Game(name, detail, price, genre, level);
+        return new Game(name, detail, price, genre, level, admin);
     }
 
 

@@ -1,5 +1,6 @@
 package ir.ac.kntu.models;
 
+import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
@@ -252,5 +253,27 @@ public class Store {
         }
     }
 
-
+    public ArrayList<Product> getAdminProducts(Admin admin, ProductType productType) {
+        ArrayList<Product> result = new ArrayList<>();
+        if (productType == null) {
+            for (ArrayList<Product> eachProducts : products.values()) {
+                for (Product product : eachProducts) {
+                    if (admin.isMastetAdmin()) {
+                        result.add(product);
+                    } else if (admin.getProductAccessID().contains(product.getId())) {
+                        result.add(product);
+                    }
+                }
+            }
+        } else {
+            for (Product product : products.get(productType)) {
+                if (admin.isMastetAdmin()) {
+                    result.add(product);
+                } else if (admin.getProductAccessID().contains(product.getId())) {
+                    result.add(product);
+                }
+            }
+        }
+        return result;
+    }
 }

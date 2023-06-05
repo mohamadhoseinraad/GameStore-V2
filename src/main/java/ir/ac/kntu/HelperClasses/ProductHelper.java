@@ -1,8 +1,15 @@
 package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.ProductType;
+import ir.ac.kntu.models.product.accessories.AccessoryType;
+import ir.ac.kntu.models.product.accessories.GamePad;
+import ir.ac.kntu.models.product.accessories.Monitor;
+import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
+
+import java.util.ArrayList;
 
 public class ProductHelper {
 
@@ -43,6 +50,34 @@ public class ProductHelper {
         } else {
             TerminalColor.green();
         }
+    }
+
+    public static ArrayList<Product> findProductByName(ArrayList<Product> products,
+                                                       String name,
+                                                       ProductType productType, AccessoryType accessoryType) {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getName().startsWith(name)) {
+                if (productType == ProductType.GAME) {
+                    if (product.getClass() != Game.class) {
+                        result.add(product);
+                    }
+                } else if (productType == ProductType.ACCESSORIES) {
+                    if (accessoryType == AccessoryType.GAME_PAD) {
+                        if (product.getClass() != GamePad.class) {
+                            result.add(product);
+                        }
+                    } else if (accessoryType == AccessoryType.MONITOR) {
+                        if (product.getClass() != Monitor.class) {
+                            result.add(product);
+                        }
+                    }
+                } else {
+                    result.add(product);
+                }
+            }
+        }
+        return result;
     }
 
 

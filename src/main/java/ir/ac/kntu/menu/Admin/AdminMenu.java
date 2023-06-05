@@ -37,11 +37,13 @@ public class AdminMenu extends Menu {
                     case GAMES: {
                         games();
                         break;
-                    } case EDIT_ADMINS:{
+                    }
+                    case EDIT_ADMINS: {
                         editAdmins();
                         break;
 
-                    } case ACCESSORY:{
+                    }
+                    case ACCESSORY: {
                         accessory();
                         break;
                     }
@@ -58,8 +60,7 @@ public class AdminMenu extends Menu {
 
     private void accessory() {
         if (admin.isSeller() || admin.isMastetAdmin()) {
-            AdminUserSearch adminUserSearch = new AdminUserSearch(storeDB);
-            adminUserSearch.showMenu();
+            System.out.println("Come soon");
         } else {
             TerminalColor.red();
             System.out.println("You don't have permission!");
@@ -97,7 +98,7 @@ public class AdminMenu extends Menu {
     }
 
     private void games() {
-        if (admin.isUserManager() || admin.isDeveloper()) {
+        if (admin.isMastetAdmin() || admin.isDeveloper()) {
             AdminGamesMenu adminGamesMenu = new AdminGamesMenu(storeDB, admin);
             adminGamesMenu.showMenu();
         } else {

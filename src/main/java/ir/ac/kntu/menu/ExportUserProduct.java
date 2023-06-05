@@ -1,10 +1,10 @@
-package ir.ac.kntu.menu.User.Library;
+package ir.ac.kntu.menu;
 
+import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.utils.GenerateHTML;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.models.Store;
-import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 
@@ -12,29 +12,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
-public class ExportUserGames extends Menu {
+public class ExportUserProduct extends Menu {
 
-    private final Store storeDB;
-
-    private final User currentUser;
-
-    private final ArrayList<Game> library;
+    private final ArrayList<Product> library;
 
 
-    public ExportUserGames(Store store, User user) {
-        this.storeDB = store;
-        currentUser = user;
-        library = getAllGames();
+    public ExportUserProduct(ArrayList<Product> products) {
+        library = products;
     }
 
-    private ArrayList<Game> getAllGames() {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Map.Entry<String, String> gameName : currentUser.getLibrary().entrySet()) {
-            Game game = (Game) storeDB.findProduct(gameName.getKey());
-            result.add(game);
-        }
-        return result;
-    }
 
     @Override
     public void showMenu() {
@@ -66,8 +52,8 @@ public class ExportUserGames extends Menu {
     }
 
     private void allGame() {
-        ArrayList<Game> result = getAllGames();
-        String title = "All Game " + currentUser.getUsername();
+        ArrayList<Product> result = library;
+        String title = "All Game ";
         GenerateHTML.generateHTML(title, convertArray(result));
     }
 
@@ -75,14 +61,14 @@ public class ExportUserGames extends Menu {
     private void searchByName() {
         System.out.println("Search Name of game : ");
         String name = Scan.getLine().trim().toUpperCase();
-        ArrayList<Game> result = nameFilter(name);
-        GenerateHTML.generateHTML(currentUser.getUsername() + " Games with " + name + "in their name", convertArray(result));
+        ArrayList<Product> result = nameFilter(name);
+        GenerateHTML.generateHTML( " Games with " + name + "in their name", convertArray(result));
 
     }
 
-    private ArrayList<Game> nameFilter(String name) {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Game game : library) {
+    private ArrayList<Product> nameFilter(String name) {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product game : library) {
             if (game.getName().startsWith(name)) {
                 result.add(game);
             }
@@ -90,7 +76,7 @@ public class ExportUserGames extends Menu {
         return result;
     }
 
-    private ArrayList<Object> convertArray(ArrayList<Game> input) {
+    private ArrayList<Object> convertArray(ArrayList<Product> input) {
         ArrayList<Object> result = new ArrayList<>();
         Collections.addAll(result, input);
         return result;
@@ -109,14 +95,14 @@ public class ExportUserGames extends Menu {
         }
         double basePrice = Double.parseDouble(basePriceStr);
         double maxPrice = Double.parseDouble(maxPriceStr);
-        ArrayList<Game> result = priceFilter(basePrice, maxPrice);
-        String title = currentUser.getUsername() + " Games filter by price from " + basePrice + "to" + maxPrice;
+        ArrayList<Product> result = priceFilter(basePrice, maxPrice);
+        String title =  " Games filter by price from " + basePrice + "to" + maxPrice;
         GenerateHTML.generateHTML(title, convertArray(result));
     }
 
-    private ArrayList<Game> priceFilter(double min, double max) {
-        ArrayList<Game> result = new ArrayList<>();
-        for (Game game : library) {
+    private ArrayList<Product> priceFilter(double min, double max) {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product game : library) {
             if (game.getPrice() >= min && game.getPrice() <= max) {
                 result.add(game);
             }

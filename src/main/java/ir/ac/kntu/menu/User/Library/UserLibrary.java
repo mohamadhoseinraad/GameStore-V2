@@ -1,7 +1,7 @@
 package ir.ac.kntu.menu.User.Library;
 
-import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.HelperClasses.StoreHelperClass;
+import ir.ac.kntu.menu.ExportUserProduct;
 import ir.ac.kntu.menu.User.SearchProduct;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.menu.Menu;
@@ -10,9 +10,9 @@ import ir.ac.kntu.models.product.accessories.Monitor;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
-import ir.ac.kntu.models.product.accessories.Accessory;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class UserLibrary extends Menu {
 
@@ -86,8 +86,17 @@ public class UserLibrary extends Menu {
     }
 
     private void exportHtml() {
-        ExportUserGames exportUserGames = new ExportUserGames(storeDB, currentUser);
-        exportUserGames.showMenu();
+        ExportUserProduct exportUserProduct = new ExportUserProduct(getAllGames());
+        exportUserProduct.showMenu();
+    }
+
+    private ArrayList<Product> getAllGames() {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Map.Entry<String, String> gameName : currentUser.getLibrary().entrySet()) {
+            Product game = storeDB.findProduct(gameName.getKey());
+            result.add(game);
+        }
+        return result;
     }
 
 }

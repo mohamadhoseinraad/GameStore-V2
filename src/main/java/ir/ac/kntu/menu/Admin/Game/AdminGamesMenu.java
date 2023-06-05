@@ -2,18 +2,24 @@ package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
+import ir.ac.kntu.menu.ExportUserProduct;
 import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
+import ir.ac.kntu.models.product.Product;
+import ir.ac.kntu.models.product.ProductType;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.User;
 
+import java.util.ArrayList;
+
 public class AdminGamesMenu extends Menu {
 
-    private Store storeDB;
+    private final Store storeDB;
 
-    private Admin admin;
+    private final Admin admin;
+
 
     public AdminGamesMenu(Store storeDB, Admin admin) {
         this.storeDB = storeDB;
@@ -54,12 +60,12 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void exportHtml() {
-        ExportProducts exportProducts = new ExportProducts(storeDB);
+        ExportUserProduct exportProducts = new ExportUserProduct(storeDB.getAdminProducts(admin, ProductType.GAME));
         exportProducts.showMenu();
     }
 
     private void addGame() {
-        Game newGame = GameHelper.makeGame();
+        Game newGame = GameHelper.makeGame(admin);
         if (newGame != null) {
             if (storeDB.addProduct(newGame)) {
                 TerminalColor.green();
@@ -71,7 +77,7 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void editGame() {
-        Game game = (Game) SelectItemHelper.searchStoreProtectByName(storeDB);
+        Game game = (Game) SelectItemHelper.searchInCostumeProtectByName(storeDB.getAdminProducts(admin, ProductType.GAME));
         if (game == null) {
             return;
         }
@@ -80,9 +86,11 @@ public class AdminGamesMenu extends Menu {
     }
 
     private void removeGame() {
-        Game game = (Game) SelectItemHelper.searchStoreProtectByName(storeDB);
-        if (storeDB.removeGame(game) && !(game == null)) {
+        Game game = (Game) SelectItemHelper.searchInCostumeProtectByName(storeDB.getAdminProducts(admin, ProductType.GAME));
+
+        if (game != null && checkPermission(game) && storeDB.removeGame(game)) {
             TerminalColor.green();
+            admin.removeAccessProduct(game);
             System.out.println(game.getName() + " with " + game.getId() + " id successfully deleted !");
             TerminalColor.reset();
             return;
@@ -90,6 +98,16 @@ public class AdminGamesMenu extends Menu {
         TerminalColor.red();
         System.out.println("Fail delete game !");
         TerminalColor.red();
+    }
+
+    private boolean checkPermission(Game game) {
+        if (!game.creatorId.equals(admin.getId()) && !admin.isMastetAdmin()) {
+            TerminalColor.red();
+            System.out.println("Fail delete game ! You are not creator of this game !");
+            TerminalColor.reset();
+            return false;
+        }
+        return true;
     }
 
 }
