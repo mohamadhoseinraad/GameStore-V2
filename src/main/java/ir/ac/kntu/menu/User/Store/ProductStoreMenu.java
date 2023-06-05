@@ -65,16 +65,16 @@ public class ProductStoreMenu extends Menu {
     }
 
     private void buyAccessory(Accessory currentProduct) {
-        if (!(currentUser.getWallet() >= currentProduct.getPrice())) {
-            TerminalColor.red();
-            System.out.println("You don't have enough money ! :(");
-            TerminalColor.reset();
-            return;
-        }
         if (currentUser.addProduct(currentProduct)) {
             TerminalColor.green();
             currentProduct.addBuy();
             System.out.println("Buy Successfully :) ");
+            TerminalColor.reset();
+            return;
+        }
+        if (!(currentUser.getWallet() >= currentProduct.getPrice())) {
+            TerminalColor.red();
+            System.out.println("You don't have enough money ! :(");
             TerminalColor.reset();
             return;
         }

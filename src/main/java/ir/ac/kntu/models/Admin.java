@@ -81,11 +81,6 @@ public class Admin extends User {
     }
 
     @Override
-    public boolean payWallet(double price) {
-        return true;
-    }
-
-    @Override
     public Map<String, String> getLibrary() {
         return null;
     }
@@ -96,11 +91,7 @@ public class Admin extends User {
     }
 
     @Override
-    public void addCostumeGame(Game game) {
-    }
-
-    @Override
-    public void addCostumeProduct(Accessory accessory) {
+    public void addCostumeProduct(Product accessory) {
     }
 
     @Override

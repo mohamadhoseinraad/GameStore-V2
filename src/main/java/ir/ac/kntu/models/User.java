@@ -109,14 +109,6 @@ public class User implements Comparable {
         wallet += value;
     }
 
-    public boolean payWallet(double price) {
-        if (wallet < price) {
-            return false;
-        }
-        wallet -= price;
-        return true;
-    }
-
     public Map<String, String> getLibrary() {
         return library;
     }
@@ -136,7 +128,7 @@ public class User implements Comparable {
 
     private boolean addGame(Game game) {
         double price = GameHelper.applyOffer(game.getPrice(), score);
-        if (!library.containsKey(game.getId()) && wallet >= price) {
+        if (!doHaveGame(game) && wallet >= price) {
             library.put(game.getId(), game.getName());
             wallet -= price;
             return true;
@@ -155,18 +147,14 @@ public class User implements Comparable {
         return false;
     }
 
-    public void addCostumeGame(Game game) {
-        library.put(game.getId(), game.getName());
-    }
-
-    public void addCostumeProduct(Accessory accessory) {
+    public void addCostumeProduct(Product accessory) {
         library.put(accessory.getId(), accessory.getName());
     }
 
     public boolean giftGame(Game game, User friend) {
         double price = GameHelper.applyOffer(game.getPrice(), score);
         if (!friend.getLibrary().containsKey(game.getId()) && wallet >= price) {
-            friend.addCostumeGame(game);
+            friend.addCostumeProduct(game);
             wallet -= price;
             return true;
         }
