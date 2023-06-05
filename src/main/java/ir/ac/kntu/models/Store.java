@@ -212,6 +212,14 @@ public class Store {
         return false;
     }
 
+    public boolean removeAccessory(Accessory accessory) {
+        if (products.get(ProductType.ACCESSORIES).contains(accessory)) {
+            products.get(ProductType.ACCESSORIES).remove(accessory);
+            return true;
+        }
+        return false;
+    }
+
     public boolean addUser(User newUser) {
         if (newUser == null) {
             return false;

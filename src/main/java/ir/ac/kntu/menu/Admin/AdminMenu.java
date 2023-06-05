@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.Admin;
 
+import ir.ac.kntu.menu.Admin.Accessory.AdminAccessoriesMenu;
 import ir.ac.kntu.menu.Admin.Admins.AdminAdminsSearch;
 import ir.ac.kntu.menu.Admin.Profile.AdminProfile;
 import ir.ac.kntu.models.Admin;
@@ -60,7 +61,8 @@ public class AdminMenu extends Menu {
 
     private void accessory() {
         if (admin.isSeller() || admin.isMastetAdmin()) {
-            System.out.println("Come soon");
+            AdminAccessoriesMenu adminAccessoriesMenu = new AdminAccessoriesMenu(storeDB, admin);
+            adminAccessoriesMenu.showMenu();
         } else {
             TerminalColor.red();
             System.out.println("You don't have permission!");

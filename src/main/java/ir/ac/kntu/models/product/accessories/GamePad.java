@@ -1,6 +1,7 @@
 package ir.ac.kntu.models.product.accessories;
 
 import ir.ac.kntu.HelperClasses.AccessoryHelper;
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.User;
 
 import java.util.Objects;
@@ -15,8 +16,8 @@ public class GamePad extends Accessory {
 
     private Connection connection;
 
-    public GamePad(String name, String details, double price, int amount, Connection connection, Device device) {
-        super(name, details, price, amount, AccessoryType.GAME_PAD);
+    public GamePad(String name, String details, double price, int amount, Connection connection, Device device, Admin admin) {
+        super(name, details, price, amount, AccessoryType.GAME_PAD, admin);
         this.device = device;
         this.connection = connection;
         id = "ACC_GP" + countGamePad++;

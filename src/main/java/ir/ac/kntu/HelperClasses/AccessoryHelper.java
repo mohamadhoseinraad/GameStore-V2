@@ -1,15 +1,16 @@
 package ir.ac.kntu.HelperClasses;
 
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.accessories.*;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
 
 public class AccessoryHelper {
-    public static Accessory makeAccessory() {
+    private static Accessory makeAccessory(Admin admin) {
         System.out.println("Pleas enter name of Accessory :");
         String name = Scan.getLine();
-        System.out.println("Pleas enter detail of game :");
+        System.out.println("Pleas enter detail of Accessory :");
         String detail = Scan.getLine();
         System.out.println("Pleas enter price :");
         String priceSrt = Scan.getLine();
@@ -28,11 +29,11 @@ public class AccessoryHelper {
         }
         TerminalColor.reset();
         double price = Double.parseDouble(priceSrt);
-        return new Accessory(name, detail, price, Integer.parseInt(amountSrt), AccessoryType.NULL);
+        return new Accessory(name, detail, price, Integer.parseInt(amountSrt), null, admin);
     }
 
-    public static GamePad makeGamePad() {
-        Accessory accessory = makeAccessory();
+    public static GamePad makeGamePad(Admin admin) {
+        Accessory accessory = makeAccessory(admin);
         if (accessory == null) {
             TerminalColor.red();
             System.out.println("Error in create new product . try again");
@@ -45,11 +46,11 @@ public class AccessoryHelper {
         Device device = ProductHelper.getInputEnumData(Device.class);
         String name = accessory.getName();
         String detail = accessory.getDetails();
-        return new GamePad(name, detail, accessory.getPrice(), accessory.getAmount(), connection, device);
+        return new GamePad(name, detail, accessory.getPrice(), accessory.getAmount(), connection, device, admin);
     }
 
-    public static Monitor makeMonitor() {
-        Accessory accessory = makeAccessory();
+    public static Monitor makeMonitor(Admin admin) {
+        Accessory accessory = makeAccessory(admin);
         if (accessory == null) {
             TerminalColor.red();
             System.out.println("Error in create new product . try again");
@@ -73,7 +74,7 @@ public class AccessoryHelper {
         int resTime = Integer.parseInt(refRateStr);
         String name = accessory.getName();
         String detail = accessory.getDetails();
-        return new Monitor(name, detail, accessory.getPrice(), accessory.getAmount(), size, resTime, resTime);
+        return new Monitor(name, detail, accessory.getPrice(), accessory.getAmount(), size, resTime, resTime, admin);
     }
 
     public static void printAccessory(Accessory accessory, User user) {

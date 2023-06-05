@@ -1,5 +1,6 @@
 package ir.ac.kntu.models.product.accessories;
 
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
@@ -10,10 +11,22 @@ public class Accessory extends Product {
 
     private AccessoryType accessoryType;
 
-    public Accessory(String name, String details, double price, int amount, AccessoryType accessoryType) {
+    private final String sellerId;
+
+    public Accessory(String name, String details, double price, int amount, AccessoryType accessoryType, Admin admin) {
         super(name, details, price, ProductType.ACCESSORIES);
         this.amount = amount;
         this.accessoryType = accessoryType;
+        if (admin == null){
+            sellerId = "ADM0";
+        } else {
+            sellerId = admin.getId();
+        }
+
+    }
+
+    public String getSellerId() {
+        return sellerId;
     }
 
     public int getAmount() {

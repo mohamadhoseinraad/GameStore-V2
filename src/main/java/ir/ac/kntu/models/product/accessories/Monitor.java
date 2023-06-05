@@ -1,6 +1,7 @@
 package ir.ac.kntu.models.product.accessories;
 
 import ir.ac.kntu.HelperClasses.AccessoryHelper;
+import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.User;
 
 import java.util.Objects;
@@ -17,8 +18,8 @@ public class Monitor extends Accessory {
 
     private int responseTime;
 
-    public Monitor(String name, String details, double price, int amount, int size, int refreshRate, int responseTime) {
-        super(name, details, price, amount, AccessoryType.MONITOR);
+    public Monitor(String name, String details, double price, int amount, int size, int refreshRate, int responseTime, Admin admin) {
+        super(name, details, price, amount, AccessoryType.MONITOR, admin);
         this.refreshRate = refreshRate;
         this.responseTime = responseTime;
         this.size = size;

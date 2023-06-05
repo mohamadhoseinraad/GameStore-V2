@@ -4,13 +4,9 @@ import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.utils.GenerateHTML;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
-import ir.ac.kntu.models.Store;
-import ir.ac.kntu.models.product.games.Game;
-import ir.ac.kntu.models.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
 public class ExportUserProduct extends Menu {
 

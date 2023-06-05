@@ -18,7 +18,7 @@ public class DefaultData {
         Game g2 = new Game("Rainbow six", "Action shooter game", 20, Genre.SHOOTING, Level.LEVEL_1, null);
         Game g3 = new Game("GTA V", "Story mode game form al life of a person", 35, Genre.SHOOTING, Level.LEVEL_1, amin2);
         Game g4 = new Game("Bomb", "Strategy game ", 0, Genre.STRATEGY, Level.LEVEL_4, amin2);
-        GamePad gp1 = new GamePad("Ps4GP", "For PS4 , PS5", 100, 3, Connection.WIRELESS, Device.PLAY_STATION);
+        GamePad gp1 = new GamePad("Ps4GP", "For PS4 , PS5", 100, 3, Connection.WIRELESS, Device.PLAY_STATION, null);
         store.addUser(user1);
         g2.setBetaVersion(true);
         store.addUser(user2);
