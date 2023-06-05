@@ -3,7 +3,7 @@ package ir.ac.kntu.models.product.games;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.models.Admin;
-import ir.ac.kntu.models.Community;
+import ir.ac.kntu.models.product.Community;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
@@ -17,6 +17,8 @@ public class Game extends Product {
     private final String id;
 
     public final String creatorId;
+
+    private ArrayList<String> developers = new ArrayList<>();
 
     private Genre genre;
 
@@ -133,5 +135,13 @@ public class Game extends Product {
         if (!isBetaVersion) {
             super.addCommunity(community);
         }
+    }
+
+    public ArrayList<String> getDevelopers() {
+        return new ArrayList<>(developers);
+    }
+
+    public void addDeveloper(Admin admin) {
+        developers.add(admin.getId());
     }
 }

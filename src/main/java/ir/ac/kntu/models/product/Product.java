@@ -1,6 +1,5 @@
 package ir.ac.kntu.models.product;
 
-import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
 import org.jetbrains.annotations.NotNull;
 

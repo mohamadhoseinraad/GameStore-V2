@@ -1,6 +1,6 @@
 package ir.ac.kntu.menu.User.Library;
 
-import ir.ac.kntu.models.Community;
+import ir.ac.kntu.models.product.Community;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.utils.TerminalColor;

@@ -304,4 +304,8 @@ public class User implements Comparable {
             return 0;
         }
     }
+
+    public void removeProduct(Product product) {
+        library.remove(product.getId());
+    }
 }

@@ -1,6 +1,7 @@
 package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.*;
+import ir.ac.kntu.models.product.Community;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.product.games.Genre;
 import ir.ac.kntu.models.product.games.Level;

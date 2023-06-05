@@ -1,4 +1,4 @@
-package ir.ac.kntu.models;
+package ir.ac.kntu.models.product;
 
 import ir.ac.kntu.utils.TerminalColor;
 

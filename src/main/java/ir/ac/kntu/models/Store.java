@@ -187,6 +187,9 @@ public class Store {
         }
         if (products.get(productType).contains(product)) {
             products.get(productType).remove(product);
+            for (User user : users){
+                user.removeProduct(product);
+            }
             return true;
         }
         return false;
@@ -206,6 +209,9 @@ public class Store {
 
     public void removeUser(User user) {
         users.remove(user);
+        for (User u: users){
+            u.removeFriend(user);
+        }
     }
 
     public boolean loginUser(String username, String password) {
