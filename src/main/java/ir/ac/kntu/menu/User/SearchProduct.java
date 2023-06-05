@@ -17,6 +17,7 @@ import ir.ac.kntu.models.product.accessories.Monitor;
 import ir.ac.kntu.models.product.games.Game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SearchProduct extends Menu {
 
@@ -73,6 +74,10 @@ public class SearchProduct extends Menu {
                         all();
                         break;
                     }
+                    case TOP:{
+                        top();
+                        break;
+                    }
                     case BY_NAME: {
                         searchByName();
                         break;
@@ -94,6 +99,16 @@ public class SearchProduct extends Menu {
 
     public void all() {
         Product selectedProduct = SelectItemHelper.handleSelect(products);
+        if (selectedProduct == null) {
+            return;
+        }
+        nextMenu(selectedProduct);
+    }
+
+    public void top() {
+        ArrayList<Product> sortedProducts =new ArrayList<>(products);
+        Collections.sort(sortedProducts,Collections.reverseOrder());
+        Product selectedProduct = SelectItemHelper.handleSelect(sortedProducts);
         if (selectedProduct == null) {
             return;
         }

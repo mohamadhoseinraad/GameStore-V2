@@ -85,6 +85,7 @@ public class Game extends Product {
                 ", price=" + getPrice() +
                 ", score=" + getScore() +
                 ", level=" + level +
+                ", members=" + getCountBuy() +
                 '}';
     }
 

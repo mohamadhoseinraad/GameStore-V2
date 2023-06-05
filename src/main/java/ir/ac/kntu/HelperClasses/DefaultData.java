@@ -34,6 +34,7 @@ public class DefaultData {
         Community community = new Community(user1.getUsername(), "Awlliii");
         game1.addCommunity(community);
         user1.addProduct(game1);
+        game1.addBuy();
         user1.addFriend(user2);
         user2.addFriend(user1);
         user1.setScore(30);

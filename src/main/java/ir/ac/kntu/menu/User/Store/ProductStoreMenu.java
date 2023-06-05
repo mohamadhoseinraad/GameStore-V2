@@ -73,6 +73,7 @@ public class ProductStoreMenu extends Menu {
         }
         if (currentUser.addProduct(currentProduct)) {
             TerminalColor.green();
+            currentProduct.addBuy();
             System.out.println("Buy Successfully :) ");
             TerminalColor.reset();
             return;
@@ -97,6 +98,7 @@ public class ProductStoreMenu extends Menu {
         }
         if (currentUser.addProduct(currentProduct)) {
             TerminalColor.green();
+            currentProduct.addBuy();
             System.out.println("Buy Successfully :) ");
             TerminalColor.reset();
             return;
@@ -147,6 +149,7 @@ public class ProductStoreMenu extends Menu {
         }
         if (currentUser.giftAccessory(currentProduct, friend)) {
             TerminalColor.green();
+            currentProduct.addBuy();
             System.out.println("Gift Successfully :) ");
             TerminalColor.reset();
         }
@@ -167,6 +170,7 @@ public class ProductStoreMenu extends Menu {
         }
         if (currentUser.giftGame(currentProduct, friend)) {
             TerminalColor.green();
+            currentProduct.addBuy();
             System.out.println("Gift Successfully :) ");
             TerminalColor.reset();
         }

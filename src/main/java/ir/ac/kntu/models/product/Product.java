@@ -2,12 +2,13 @@ package ir.ac.kntu.models.product;
 
 import ir.ac.kntu.models.Community;
 import ir.ac.kntu.models.User;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Product {
+public abstract class Product implements Comparable {
 
     private String name;
 
@@ -16,6 +17,8 @@ public abstract class Product {
     private double price;
 
     private double score = 0;
+
+    private int countBuy = 0;
 
     private Map<String, Double> rates = new HashMap<>();
 
@@ -95,13 +98,13 @@ public abstract class Product {
         this.communities = communities;
     }
 
-    public void showAllComment(){
-        for (Community community : communities){
+    public void showAllComment() {
+        for (Community community : communities) {
             community.showComment();
         }
     }
 
-    public void addCommunity(Community community){
+    public void addCommunity(Community community) {
         communities.add(community);
     }
 
@@ -116,4 +119,24 @@ public abstract class Product {
     public abstract void showProduct(User currentUser);
 
     public abstract String getId();
+
+    public void addBuy() {
+        countBuy++;
+    }
+
+    public int getCountBuy() {
+        return countBuy;
+    }
+
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Product product = (Product) o;
+        if (this.countBuy > product.countBuy) {
+            return 1;
+        } else if (this.countBuy < product.countBuy) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 }

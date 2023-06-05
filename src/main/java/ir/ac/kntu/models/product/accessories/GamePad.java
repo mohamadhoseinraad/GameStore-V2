@@ -69,6 +69,7 @@ public class GamePad extends Accessory {
                 ", connection=" + connection + '\'' +
                 "amount=" + getAmount() + '\'' +
                 ", price=" + getPrice() +
+                ", buys=" + getCountBuy() +
                 '}';
     }
 

@@ -72,6 +72,20 @@ public class Monitor extends Accessory {
     }
 
     @Override
+    public String toString() {
+        return "Monitor{" +
+                "id='" + id + '\'' +
+                "name='" + getName() + '\'' +
+                ", refreshRate hz=" + refreshRate + '\'' +
+                ", responseTime=" + responseTime + '\'' +
+                ", size=" + size + '\'' +
+                "amount=" + getAmount() + '\'' +
+                ", price=" + getPrice() +
+                ", buys=" + getCountBuy() +
+                '}';
+    }
+
+    @Override
     public void showProduct(User currentUser) {
         AccessoryHelper.printAccessory(this, currentUser);
     }
