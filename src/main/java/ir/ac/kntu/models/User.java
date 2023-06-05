@@ -6,10 +6,11 @@ import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.accessories.Accessory;
 import ir.ac.kntu.models.product.accessories.GamePad;
 import ir.ac.kntu.models.product.accessories.Monitor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class User {
+public class User implements Comparable {
 
     private static int countUser = 0;
 
@@ -177,7 +178,7 @@ public class User {
         if ((accessory.getAmount() > 0) && wallet >= price) {
             friend.addCostumeProduct(accessory);
             wallet -= price;
-            accessory.setAmount(accessory.getAmount() -1);
+            accessory.setAmount(accessory.getAmount() - 1);
             return true;
         }
         return false;
@@ -301,23 +302,18 @@ public class User {
 
     @Override
     public String toString() {
-        return "Username :" + username + " | Phone number : " + phoneNumber + " | Email : " + email + " | Score : " + score + lastGameName();
+        return "Username :" + username + " | Phone number : " + phoneNumber + " | Email : " + email + " | Score : " + score;
     }
 
-    private String lastGameName() {
-
-        String result = " | 5 last Game  ";
-        if (library.size() != 0) {
-            int i = 5;
-            if (library.size() < 5) {
-                i = library.size();
-            }
-            for (; i > 0; i--) {
-                result += i + " - " + library.get(library.size() - i) + "   ";
-            }
-            return result;
+    @Override
+    public int compareTo(@NotNull Object o) {
+        User ouser = (User) o;
+        if (this.score > ouser.score) {
+            return 1;
+        } else if (this.score < ouser.score) {
+            return -1;
+        } else {
+            return 0;
         }
-        return " | No Games";
     }
-
 }

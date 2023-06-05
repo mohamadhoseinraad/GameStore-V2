@@ -8,22 +8,14 @@ import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.UserType;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class AdminUserSearch {
     private Store storeDB;
 
     public AdminUserSearch(Store storeDB) {
         this.storeDB = storeDB;
-    }
-
-    private User searchMenu(String name) {
-        name = name.trim().toUpperCase();
-        ArrayList<User> result = storeDB.findUserByUsernames(name);
-        printUserSearchResult(result);
-        if (result.size() != 0) {
-            return handleSelect(result);
-        }
-        return null;
     }
 
 
@@ -37,7 +29,7 @@ public class AdminUserSearch {
             if (selectedUser == null) {
                 return null;
             }
-            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB,selectedUser);
+            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB, selectedUser);
             adminEditUserMenu.showMenu();
         }
         return null;
@@ -53,7 +45,7 @@ public class AdminUserSearch {
             if (selectedUser == null) {
                 return null;
             }
-            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB,selectedUser);
+            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB, selectedUser);
             adminEditUserMenu.showMenu();
         }
         return null;
@@ -69,7 +61,7 @@ public class AdminUserSearch {
             if (selectedUser == null) {
                 return null;
             }
-            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB,selectedUser);
+            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB, selectedUser);
             adminEditUserMenu.showMenu();
         }
         return null;
@@ -106,7 +98,22 @@ public class AdminUserSearch {
             if (selectedUser == null) {
                 return null;
             }
-            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB,selectedUser);
+            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB, selectedUser);
+            adminEditUserMenu.showMenu();
+        }
+        return null;
+    }
+
+    private User topUsers() {
+        ArrayList<User> result = new ArrayList<>(getAllUsers());
+        Collections.sort(result, Collections.reverseOrder());
+        printUserSearchResult(result);
+        if (result.size() != 0) {
+            User selectedUser = handleSelect(result);
+            if (selectedUser == null) {
+                return null;
+            }
+            AdminEditUserMenu adminEditUserMenu = new AdminEditUserMenu(storeDB, selectedUser);
             adminEditUserMenu.showMenu();
         }
         return null;
@@ -115,9 +122,7 @@ public class AdminUserSearch {
     private ArrayList<User> getAllUsers() {
         ArrayList<User> result = new ArrayList<>();
         for (User user : storeDB.getUsers()) {
-            if (user.getUserType() != UserType.ADMIN) {
-                result.add(user);
-            }
+            result.add(user);
         }
         return result;
     }
@@ -140,24 +145,32 @@ public class AdminUserSearch {
         }
     }
 
-    public User showMenu() {
+    public void showMenu() {
         AdminUserSearchOption option;
         while ((option = printMenuOptions("Search User", AdminUserSearchOption.class)) != AdminUserSearchOption.EXIT) {
             if (option != null) {
                 switch (option) {
                     case ALL: {
-                        return allUsers();
+                        allUsers();
+                        break;
+                    }
+                    case TOP_USERS: {
+                        topUsers();
+                        break;
                     }
                     case BY_USERNAME: {
-                        return usernameSearch();
+                        usernameSearch();
+                        break;
                     }
                     case BY_EMAIL: {
-                        return emailSearch();
+                        emailSearch();
+                        break;
                     }
                     case BY_PHONE_NUMBER: {
-                        return phoneSearch();
+                        phoneSearch();
+                        break;
                     }
-                    case ADD_USER:{
+                    case ADD_USER: {
                         UserHelper.makeUser(storeDB);
                         break;
                     }
@@ -168,13 +181,11 @@ public class AdminUserSearch {
                         System.out.println("Invalid choose");
                 }
             }
-            return null;
         }
         System.exit(0);
-        return null;
     }
 
-    private  <T extends Enum<T>> T getOption(Class<T> menuEnum) {
+    private <T extends Enum<T>> T getOption(Class<T> menuEnum) {
         T[] options = menuEnum.getEnumConstants();
         String choiceStr = Scan.getLine().trim();
         int choice = -1;
@@ -191,7 +202,7 @@ public class AdminUserSearch {
         return null;
     }
 
-    private  <T extends Enum<T>> T printMenuOptions(String title, Class<T> menuEnum) {
+    private <T extends Enum<T>> T printMenuOptions(String title, Class<T> menuEnum) {
         TerminalColor.cyan();
         System.out.println("----------" + title + "----------");
         TerminalColor.reset();
