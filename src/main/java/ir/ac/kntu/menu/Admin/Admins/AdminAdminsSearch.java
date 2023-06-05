@@ -1,12 +1,12 @@
 package ir.ac.kntu.menu.Admin.Admins;
 
 import ir.ac.kntu.models.Admin;
+import ir.ac.kntu.models.SearchEnum.UserFilterBy;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.HelperClasses.UserHelper;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.models.User;
-import ir.ac.kntu.models.UserType;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class AdminAdminsSearch {
     private void usernameSearch() {
         System.out.println("Search Admin by username : ");
         String name = Scan.getLine().trim().toUpperCase();
-        ArrayList<Admin> result = storeDB.findAdminByUsernames(name);
+        ArrayList<Admin> result = storeDB.adminsFilterBy(name, UserFilterBy.USERNAME);
         printUserSearchResult(result);
         if (result.size() != 0) {
             Admin selectedUser = handleSelect(result);
@@ -36,7 +36,7 @@ public class AdminAdminsSearch {
     private User emailSearch() {
         System.out.println("Search User by e-mail : ");
         String email = Scan.getLine().trim().toLowerCase();
-        ArrayList<Admin> result = storeDB.findAdminByEmail(email);
+        ArrayList<Admin> result = storeDB.adminsFilterBy(email, UserFilterBy.EMAIL);
         printUserSearchResult(result);
         if (result.size() != 0) {
             Admin selectedUser = handleSelect(result);
@@ -52,7 +52,7 @@ public class AdminAdminsSearch {
     private User phoneSearch() {
         System.out.println("Search User by phone number : ");
         String phoneNumber = Scan.getLine().trim().toLowerCase();
-        ArrayList<Admin> result = storeDB.findAdminByPhoneNumber(phoneNumber);
+        ArrayList<Admin> result = storeDB.adminsFilterBy(phoneNumber, UserFilterBy.PHONE_NUMBER);
         printUserSearchResult(result);
         if (result.size() != 0) {
             Admin selectedUser = handleSelect(result);

@@ -5,14 +5,10 @@ import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.menu.ExportUserProduct;
 import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
-import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.product.games.Game;
-import ir.ac.kntu.models.User;
-
-import java.util.ArrayList;
 
 public class AdminGamesMenu extends Menu {
 
@@ -88,7 +84,7 @@ public class AdminGamesMenu extends Menu {
     private void removeGame() {
         Game game = (Game) SelectItemHelper.searchInCostumeProtectByName(storeDB.getAdminProducts(admin, ProductType.GAME));
 
-        if (game != null && checkPermission(game) && storeDB.removeGame(game)) {
+        if (game != null && checkPermission(game) && storeDB.removeProduct(game)) {
             TerminalColor.green();
             admin.removeAccessProduct(game);
             System.out.println(game.getName() + " with " + game.getId() + " id successfully deleted !");

@@ -1,10 +1,8 @@
 package ir.ac.kntu.menu.Admin.Accessory;
 
 import ir.ac.kntu.HelperClasses.AccessoryHelper;
-import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
-import ir.ac.kntu.menu.Admin.Game.AdminGameEdit;
 import ir.ac.kntu.menu.ExportUserProduct;
 import ir.ac.kntu.menu.Menu;
 import ir.ac.kntu.models.Admin;
@@ -14,7 +12,6 @@ import ir.ac.kntu.models.product.ProductType;
 import ir.ac.kntu.models.product.accessories.Accessory;
 import ir.ac.kntu.models.product.accessories.AccessoryType;
 import ir.ac.kntu.models.product.accessories.Monitor;
-import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.utils.TerminalColor;
 
 public class AdminAccessoriesMenu extends Menu {
@@ -119,7 +116,7 @@ public class AdminAccessoriesMenu extends Menu {
     private void removeAccessory() {
         Accessory accessory = (Accessory) SelectItemHelper.searchInCostumeProtectByName(storeDB.getAdminProducts(admin, ProductType.ACCESSORIES));
 
-        if (accessory != null && checkPermission(accessory) && storeDB.removeAccessory(accessory)) {
+        if (accessory != null && checkPermission(accessory) && storeDB.removeProduct(accessory)) {
             TerminalColor.green();
             admin.removeAccessProduct(accessory);
             System.out.println(accessory.getName() + " with " + accessory.getId() + " id successfully deleted !");

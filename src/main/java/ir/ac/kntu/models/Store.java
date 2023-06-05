@@ -1,6 +1,6 @@
 package ir.ac.kntu.models;
 
-import ir.ac.kntu.HelperClasses.ProductHelper;
+import ir.ac.kntu.models.SearchEnum.UserFilterBy;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
@@ -39,38 +39,6 @@ public class Store {
         this.users = new ArrayList<>(users);
     }
 
-    public ArrayList<Game> getGames() {
-        ArrayList<Game> games = new ArrayList<>();
-        for (Product p : products.get(ProductType.GAME)) {
-            games.add((Game) p);
-        }
-        return games;
-    }
-
-    public ArrayList<Accessory> getAccessories() {
-        ArrayList<Accessory> accessories = new ArrayList<>();
-        for (Product p : products.get(ProductType.ACCESSORIES)) {
-            accessories.add((Accessory) p);
-        }
-        return accessories;
-    }
-
-    public ArrayList<Product> getProducts() {
-        ArrayList<Product> productsList = new ArrayList<>();
-        for (Product p : products.get(ProductType.GAME)) {
-            productsList.add(p);
-        }
-        for (Product p : products.get(ProductType.ACCESSORIES)) {
-            productsList.add(p);
-        }
-        return productsList;
-    }
-
-
-    public void setGames(ArrayList<Game> games) {
-        products.put(ProductType.GAME, new ArrayList<>(games));
-    }
-
     public User findUserByUsername(String username) {
         if (username == null) {
             return null;
@@ -99,24 +67,71 @@ public class Store {
         return null;
     }
 
-    public ArrayList<User> findUserByPhoneNumber(String phoneNumber) {
+    public ArrayList<User> usersFilterBy(String inputQuery, UserFilterBy userFilterBy) {
         ArrayList<User> result = new ArrayList<>();
         for (User u : users) {
-            if (u.getPhoneNumber().compareTo(phoneNumber) >= 0 && u.getUserType() != UserType.ADMIN) {
+            if (checkFilter(userFilterBy, u, inputQuery)) {
                 result.add(u);
             }
         }
         return result;
     }
 
-    public ArrayList<Admin> findAdminByPhoneNumber(String phoneNumber) {
+    public ArrayList<Admin> adminsFilterBy(String inputQuery, UserFilterBy userFilterBy) {
         ArrayList<Admin> result = new ArrayList<>();
         for (Admin u : admins) {
-            if (u.getPhoneNumber().compareTo(phoneNumber) >= 0) {
+            if (checkFilter(userFilterBy, u, inputQuery)) {
                 result.add(u);
             }
         }
         return result;
+    }
+
+    private boolean checkFilter(UserFilterBy userFilterBy, User user, String input) {
+        switch (userFilterBy) {
+            case EMAIL: {
+                return user.getEmail().startsWith(input);
+            }
+            case USERNAME: {
+                return user.getUsername().startsWith(input);
+            }
+            case PHONE_NUMBER: {
+                return user.getPhoneNumber().startsWith(input);
+            }
+            case ALL_USER: {
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
+
+    public ArrayList<Game> getGames() {
+        ArrayList<Game> games = new ArrayList<>();
+        for (Product p : products.get(ProductType.GAME)) {
+            games.add((Game) p);
+        }
+        return games;
+    }
+
+    public ArrayList<Accessory> getAccessories() {
+        ArrayList<Accessory> accessories = new ArrayList<>();
+        for (Product p : products.get(ProductType.ACCESSORIES)) {
+            accessories.add((Accessory) p);
+        }
+        return accessories;
+    }
+
+    public ArrayList<Product> getProducts() {
+        ArrayList<Product> productsList = new ArrayList<>();
+        for (Product p : products.get(ProductType.GAME)) {
+            Collections.addAll(productsList, p);
+        }
+        for (Product p : products.get(ProductType.ACCESSORIES)) {
+            Collections.addAll(productsList, p);
+        }
+        return productsList;
     }
 
     public Product findProduct(String id) {
@@ -148,47 +163,6 @@ public class Store {
         return result;
     }
 
-    public ArrayList<User> findUserByEmail(String email) {
-        ArrayList<User> result = new ArrayList<>();
-        for (User u : users) {
-            if (u.getEmail().startsWith(email) && u.getUserType() != UserType.ADMIN) {
-                result.add(u);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Admin> findAdminByEmail(String email) {
-        ArrayList<Admin> result = new ArrayList<>();
-        for (Admin u : admins) {
-            if (u.getEmail().startsWith(email)) {
-                result.add(u);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<User> findUserByUsernames(String username) {
-        ArrayList<User> result = new ArrayList<>();
-        for (User u : users) {
-            if (u.getUsername().startsWith(username) && u.getUserType() != UserType.ADMIN) {
-                result.add(u);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Admin> findAdminByUsernames(String username) {
-        ArrayList<Admin> result = new ArrayList<>();
-        for (Admin u : admins) {
-            if (u.getUsername().startsWith(username)) {
-                result.add(u);
-            }
-        }
-        return result;
-    }
-
-
     public boolean addProduct(Product newProduct) {
         if (newProduct == null) {
             return false;
@@ -204,17 +178,15 @@ public class Store {
         return false;
     }
 
-    public boolean removeGame(Game game) {
-        if (products.get(ProductType.GAME).contains(game)) {
-            products.get(ProductType.GAME).remove(game);
-            return true;
+    public boolean removeProduct(Product product) {
+        ProductType productType;
+        if (product.getClass() == Game.class) {
+            productType = ProductType.GAME;
+        } else {
+            productType = ProductType.ACCESSORIES;
         }
-        return false;
-    }
-
-    public boolean removeAccessory(Accessory accessory) {
-        if (products.get(ProductType.ACCESSORIES).contains(accessory)) {
-            products.get(ProductType.ACCESSORIES).remove(accessory);
+        if (products.get(productType).contains(product)) {
+            products.get(productType).remove(product);
             return true;
         }
         return false;
@@ -232,12 +204,8 @@ public class Store {
 
     }
 
-    public boolean removeUser(User user) {
-        if (users.contains(user)) {
-            users.remove(user);
-            return true;
-        }
-        return false;
+    public void removeUser(User user) {
+        users.remove(user);
     }
 
     public boolean loginUser(String username, String password) {
