@@ -24,6 +24,12 @@ public class GameLibraryMenu extends Menu {
 
     @Override
     public void showMenu() {
+        if (!currentGame.isAvailable()) {
+            TerminalColor.red();
+            System.out.println("Sorry game temporary is not available");
+            TerminalColor.reset();
+            return;
+        }
         SelectedProductMenuOptions option;
         while (printGame() && (option = printMenuOptions(currentGame.getName(), SelectedProductMenuOptions.class)) != SelectedProductMenuOptions.EXIT) {
             switch (option) {

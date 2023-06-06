@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.Admin.Game;
 
+import ir.ac.kntu.HelperClasses.GetInputHelper;
 import ir.ac.kntu.HelperClasses.ProductHelper;
 import ir.ac.kntu.menu.Admin.Admins.AdminEditAdminMenu;
 import ir.ac.kntu.models.Admin;
@@ -34,6 +35,10 @@ public class AdminGameEdit extends Menu {
         while (showGame() && (option = printMenuOptions("EDIT Games", AdminGameEditOptions.class)) != AdminGameEditOptions.EXIT) {
             if (option != null) {
                 switch (option) {
+                    case AVAILABLE:{
+                        available();
+                        break;
+                    }
                     case EDIT_NAME: {
                         editName();
                         break;
@@ -67,6 +72,19 @@ public class AdminGameEdit extends Menu {
             }
         }
         System.exit(0);
+    }
+
+    private void available() {
+        System.out.println("Y for available N for not available");
+        if (GetInputHelper.inputConform().equals("Y")){
+            currentGame.setAvailable(true);
+            TerminalColor.green();
+            System.out.println("Now is available ");
+        } else {
+            currentGame.setAvailable(false);
+            TerminalColor.yellow();
+            System.out.println("Now is not available ");
+        }
     }
 
     private void removeDeveloper() {

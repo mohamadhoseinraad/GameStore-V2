@@ -26,29 +26,35 @@ public class ProductStoreMenu extends Menu {
 
     @Override
     public void showMenu() {
-        ProductStoreMenuOptions option;
-        while (printProduct() && (option = printMenuOptions(currentProduct.getName(),
-                ProductStoreMenuOptions.class)) != ProductStoreMenuOptions.EXIT) {
-            if (option != null) {
-                switch (option) {
-                    case BUY: {
-                        buy();
-                        break;
-                    }
-                    case GIFT: {
-                        gift();
-                        break;
-                    }
-                    case BACK: {
-                        return;
-                    }
-                    default: {
-                        break;
+        if (currentProduct.getClass() == Game.class && !((Game) currentProduct).isAvailable()) {
+            TerminalColor.red();
+            System.out.println("Sorry game temporary is not available");
+            TerminalColor.reset();
+        } else {
+            ProductStoreMenuOptions option;
+            while (printProduct() && (option = printMenuOptions(currentProduct.getName(),
+                    ProductStoreMenuOptions.class)) != ProductStoreMenuOptions.EXIT) {
+                if (option != null) {
+                    switch (option) {
+                        case BUY: {
+                            buy();
+                            break;
+                        }
+                        case GIFT: {
+                            gift();
+                            break;
+                        }
+                        case BACK: {
+                            return;
+                        }
+                        default: {
+                            break;
+                        }
                     }
                 }
             }
+            System.exit(0);
         }
-        System.exit(0);
     }
 
     public boolean printProduct() {

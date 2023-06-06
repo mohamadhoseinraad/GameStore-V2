@@ -7,6 +7,7 @@ import ir.ac.kntu.models.product.Community;
 import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
+import ir.ac.kntu.utils.TerminalColor;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,6 +27,8 @@ public class Game extends Product {
     private Level level;
 
     private boolean isBetaVersion;
+
+    private boolean isAvailable = true;
 
 
     public Game(String name, String details, double price, Genre genre, Level level, Admin admin) {
@@ -61,6 +64,14 @@ public class Game extends Product {
 
     public boolean isBetaVersion() {
         return isBetaVersion;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
     public void setBetaVersion(boolean betaVersion) {
