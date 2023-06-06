@@ -45,6 +45,10 @@ public class UserMenu extends Menu {
                         friends();
                         break;
                     }
+                    case COUNT_PRICE: {
+                        countPrice();
+                        break;
+                    }
                     case LOGOUT:
                         currentUser.isLogout();
                         System.out.println("Back soon :)");
@@ -55,6 +59,11 @@ public class UserMenu extends Menu {
             }
         }
         System.exit(0);
+    }
+
+    private void countPrice() {
+        UserCountPriceMenu userCountPriceMenu = new UserCountPriceMenu(storeDB, currentUser);
+        userCountPriceMenu.showMenu();
     }
 
     public void profile() {
