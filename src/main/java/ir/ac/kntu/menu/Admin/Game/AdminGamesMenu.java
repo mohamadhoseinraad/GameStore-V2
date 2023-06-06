@@ -77,7 +77,7 @@ public class AdminGamesMenu extends Menu {
         if (game == null) {
             return;
         }
-        AdminGameEdit adminGameEdit = new AdminGameEdit(game, admin);
+        AdminGameEdit adminGameEdit = new AdminGameEdit(game, admin, storeDB);
         adminGameEdit.showMenu();
     }
 

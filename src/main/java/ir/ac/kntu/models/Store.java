@@ -87,6 +87,22 @@ public class Store {
         return result;
     }
 
+    public ArrayList<Admin> gameDevelopers(Game game, boolean access) {
+        ArrayList<Admin> result = new ArrayList<>();
+        for (Admin u : admins) {
+            if (access) {
+                if (game.getDevelopers().contains(u.getId()) && !u.isMastetAdmin()) {
+                    result.add(u);
+                }
+            } else {
+                if (!game.getDevelopers().contains(u.getId()) && !u.isMastetAdmin()) {
+                    result.add(u);
+                }
+            }
+        }
+        return result;
+    }
+
     private boolean checkFilter(UserFilterBy userFilterBy, User user, String input) {
         switch (userFilterBy) {
             case EMAIL: {
@@ -187,7 +203,7 @@ public class Store {
         }
         if (products.get(productType).contains(product)) {
             products.get(productType).remove(product);
-            for (User user : users){
+            for (User user : users) {
                 user.removeProduct(product);
             }
             return true;
@@ -209,7 +225,7 @@ public class Store {
 
     public void removeUser(User user) {
         users.remove(user);
-        for (User u: users){
+        for (User u : users) {
             u.removeFriend(user);
         }
     }

@@ -1,7 +1,10 @@
 package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.ProductHelper;
+import ir.ac.kntu.menu.Admin.Admins.AdminEditAdminMenu;
 import ir.ac.kntu.models.Admin;
+import ir.ac.kntu.models.SearchEnum.UserFilterBy;
+import ir.ac.kntu.models.Store;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
@@ -9,15 +12,20 @@ import ir.ac.kntu.models.User;
 import ir.ac.kntu.models.product.games.Game;
 import ir.ac.kntu.models.product.games.Genre;
 
+import java.util.ArrayList;
+
 public class AdminGameEdit extends Menu {
 
-    private Game currentGame;
+    private final Game currentGame;
 
-    private Admin admin;
+    private final Admin admin;
 
-    public AdminGameEdit(Game currentGame, Admin admin) {
+    private final Store storeDB;
+
+    public AdminGameEdit(Game currentGame, Admin admin, Store storeDB) {
         this.currentGame = currentGame;
         this.admin = admin;
+        this.storeDB = storeDB;
     }
 
     @Override
@@ -42,6 +50,14 @@ public class AdminGameEdit extends Menu {
                         editPrice();
                         break;
                     }
+                    case ADD_DEVELOPER: {
+                        addDeveloper();
+                        break;
+                    }
+                    case REMOVE_DEVELOPER: {
+                        removeDeveloper();
+                        break;
+                    }
                     case BACK: {
                         return;
                     }
@@ -51,6 +67,37 @@ public class AdminGameEdit extends Menu {
             }
         }
         System.exit(0);
+    }
+
+    private void removeDeveloper() {
+        ArrayList<Admin> result = storeDB.gameDevelopers(currentGame, true);
+        printUserSearchResult(result);
+        if (result.size() != 0) {
+            Admin selectedUser = handleSelect(result);
+            if (selectedUser == null) {
+                return;
+            }
+            currentGame.removeDeveloper(selectedUser);
+            selectedUser.removeAccessProduct(currentGame);
+            TerminalColor.yellow();
+            System.out.println(selectedUser.getUsername() + " remove from developer for " + currentGame.getName());
+        }
+    }
+
+    private void addDeveloper() {
+        ArrayList<Admin> result = storeDB.gameDevelopers(currentGame, false);
+        printUserSearchResult(result);
+        if (result.size() != 0) {
+            Admin selectedUser = handleSelect(result);
+            if (selectedUser == null) {
+                return;
+            }
+            currentGame.addDeveloper(selectedUser);
+            selectedUser.addAccessProduct(currentGame);
+            TerminalColor.green();
+            System.out.println(selectedUser.getUsername() + " added to developer for " + currentGame.getName());
+        }
+
     }
 
     private boolean showGame() {
@@ -98,6 +145,46 @@ public class AdminGameEdit extends Menu {
     private void editGenre() {
         Genre genre = ProductHelper.getInputEnumData(Genre.class);
         currentGame.setGenre(genre);
+    }
+
+    private Admin handleSelect(ArrayList<Admin> searchResult) {
+        System.out.println("---- chose number : ");
+        String input = Scan.getLine();
+        if (!input.matches("[0-9]+")) {
+            TerminalColor.red();
+            System.out.println("Chose valid number!");
+            TerminalColor.reset();
+        } else {
+            int choose = Integer.parseInt(input) - 1;
+            if (choose >= searchResult.size() || choose < 0) {
+                TerminalColor.red();
+                System.out.println("Chose valid number!");
+                TerminalColor.reset();
+            } else {
+                Admin user = searchResult.get(choose);
+                return user;
+            }
+        }
+        return null;
+
+    }
+
+    private void printUserSearchResult(ArrayList<Admin> result) {
+        if (result.size() == 0) {
+            System.out.println("Not found ! :(");
+        } else {
+            int i = 1;
+            for (User user : result) {
+                TerminalColor.blue();
+                System.out.print(i);
+                TerminalColor.yellow();
+                System.out.print(" | ");
+                TerminalColor.blue();
+                System.out.println(user);
+                TerminalColor.reset();
+                i++;
+            }
+        }
     }
 
 }

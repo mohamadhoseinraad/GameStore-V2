@@ -144,4 +144,8 @@ public class Game extends Product {
     public void addDeveloper(Admin admin) {
         developers.add(admin.getId());
     }
+
+    public void removeDeveloper(Admin admin) {
+        developers.remove(admin.getId());
+    }
 }
