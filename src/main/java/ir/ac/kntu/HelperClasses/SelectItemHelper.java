@@ -95,32 +95,71 @@ public class SelectItemHelper {
         }
     }
 
+    private static ArrayList<Product>[] makePagination(ArrayList<Product> products) {
+        final int pageSize = 3;
+        ArrayList<Product>[] pages = new ArrayList[products.size() / pageSize + 1];
+        for (int i = 0; i < pages.length; i++) {
+            pages[i] = new ArrayList<>();
+        }
+        int j = 0;
+        for (int i = 0; i < products.size(); i++) {
+            pages[j].add(products.get(i));
+            if (pages[j].size() == pageSize) {
+                j++;
+            }
+        }
+        return pages;
+    }
+
+    private static int checkInput(int page, String input, int totalPage) {
+        if (input.equals("x")) {
+            if (page + 1 <= totalPage - 1) {
+                page++;
+            } else {
+                TerminalColor.red();
+                System.out.println("this is last page!");
+            }
+        } else if (input.equals("y")) {
+            if (page - 1 >= 0) {
+                page--;
+            } else {
+                TerminalColor.red();
+                System.out.println("this is first page!");
+            }
+        }
+        return page;
+    }
+
     public static Product handleSelect(ArrayList<Product> searchResult) {
-        if (searchResult == null) {
+        if (searchResult == null || searchResult.size() == 0) {
             return null;
         }
+        int page = 0;
         while (true) {
-            printGameSearchResult(searchResult);
-            if (searchResult.size() == 0) {
-                return null;
-            }
-            System.out.println("---- chose number : (0 to back )");
+            int totalPage = makePagination(searchResult).length;
+            ArrayList<Product> eachPage = makePagination(searchResult)[page];
+            printGameSearchResult(eachPage);
+            System.out.println("---- chose number : (0 to back  x to next page y back page)");
             String input = Scan.getLine();
-            if (!input.matches("[0-9]+")) {
+            if (!input.matches("[x y 0-9]+")) {
                 TerminalColor.red();
-                System.out.println("Chose valid number!");
+                System.out.println("Chose valid input!");
                 TerminalColor.reset();
             } else {
-                int choose = Integer.parseInt(input) - 1;
-                if (choose == -1) {
-                    return null;
-                }
-                if (choose >= searchResult.size() || choose < 0) {
-                    TerminalColor.red();
-                    System.out.println("Chose valid number!");
-                    TerminalColor.reset();
+                if (input.matches("[x y]")) {
+                    page = checkInput(page, input, totalPage);
                 } else {
-                    return searchResult.get(choose);
+                    int choose = Integer.parseInt(input) - 1;
+                    if (choose == -1) {
+                        return null;
+                    }
+                    if (choose >= eachPage.size() || choose < 0) {
+                        TerminalColor.red();
+                        System.out.println("Chose valid number!");
+                        TerminalColor.reset();
+                    } else {
+                        return eachPage.get(choose);
+                    }
                 }
             }
         }
