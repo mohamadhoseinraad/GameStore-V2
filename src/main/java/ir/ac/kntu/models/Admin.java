@@ -1,13 +1,16 @@
 package ir.ac.kntu.models;
 
+import ir.ac.kntu.HelperClasses.FeedBacksHelper;
+import ir.ac.kntu.models.product.FeedBack;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.accessories.Accessory;
 import ir.ac.kntu.models.product.games.Game;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Admin extends User {
+public class Admin extends User implements Comparable {
     private final boolean isMastetAdmin;
 
     private boolean isDeveloper;
@@ -18,9 +21,9 @@ public class Admin extends User {
 
     private ArrayList<String> productAccessID = new ArrayList<>();
 
-    private ArrayList<String> scheduledEvent = new ArrayList<>();
+    private ArrayList<FeedBack> scheduledEvent = new ArrayList<>();
 
-    private ArrayList<String> inbox = new ArrayList<>();
+    private ArrayList<FeedBack> inbox = new ArrayList<>();
 
     public Admin(String username, String phoneNumber, String email, String password, boolean isMastetAdmin) {
         super(username, phoneNumber, email, password, UserType.ADMIN);
@@ -69,6 +72,46 @@ public class Admin extends User {
 
     public ArrayList<String> getProductAccessID() {
         return productAccessID;
+    }
+
+    public ArrayList<FeedBack> getInbox() {
+        return inbox;
+    }
+
+    public void setInbox(ArrayList<FeedBack> inbox) {
+        this.inbox = inbox;
+    }
+
+    public void addInbox(FeedBack feedBack) {
+        inbox.add(feedBack);
+    }
+
+    public void deAcceptFeedback(FeedBack feedBack, Game game, ArrayList<Admin> developers) {
+        inbox.remove(feedBack);
+        FeedBacksHelper.updateFeedBackReq(feedBack, game, developers);
+    }
+
+    public void acceptFeedback(FeedBack feedBack) {
+        inbox.remove(feedBack);
+        scheduledEvent.add(feedBack);
+        feedBack.setAccept(true);
+    }
+
+    public ArrayList<FeedBack> getScheduledEvent() {
+        return scheduledEvent;
+    }
+
+    public void setScheduledEvent(ArrayList<FeedBack> scheduledEvent) {
+        this.scheduledEvent = scheduledEvent;
+    }
+
+    public void addScheduledEvent(FeedBack feedBack) {
+        scheduledEvent.add(feedBack);
+        feedBack.setAccept(true);
+    }
+
+    public void solvedScheduledEvent(FeedBack feedBack) {
+        scheduledEvent.remove(feedBack);
     }
 
     @Override
@@ -170,4 +213,22 @@ public class Admin extends User {
     @Override
     public void isLogout() {
     }
+
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Admin admin = (Admin) o;
+        if (this.getScheduledEvent().size() > admin.getScheduledEvent().size()) {
+            return 1;
+        } else if (this.getScheduledEvent().size() < admin.getScheduledEvent().size()) {
+            return -1;
+        } else {
+            if (this.getInbox().size() > admin.getInbox().size()) {
+                return 1;
+            } else if (this.getInbox().size() < admin.getInbox().size()) {
+                return -1;
+            }
+            return 0;
+        }
+    }
 }
+

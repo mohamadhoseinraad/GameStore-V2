@@ -1,10 +1,12 @@
 package ir.ac.kntu.menu.Admin.Game;
 
 import ir.ac.kntu.HelperClasses.GameHelper;
+import ir.ac.kntu.HelperClasses.GetInputHelper;
 import ir.ac.kntu.HelperClasses.SelectItemHelper;
 import ir.ac.kntu.menu.ExportUserProduct;
 import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.Store;
+import ir.ac.kntu.models.product.FeedBack;
 import ir.ac.kntu.models.product.ProductType;
 import ir.ac.kntu.utils.TerminalColor;
 import ir.ac.kntu.menu.Menu;
@@ -28,6 +30,14 @@ public class AdminGamesMenu extends Menu {
         while ((option = printMenuOptions("Admin Menu-Games", AdminGamesMenuOptions.class)) != AdminGamesMenuOptions.EXIT) {
             if (option != null) {
                 switch (option) {
+                    case INBOX: {
+                        inbox();
+                        break;
+                    }
+                    case SCHEDULED_EVENT: {
+                        scheduledEvent();
+                        break;
+                    }
                     case ADD_GAME: {
                         addGame();
                         break;
@@ -93,6 +103,41 @@ public class AdminGamesMenu extends Menu {
         }
         TerminalColor.red();
         System.out.println("Fail delete game !");
+        TerminalColor.red();
+    }
+
+    private void inbox() {
+        FeedBack feedBack = SelectItemHelper.handleSelectFeedBack(admin.getInbox());
+
+        if (feedBack != null) {
+            System.out.println("Y to Accept N to No: ");
+            if (GetInputHelper.inputConform().equals("Y")) {
+                admin.acceptFeedback(feedBack);
+            } else {
+                Game g = storeDB.getGame(feedBack.getGameId());
+                admin.deAcceptFeedback(feedBack, g, storeDB.gameDevelopers(g, true));
+            }
+            return;
+        }
+        TerminalColor.red();
+        System.out.println("Fail select feedback !");
+        TerminalColor.red();
+    }
+
+    private void scheduledEvent() {
+        FeedBack feedBack = SelectItemHelper.handleSelectFeedBack(admin.getScheduledEvent());
+
+        if (feedBack != null) {
+            System.out.println("Y to Solved N to No: ");
+            if (GetInputHelper.inputConform().equals("Y")) {
+                admin.solvedScheduledEvent(feedBack);
+            } else {
+                System.out.println("Canceled");
+            }
+            return;
+        }
+        TerminalColor.red();
+        System.out.println("Fail select feedback !");
         TerminalColor.red();
     }
 

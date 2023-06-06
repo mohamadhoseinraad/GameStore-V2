@@ -1,10 +1,12 @@
 package ir.ac.kntu.models.product.games;
 
 
+import ir.ac.kntu.HelperClasses.FeedBacksHelper;
 import ir.ac.kntu.HelperClasses.GameHelper;
 import ir.ac.kntu.models.Admin;
 import ir.ac.kntu.models.product.Community;
 import ir.ac.kntu.models.User;
+import ir.ac.kntu.models.product.FeedBack;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.models.product.ProductType;
 import ir.ac.kntu.utils.TerminalColor;
@@ -20,6 +22,8 @@ public class Game extends Product {
     public final String creatorId;
 
     private ArrayList<String> developers = new ArrayList<>();
+
+    private ArrayList<FeedBack> feedBacks = new ArrayList<>();
 
     private Genre genre;
 
@@ -39,9 +43,11 @@ public class Game extends Product {
         isBetaVersion = false;
         if (admin == null) {
             creatorId = "ADM0";
+            developers.add("ADM0");
         } else {
             creatorId = admin.getId();
             admin.addAccessProduct(this);
+            developers.add(creatorId);
         }
     }
 
@@ -78,6 +84,20 @@ public class Game extends Product {
         isBetaVersion = betaVersion;
     }
 
+    public ArrayList<FeedBack> getFeedBacks() {
+        return feedBacks;
+    }
+
+    public void addFeedBack(FeedBack feedBack, ArrayList<Admin> developers) {
+        feedBacks.add(feedBack);
+        FeedBacksHelper.handleFeedBack(this, developers);
+
+    }
+
+    public void removeFeedBack(FeedBack feedBack) {
+        feedBacks.remove(feedBack);
+
+    }
 
     @Override
     public void showProduct(User currentUser) {
@@ -153,7 +173,9 @@ public class Game extends Product {
     }
 
     public void addDeveloper(Admin admin) {
-        developers.add(admin.getId());
+        if (admin != null) {
+            developers.add(admin.getId());
+        }
     }
 
     public void removeDeveloper(Admin admin) {

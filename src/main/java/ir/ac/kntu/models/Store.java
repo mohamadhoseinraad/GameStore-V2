@@ -64,6 +64,11 @@ public class Store {
                 return user;
             }
         }
+        for (Admin admin : admins) {
+            if (admin.getId().equals(userId)) {
+                return admin;
+            }
+        }
         return null;
     }
 
@@ -91,7 +96,8 @@ public class Store {
         ArrayList<Admin> result = new ArrayList<>();
         for (Admin u : admins) {
             if (access) {
-                if (game.getDevelopers().contains(u.getId()) && !u.isMastetAdmin()) {
+                if ((game.getDevelopers().contains(u.getId()) && !u.isMastetAdmin()) ||
+                        u.isMastetAdmin() && game.creatorId.equals(u.getId())) {
                     result.add(u);
                 }
             } else {
@@ -129,6 +135,15 @@ public class Store {
             games.add((Game) p);
         }
         return games;
+    }
+
+    public Game getGame(String id) {
+        for (Product p : products.get(ProductType.GAME)) {
+            if (p.getId().equals(id)) {
+                return (Game) p;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Accessory> getAccessories() {

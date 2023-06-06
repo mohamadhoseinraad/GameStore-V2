@@ -1,5 +1,6 @@
 package ir.ac.kntu.menu.Admin;
 
+import ir.ac.kntu.HelperClasses.FeedBacksHelper;
 import ir.ac.kntu.menu.Admin.Accessory.AdminAccessoriesMenu;
 import ir.ac.kntu.menu.Admin.Admins.AdminAdminsSearch;
 import ir.ac.kntu.menu.Admin.Profile.AdminProfile;
@@ -19,6 +20,7 @@ public class AdminMenu extends Menu {
     public AdminMenu(Store store, Admin admin) {
         this.storeDB = store;
         this.admin = admin;
+        FeedBacksHelper.updateAllFeedBack(store);
     }
 
     @Override

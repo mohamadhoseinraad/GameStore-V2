@@ -1,6 +1,8 @@
 package ir.ac.kntu.menu.User.Library;
 
+import ir.ac.kntu.HelperClasses.FeedBacksHelper;
 import ir.ac.kntu.models.product.Community;
+import ir.ac.kntu.models.product.FeedBack;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.models.Store;
 import ir.ac.kntu.utils.TerminalColor;
@@ -61,7 +63,10 @@ public class GameLibraryMenu extends Menu {
     }
 
     private void feedback() {
-        System.out.println("In Update will come!");
+        System.out.println(storeDB.gameDevelopers(currentGame, true));
+        FeedBacksHelper.makeFeedBack(currentUser, currentGame, storeDB);
+
+        FeedBacksHelper.handleFeedBack(currentGame, storeDB.gameDevelopers(currentGame, true));
     }
 
     private boolean printGame() {

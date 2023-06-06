@@ -1,6 +1,7 @@
 package ir.ac.kntu.HelperClasses;
 
 import ir.ac.kntu.models.Store;
+import ir.ac.kntu.models.product.FeedBack;
 import ir.ac.kntu.models.product.Product;
 import ir.ac.kntu.utils.Scan;
 import ir.ac.kntu.utils.TerminalColor;
@@ -125,6 +126,37 @@ public class SelectItemHelper {
         }
     }
 
+    public static FeedBack handleSelectFeedBack(ArrayList<FeedBack> searchResult) {
+        if (searchResult == null) {
+            return null;
+        }
+        while (true) {
+            printFeedBackSearchResult(searchResult);
+            if (searchResult.size() == 0) {
+                return null;
+            }
+            System.out.println("---- chose number : (0 to back )");
+            String input = Scan.getLine();
+            if (!input.matches("[0-9]+")) {
+                TerminalColor.red();
+                System.out.println("Chose valid number!");
+                TerminalColor.reset();
+            } else {
+                int choose = Integer.parseInt(input) - 1;
+                if (choose == -1) {
+                    return null;
+                }
+                if (choose >= searchResult.size() || choose < 0) {
+                    TerminalColor.red();
+                    System.out.println("Chose valid number!");
+                    TerminalColor.reset();
+                } else {
+                    return searchResult.get(choose);
+                }
+            }
+        }
+    }
+
     private static void printGameSearchResult(ArrayList<Product> result) {
         if (result.size() == 0) {
             System.out.println("Not found ! :(");
@@ -137,6 +169,24 @@ public class SelectItemHelper {
                 System.out.print(" | ");
                 TerminalColor.blue();
                 System.out.println(product);
+                TerminalColor.reset();
+                i++;
+            }
+        }
+    }
+
+    private static void printFeedBackSearchResult(ArrayList<FeedBack> result) {
+        if (result.size() == 0) {
+            System.out.println("Not found ! :(");
+        } else {
+            int i = 1;
+            for (FeedBack feedBack : result) {
+                TerminalColor.blue();
+                System.out.print(i);
+                TerminalColor.yellow();
+                System.out.print(" | ");
+                TerminalColor.blue();
+                System.out.println(feedBack);
                 TerminalColor.reset();
                 i++;
             }
